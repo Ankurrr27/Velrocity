@@ -4,30 +4,42 @@ import { motion } from "framer-motion";
 
 export default function PhoneMockup({ children }: { children: React.ReactNode }) {
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.88, y: 32, rotateX: 6 }}
-      animate={{ opacity: 1, scale: 1, y: 0, rotateX: 0 }}
-      transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-      className="relative flex justify-center items-center"
-      style={{ perspective: "1200px" }}
-    >
+    <div className="relative flex justify-center items-center w-full" style={{ perspective: "2000px" }}>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.85, y: 40, rotateX: 20, rotateY: -20 }}
+        animate={{ opacity: 1, scale: 1, y: 0, rotateX: 4, rotateY: -14, rotateZ: 2 }}
+        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+        className="relative"
+      >
+        {/* Floating Animation Loop */}
+        <motion.div
+          animate={{
+            y: [0, -15, 0],
+            rotateX: [4, 6, 4],
+            rotateY: [-14, -16, -14],
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="relative flex justify-center items-center"
+        >
 
       {/* ── AMBIENT GLOW STACK ─────────────────────────────── */}
       <div className="pointer-events-none absolute inset-0 -z-10">
-        {/* outer halo */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-                        w-[420px] h-[540px] rounded-full
-                        bg-[radial-gradient(ellipse,rgba(139,92,246,0.18),transparent_65%)]
+                        w-[120%] h-[120%] rounded-full
+                        bg-[radial-gradient(ellipse,rgba(99,102,241,0.15),transparent_65%)]
                         blur-[80px]" />
-        {/* tight inner accent */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
-                        w-[220px] h-[360px] rounded-full
-                        bg-[radial-gradient(ellipse,rgba(99,102,241,0.22),transparent_60%)]
+                        w-[80%] h-[80%] rounded-full
+                        bg-[radial-gradient(ellipse,rgba(59,130,246,0.2),transparent_60%)]
                         blur-[40px]" />
       </div>
 
       {/* ── PHONE SHELL ────────────────────────────────────── */}
-      <div className="relative w-[270px] sm:w-[290px] h-[560px] sm:h-[590px]">
+      <div className="relative w-[280px] sm:w-[300px] lg:w-[320px] h-[580px] sm:h-[620px] lg:h-[660px] transition-all duration-500">
 
         {/* Left: mute toggle + volume buttons */}
         <div className="absolute -left-[3px] top-[100px] w-[3px] h-[28px] rounded-l-full
@@ -143,13 +155,16 @@ export default function PhoneMockup({ children }: { children: React.ReactNode })
       </div>
       {/* /PHONE SHELL */}
 
-      {/* Ground shadow */}
+      {/* Ground shadow beneath the floating phone */}
       <div className="
-        absolute -bottom-8 left-1/2 -translate-x-1/2
-        w-[160px] h-[24px] rounded-full
-        bg-black/50 blur-2xl -z-10
+        absolute -bottom-16 left-1/2 -translate-x-1/2
+        w-[200px] h-[30px] rounded-[100%]
+        bg-black/80 blur-xl -z-20
+        shadow-[0_0_40px_rgba(99,102,241,0.15)]
       " />
-
-    </motion.div>
+      
+        </motion.div>
+      </motion.div>
+    </div>
   );
 }

@@ -27,10 +27,8 @@ export default function Home() {
         {/* HERO SECTION */}
         <section className="max-w-7xl mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-10 md:gap-12 items-center mb-12 md:mb-16">
           <Hero />
-          <div className="flex justify-center lg:justify-end mt-10 lg:mt-0">
-            <div className="scale-90 sm:scale-100 origin-center transition-transform">
-              <MockUI />
-            </div>
+          <div className="flex justify-center lg:justify-end mt-10 lg:mt-0 relative z-20">
+            <MockUI />
           </div>
         </section>
 
