@@ -13,7 +13,7 @@ export default function Navbar() {
           <span className="text-[11px] font-black uppercase tracking-[0.25em] text-white">
             Velrocity
           </span>
-          <span className="text-[11px] font-black text-orange-500 select-none">/</span>
+          <span className="text-[11px] font-black text-indigo-500 select-none">/</span>
           <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-zinc-600">
             OS
           </span>
@@ -52,16 +52,16 @@ export default function Navbar() {
             className="
               group relative overflow-hidden
               px-5 py-2 rounded-full
-              border border-orange-500/60 hover:border-orange-500
+              border border-indigo-500/60 hover:border-indigo-500
               text-[9px] font-black uppercase tracking-[0.2em]
-              text-orange-400 hover:text-black
+              text-indigo-400 hover:text-white
               transition-colors duration-200
             "
           >
             {/* fill slides in from left on hover */}
             <span className="
               absolute inset-0
-              bg-orange-500
+              bg-indigo-500
               -translate-x-full group-hover:translate-x-0
               transition-transform duration-200 ease-out
             " />

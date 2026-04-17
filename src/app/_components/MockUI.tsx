@@ -46,13 +46,13 @@ export default function MockUI() {
           <div className="flex items-center gap-2">
             {/* wordmark matches Navbar */}
             <span className="text-[9px] font-black uppercase tracking-[0.25em] text-white">Velrocity</span>
-            <span className="text-[9px] font-black text-orange-500">/</span>
+            <span className="text-[9px] font-black text-indigo-500">/</span>
             <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-zinc-600">OS</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="relative w-6 h-6 flex items-center justify-center">
               <Bell size={11} className="text-zinc-500" />
-              <div className="absolute top-0.5 right-0.5 w-1 h-1 bg-orange-500 rounded-full" />
+              <div className="absolute top-0.5 right-0.5 w-1 h-1 bg-indigo-500 rounded-full" />
             </div>
             <div className="w-6 h-6 rounded-full bg-zinc-800 border border-white/8 overflow-hidden">
               <div className="w-full h-full bg-gradient-to-br from-zinc-700 to-zinc-900" />
@@ -68,7 +68,7 @@ export default function MockUI() {
             { val: "4.5h",          label: "Deep",   accent: false },
           ].map(({ val, label, accent }) => (
             <div key={label} className="flex-1 flex flex-col items-center gap-0.5">
-              <p className={`text-lg font-black leading-none ${accent ? "text-orange-500" : "text-white"}`}>
+              <p className={`text-lg font-black leading-none ${accent ? "text-indigo-500" : "text-white"}`}>
                 {val}
               </p>
               <p className="text-[7px] font-bold uppercase tracking-[0.2em] text-zinc-600">{label}</p>
@@ -88,7 +88,7 @@ export default function MockUI() {
                   transition-colors duration-150
                   ${i === 0 ? "border-r border-white/[0.07]" : ""}
                   ${activeTab === tab
-                    ? "bg-orange-500 text-black"
+                    ? "bg-indigo-500 text-white"
                     : "text-zinc-500 hover:text-zinc-300 bg-transparent"}
                 `}
               >
@@ -105,7 +105,7 @@ export default function MockUI() {
             <div className="space-y-1">
               <div className="flex items-center justify-between gap-4 pb-2 border-b border-white/[0.06]">
                 <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-zinc-500">Today's objectives</p>
-                <p className="text-[8px] font-black text-orange-500 whitespace-nowrap">{completed} / {habits.length}</p>
+                <p className="text-[8px] font-black text-indigo-500 whitespace-nowrap">{completed} / {habits.length}</p>
               </div>
 
               {habits.map(habit => (
@@ -121,10 +121,10 @@ export default function MockUI() {
                       w-[14px] h-[14px] rounded-[3px] border flex items-center justify-center
                       transition-colors duration-150 shrink-0
                       ${habit.done
-                        ? "bg-orange-500 border-orange-500"
+                        ? "bg-indigo-500 border-indigo-500"
                         : "border-zinc-700 bg-transparent"}
                     `}>
-                      {habit.done && <CheckCircle2 size={9} strokeWidth={3} className="text-black" />}
+                      {habit.done && <CheckCircle2 size={9} strokeWidth={3} className="text-white" />}
                     </div>
                     <span className={`text-[11px] font-medium leading-none transition-colors ${
                       habit.done ? "text-zinc-600 line-through decoration-zinc-700" : "text-zinc-200"
@@ -151,10 +151,10 @@ export default function MockUI() {
                   <div className="flex items-center gap-3">
                     <div className="
                       w-7 h-7 rounded-md
-                      border border-white/[0.07] group-hover:border-orange-500/40
-                      bg-zinc-900 group-hover:bg-orange-500/10
+                      border border-white/[0.07] group-hover:border-indigo-500/40
+                      bg-zinc-900 group-hover:bg-indigo-500/10
                       flex items-center justify-center
-                      text-zinc-500 group-hover:text-orange-400
+                      text-zinc-500 group-hover:text-indigo-400
                       transition-all duration-150
                     ">
                       <Icon size={10} />
@@ -177,12 +177,12 @@ export default function MockUI() {
           <div className="rounded-lg border border-white/[0.07] bg-white/[0.02] p-3.5 flex items-center justify-between">
             <div className="flex items-center gap-3">
               {/* outlined play circle — matches hero's outlined headline */}
-              <div className="w-7 h-7 rounded-full border border-orange-500/60 flex items-center justify-center">
-                <Play size={9} className="text-orange-400 ml-0.5" fill="currentColor" />
+              <div className="w-7 h-7 rounded-full border border-indigo-500/60 flex items-center justify-center">
+                <Play size={9} className="text-indigo-400 ml-0.5" fill="currentColor" />
               </div>
               <div>
                 <p className="text-[10px] font-black uppercase tracking-tight text-white">Engine Active</p>
-                <p className="text-[7px] font-bold uppercase tracking-[0.2em] text-orange-500/70">Deep Focus</p>
+                <p className="text-[7px] font-bold uppercase tracking-[0.2em] text-indigo-500/70">Deep Focus</p>
               </div>
             </div>
             <span className="font-mono text-[10px] font-black text-zinc-300
@@ -199,7 +199,7 @@ export default function MockUI() {
             { Icon: LayoutGrid, active: activeTab === "habits" },
             { Icon: BarChart3,  active: false },
           ].map(({ Icon, active }, i) => (
-            <div key={i} className={active ? "text-orange-500" : "text-zinc-600 hover:text-zinc-400"}>
+            <div key={i} className={active ? "text-indigo-500" : "text-zinc-600 hover:text-zinc-400"}>
               <Icon size={14} />
             </div>
           ))}
@@ -207,11 +207,11 @@ export default function MockUI() {
           {/* FAB — ghost outlined, matches CTA button style */}
           <button className="
             w-9 h-9 -mt-8 rounded-full
-            border border-orange-500/70 hover:border-orange-500
-            text-orange-400 hover:text-black hover:bg-orange-500
+            border border-indigo-500/70 hover:border-indigo-500
+            text-indigo-400 hover:text-white hover:bg-indigo-500
             flex items-center justify-center
             transition-colors duration-150
-            shadow-[0_0_20px_-4px_rgba(249,115,22,0.35)]
+            shadow-[0_0_20px_-4px_rgba(99,102,241,0.35)]
           ">
             <span className="text-lg font-black leading-none">+</span>
           </button>
@@ -220,7 +220,7 @@ export default function MockUI() {
             { Icon: Clock, active: false },
             { Icon: User,  active: false },
           ].map(({ Icon, active }, i) => (
-            <div key={i} className={active ? "text-orange-500" : "text-zinc-600 hover:text-zinc-400"}>
+            <div key={i} className={active ? "text-indigo-500" : "text-zinc-600 hover:text-zinc-400"}>
               <Icon size={14} />
             </div>
           ))}

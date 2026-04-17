@@ -25,9 +25,9 @@ export default function Hero() {
       {/* BADGE */}
       <motion.div variants={rise} className="flex items-center gap-3">
         <span className="inline-flex items-center gap-2 px-3 py-1.5
-                         border border-orange-500/30 rounded-full
-                         text-[9px] font-bold uppercase tracking-[0.22em] text-orange-400">
-          <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+                         border border-indigo-500/30 rounded-full
+                         text-[9px] font-bold uppercase tracking-[0.22em] text-indigo-400">
+          <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
           Professional Choice
         </span>
       </motion.div>
@@ -46,7 +46,7 @@ export default function Hero() {
           variants={rise}
           className="text-[clamp(3rem,8vw,5.2rem)]
                      font-black leading-[0.9] tracking-[-0.03em]
-                     bg-gradient-to-r from-orange-400 to-orange-600
+                     bg-gradient-to-r from-indigo-400 to-blue-500
                      bg-clip-text text-transparent">
           Consistency.
         </motion.h1>
@@ -69,9 +69,9 @@ export default function Hero() {
           href="/register"
           className="group inline-flex items-center gap-2
                      px-7 py-3
-                     bg-orange-500 hover:bg-orange-400
-                     text-black text-[11px] font-black uppercase tracking-[0.18em]
-                     rounded-lg transition shadow-lg"
+                     bg-indigo-500 hover:bg-indigo-400
+                     text-white text-[11px] font-black uppercase tracking-[0.18em]
+                     rounded-lg transition shadow-[0_0_20px_-5px_rgba(99,102,241,0.5)]"
         >
           Get Started
           <ArrowRight size={14} className="group-hover:translate-x-1 transition" />
