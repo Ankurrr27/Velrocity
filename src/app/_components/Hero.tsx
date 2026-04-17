@@ -5,12 +5,12 @@ import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const stagger = {
-  animate: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
+  animate: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
 };
 
 const rise = {
-  initial: { opacity: 0, y: 22 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+  initial: { opacity: 0, y: 18 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.6 } },
 };
 
 export default function Hero() {
@@ -19,119 +19,95 @@ export default function Hero() {
       variants={stagger}
       initial="initial"
       animate="animate"
-      className="space-y-10"
+      className="space-y-7"
     >
 
-      {/* ── BADGE ─────────────────────────────────────────── */}
+      {/* BADGE */}
       <motion.div variants={rise} className="flex items-center gap-3">
         <span className="inline-flex items-center gap-2 px-3 py-1.5
                          border border-orange-500/30 rounded-full
                          text-[9px] font-bold uppercase tracking-[0.22em] text-orange-400">
           <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-          The Professional Choice
+          Professional Choice
         </span>
-        <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-orange-500/30 to-transparent" />
       </motion.div>
 
-      {/* ── HEADLINE ──────────────────────────────────────── */}
-      <div className="space-y-3 overflow-hidden">
+      {/* HEADLINE */}
+      <div className="space-y-2">
 
-        {/* "Architecting" — large serif/display, white */}
-        <motion.div variants={rise}>
-          <h1 className="
-            text-[clamp(3rem,8vw,5.5rem)]
-            font-black leading-[0.88] tracking-[-0.03em]
-            text-white
-          ">
-            Architecting
-          </h1>
-        </motion.div>
+        <motion.h1
+          variants={rise}
+          className="text-[clamp(3rem,8vw,5.2rem)]
+                     font-black leading-[0.9] tracking-[-0.03em] text-white">
+          Architecting
+        </motion.h1>
 
-        {/* "Consistency." — outlined / stroked word for contrast */}
-        <motion.div variants={rise}>
-          <h1 className="
-            text-[clamp(3rem,8vw,5.5rem)]
-            font-black leading-[0.88] tracking-[-0.03em]
-            text-transparent
-            [-webkit-text-stroke:1.5px_theme(colors.orange.500)]
-          ">
-            Consistency.
-          </h1>
-        </motion.div>
+        <motion.h1
+          variants={rise}
+          className="text-[clamp(3rem,8vw,5.2rem)]
+                     font-black leading-[0.9] tracking-[-0.03em]
+                     bg-gradient-to-r from-orange-400 to-orange-600
+                     bg-clip-text text-transparent">
+          Consistency.
+        </motion.h1>
 
       </div>
 
-      {/* ── BODY ──────────────────────────────────────────── */}
+      {/* BODY */}
       <motion.p
         variants={rise}
-        className="text-zinc-400 text-base md:text-lg font-normal leading-[1.75] max-w-[420px]"
+        className="text-zinc-400 text-base md:text-lg leading-relaxed max-w-[420px]"
       >
-        Automate your development metrics, sync with elite platforms,
-        and build a legendary habit stack with the world's most precise
-        productivity OS.
+        Track your development, sync across platforms, and build
+        unstoppable consistency with a precision-focused productivity OS.
       </motion.p>
 
-      {/* ── CTA ROW ───────────────────────────────────────── */}
-      <motion.div variants={rise} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+      {/* CTA */}
+      <motion.div variants={rise} className="flex gap-3 flex-wrap">
 
         <Link
           href="/register"
-          className="
-            group relative overflow-hidden
-            inline-flex items-center justify-center gap-2.5
-            px-8 py-3.5
-            bg-orange-500 hover:bg-orange-400
-            text-black text-[11px] font-black uppercase tracking-[0.18em]
-            rounded-lg transition-colors duration-200
-            shadow-[0_0_40px_-8px_rgba(249,115,22,0.5)]
-          "
+          className="group inline-flex items-center gap-2
+                     px-7 py-3
+                     bg-orange-500 hover:bg-orange-400
+                     text-black text-[11px] font-black uppercase tracking-[0.18em]
+                     rounded-lg transition shadow-lg"
         >
-          {/* shimmer on hover */}
-          <span className="
-            absolute inset-0 -translate-x-full
-            bg-gradient-to-r from-transparent via-white/20 to-transparent
-            group-hover:translate-x-full transition-transform duration-500
-          " />
-          Initialize Experience
-          <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+          Get Started
+          <ArrowRight size={14} className="group-hover:translate-x-1 transition" />
         </Link>
 
         <Link
           href="/login"
-          className="
-            inline-flex items-center justify-center gap-2
-            px-8 py-3.5
-            border border-white/8 hover:border-white/20
-            text-zinc-500 hover:text-zinc-200 text-[11px] font-bold uppercase tracking-[0.18em]
-            rounded-lg transition-all duration-200
-          "
+          className="inline-flex items-center gap-2
+                     px-7 py-3
+                     border border-white/10 hover:border-white/20
+                     text-zinc-400 hover:text-white text-[11px]
+                     font-bold uppercase tracking-[0.18em]
+                     rounded-lg transition"
         >
-          Documentation
+          View Docs
         </Link>
 
       </motion.div>
 
-      {/* ── STATS ─────────────────────────────────────────── */}
+      {/* STATS */}
       <motion.div
         variants={rise}
-        className="pt-8 border-t border-white/[0.06]
-                   grid grid-cols-3 gap-0 divide-x divide-white/[0.06]"
+        className="pt-6 flex gap-8 text-sm"
       >
-        {[
-          { label: "Uptime precision", val: "99.9%", sub: "SLA guaranteed" },
-          { label: "Live integrations", val: "42+",  sub: "platforms synced" },
-          { label: "Global ranking",   val: "Tier 1", sub: "top performers" },
-        ].map((item, i) => (
-          <div key={i} className={`space-y-1 ${i === 0 ? "pr-8" : i === 1 ? "px-8" : "pl-8"}`}>
-            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-zinc-600">
-              {item.label}
-            </p>
-            <p className="text-xl font-black text-white leading-none">
-              {item.val}
-            </p>
-            <p className="text-[10px] text-zinc-600">{item.sub}</p>
-          </div>
-        ))}
+        <div>
+          <p className="text-zinc-500 text-[10px] uppercase">Uptime</p>
+          <p className="text-white font-bold">99.9%</p>
+        </div>
+        <div>
+          <p className="text-zinc-500 text-[10px] uppercase">Integrations</p>
+          <p className="text-white font-bold">42+</p>
+        </div>
+        <div>
+          <p className="text-zinc-500 text-[10px] uppercase">Rank</p>
+          <p className="text-white font-bold">Tier 1</p>
+        </div>
       </motion.div>
 
     </motion.div>
