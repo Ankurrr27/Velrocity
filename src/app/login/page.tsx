@@ -53,12 +53,10 @@ export default function LoginPage() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-transparent text-zinc-900 dark:text-white flex-1">
       {/* BACKGROUND DECOR */}
-      <div className="pointer-events-none absolute inset-0">
-        <div
-          className="absolute -left-24 top-0 h-96 w-96 rounded-full blur-[100px]"
-          style={{ backgroundColor: "rgba(var(--primary), 0.15)" }}
-        />
-        <div className="absolute bottom-0 right-0 h-[30rem] w-[30rem] rounded-full bg-sky-500/10 blur-[100px]" />
+      <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[140px] animate-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.03] dark:opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
       </div>
 
       <div className="relative mx-auto grid min-h-screen max-w-6xl items-center gap-12 px-6 py-12 lg:grid-cols-[1fr_400px]">

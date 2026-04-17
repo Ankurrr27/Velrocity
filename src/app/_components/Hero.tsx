@@ -4,85 +4,135 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
+const stagger = {
+  animate: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
+};
+
+const rise = {
+  initial: { opacity: 0, y: 22 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+};
+
 export default function Hero() {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 25 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="space-y-6 md:space-y-8"
+      variants={stagger}
+      initial="initial"
+      animate="animate"
+      className="space-y-10"
     >
 
-      {/* 🔥 TAGS (UPGRADED) */}
-      <div className="flex flex-wrap gap-2">
-        {["LeetCode", "GitHub", "Habits"].map((t) => (
-          <span
-            key={t}
-            className="px-3 py-1 rounded-full text-[10px] md:text-xs 
-            bg-white/10 backdrop-blur border border-white/10 
-            text-zinc-400 hover:text-white hover:border-white/20 transition"
-          >
-            {t}
-          </span>
-        ))}
+      {/* ── BADGE ─────────────────────────────────────────── */}
+      <motion.div variants={rise} className="flex items-center gap-3">
+        <span className="inline-flex items-center gap-2 px-3 py-1.5
+                         border border-orange-500/30 rounded-full
+                         text-[9px] font-bold uppercase tracking-[0.22em] text-orange-400">
+          <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
+          The Professional Choice
+        </span>
+        <div className="h-px flex-1 max-w-[60px] bg-gradient-to-r from-orange-500/30 to-transparent" />
+      </motion.div>
+
+      {/* ── HEADLINE ──────────────────────────────────────── */}
+      <div className="space-y-3 overflow-hidden">
+
+        {/* "Architecting" — large serif/display, white */}
+        <motion.div variants={rise}>
+          <h1 className="
+            text-[clamp(3rem,8vw,5.5rem)]
+            font-black leading-[0.88] tracking-[-0.03em]
+            text-white
+          ">
+            Architecting
+          </h1>
+        </motion.div>
+
+        {/* "Consistency." — outlined / stroked word for contrast */}
+        <motion.div variants={rise}>
+          <h1 className="
+            text-[clamp(3rem,8vw,5.5rem)]
+            font-black leading-[0.88] tracking-[-0.03em]
+            text-transparent
+            [-webkit-text-stroke:1.5px_theme(colors.orange.500)]
+          ">
+            Consistency.
+          </h1>
+        </motion.div>
+
       </div>
 
-      {/* 🔥 HEADLINE (RESPONSIVE + TIGHT) */}
-      <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-[1.1] tracking-tight">
-        Stop guessing your progress.
-        <br />
-        <span className="bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(59,130,246,0.4)]">
-          Track it. Improve it.
-        </span>
-      </h1>
+      {/* ── BODY ──────────────────────────────────────────── */}
+      <motion.p
+        variants={rise}
+        className="text-zinc-400 text-base md:text-lg font-normal leading-[1.75] max-w-[420px]"
+      >
+        Automate your development metrics, sync with elite platforms,
+        and build a legendary habit stack with the world's most precise
+        productivity OS.
+      </motion.p>
 
-      {/* 🔥 SUBTEXT (SHORTER + CLEAN) */}
-      <p className="text-sm md:text-base text-zinc-500 max-w-md">
-        Track coding platforms, habits, and consistency —
-        all in one place, automatically.
-      </p>
+      {/* ── CTA ROW ───────────────────────────────────────── */}
+      <motion.div variants={rise} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
 
-      {/* 🔥 CTA (COMPACT + STRONG) */}
-      <div className="flex flex-wrap gap-3">
         <Link
           href="/register"
-          className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold 
-          text-white bg-gradient-to-r from-blue-500 to-purple-500 
-          shadow-lg shadow-blue-500/30 
-          hover:scale-105 active:scale-[0.98] transition"
+          className="
+            group relative overflow-hidden
+            inline-flex items-center justify-center gap-2.5
+            px-8 py-3.5
+            bg-orange-500 hover:bg-orange-400
+            text-black text-[11px] font-black uppercase tracking-[0.18em]
+            rounded-lg transition-colors duration-200
+            shadow-[0_0_40px_-8px_rgba(249,115,22,0.5)]
+          "
         >
-          Start tracking
-          <ArrowRight size={16} />
+          {/* shimmer on hover */}
+          <span className="
+            absolute inset-0 -translate-x-full
+            bg-gradient-to-r from-transparent via-white/20 to-transparent
+            group-hover:translate-x-full transition-transform duration-500
+          " />
+          Initialize Experience
+          <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
         </Link>
 
         <Link
           href="/login"
-          className="px-6 py-3 rounded-full text-sm 
-          border border-white/10 text-zinc-400 
-          hover:text-white hover:bg-white/5 transition"
+          className="
+            inline-flex items-center justify-center gap-2
+            px-8 py-3.5
+            border border-white/8 hover:border-white/20
+            text-zinc-500 hover:text-zinc-200 text-[11px] font-bold uppercase tracking-[0.18em]
+            rounded-lg transition-all duration-200
+          "
         >
-          Log in
+          Documentation
         </Link>
-      </div>
 
-      {/* 🔥 STATS (COMPACT GRID) */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-4">
+      </motion.div>
+
+      {/* ── STATS ─────────────────────────────────────────── */}
+      <motion.div
+        variants={rise}
+        className="pt-8 border-t border-white/[0.06]
+                   grid grid-cols-3 gap-0 divide-x divide-white/[0.06]"
+      >
         {[
-          { val: "Auto-track", sub: "No effort" },
-          { val: "Insights", sub: "Real data" },
-          { val: "Consistency", sub: "Built-in" }
-        ].map((s) => (
-          <div
-            key={s.val}
-            className="p-4 rounded-xl bg-white/5 backdrop-blur 
-            border border-white/10 hover:border-white/20 
-            transition hover:scale-[1.03]"
-          >
-            <div className="text-sm font-bold">{s.val}</div>
-            <div className="text-[10px] text-zinc-500">{s.sub}</div>
+          { label: "Uptime precision", val: "99.9%", sub: "SLA guaranteed" },
+          { label: "Live integrations", val: "42+",  sub: "platforms synced" },
+          { label: "Global ranking",   val: "Tier 1", sub: "top performers" },
+        ].map((item, i) => (
+          <div key={i} className={`space-y-1 ${i === 0 ? "pr-8" : i === 1 ? "px-8" : "pl-8"}`}>
+            <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-zinc-600">
+              {item.label}
+            </p>
+            <p className="text-xl font-black text-white leading-none">
+              {item.val}
+            </p>
+            <p className="text-[10px] text-zinc-600">{item.sub}</p>
           </div>
         ))}
-      </div>
+      </motion.div>
 
     </motion.div>
   );
