@@ -50,26 +50,56 @@ export default function Home() {
         <Features />
 
         {/* TESTIMONIAL / QUOTE */}
-        <section className="py-12 md:py-16 px-5 md:px-8 max-w-4xl mx-auto text-center space-y-6">
+        <section className="py-12 md:py-20 px-5 md:px-8 max-w-4xl mx-auto text-center">
            <motion.div
-             initial={{ opacity: 0, scale: 0.95 }}
-             whileInView={{ opacity: 1, scale: 1 }}
+             initial={{ opacity: 0, y: 20 }}
+             whileInView={{ opacity: 1, y: 0 }}
              viewport={{ once: true }}
-             className="relative"
+             className="relative surface-card p-10 md:p-14 border border-white/5 bg-gradient-to-b from-white/[0.04] to-transparent overflow-hidden rounded-[2rem]"
            >
-              <span className="text-4xl md:text-5xl absolute -top-8 -left-2 text-indigo-500/20 font-serif">"</span>
-              <h2 className="text-lg md:text-3xl font-black leading-tight tracking-tight text-white/90">
-                Velrocity completely changed how I track my coding progress. It's not just a tracker, it's a momentum engine.
+              {/* background accent for testimonial */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 blur-[80px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+              
+              <span className="text-6xl md:text-8xl absolute top-4 left-6 text-orange-500/10 font-serif leading-none select-none">"</span>
+              
+              <h2 className="text-xl md:text-3xl font-black leading-tight tracking-tight text-white/90 relative z-10 mb-8 max-w-3xl mx-auto">
+                Velrocity completely changed how I track my coding progress. It's not just a tracker, it's a <span className="text-orange-400">momentum engine</span>.
               </h2>
-              <div className="pt-4">
-                <p className="font-bold text-sm md:text-base text-indigo-400">Alex Rivers</p>
-                <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-zinc-500">Fullstack Developer @ Stealth</p>
+              
+              <div className="relative z-10 flex items-center justify-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-zinc-700 to-zinc-900 border-2 border-orange-500/30 flex items-center justify-center shadow-lg">
+                  <span className="text-xs font-black text-white/80">AR</span>
+                </div>
+                <div className="text-left">
+                  <p className="font-black text-sm md:text-base text-zinc-100">Alex Rivers</p>
+                  <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-orange-500/80">Fullstack Developer @ Stealth</p>
+                </div>
               </div>
            </motion.div>
         </section>
 
         {/* CALL TO ACTION */}
-       
+        <section className="py-20 px-5 md:px-8 mb-10 w-full flex justify-center">
+          <motion.div 
+             initial={{ opacity: 0, scale: 0.95 }}
+             whileInView={{ opacity: 1, scale: 1 }}
+             viewport={{ once: true }}
+             className="w-full max-w-5xl rounded-[2rem] border border-orange-500/20 bg-gradient-to-br from-orange-500/10 via-[#050505] to-[#050505] p-10 md:p-16 text-center shadow-2xl overflow-hidden relative"
+          >
+            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay pointer-events-none" />
+            
+            <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-4 text-white relative z-10">
+              Ready to <span className="text-orange-500">accelerate?</span>
+            </h2>
+            <p className="text-zinc-400 font-medium mb-10 max-w-xl mx-auto relative z-10">
+              Join thousands of developers prioritizing consistency over intensity. Start tracking your progress today.
+            </p>
+            
+            <a href="/register" className="relative z-10 inline-flex items-center gap-2 px-8 py-4 bg-orange-500 hover:bg-orange-400 text-black text-[12px] font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-[0_0_40px_-10px_rgba(249,115,22,0.8)] hover:shadow-[0_0_60px_-10px_rgba(249,115,22,1)] hover:scale-105">
+              Launch Velrocity
+            </a>
+          </motion.div>
+        </section>
       </main>
 
       <Footer />
