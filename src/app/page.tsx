@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 
 export default function Home() {
   return (
-    <div className="dark relative min-h-screen bg-[#050505] text-white overflow-x-hidden selection:bg-orange-500/30 font-sans antialiased">
+    <div className="dark min-h-screen bg-[#050505] text-white selection:bg-orange-500/30 font-sans antialiased">
       
       {/* PROFESSIONAL DOT GRID */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.03] -z-10" 
@@ -35,7 +35,7 @@ export default function Home() {
         </section>
 
         {/* TRUST / SOCIAL PROOF STRIP */}
-        <div className="border-y border-white/5 bg-zinc-900/20 backdrop-blur-md py-5 md:py-6 mb-12 md:mb-16">
+        <div className="border-y border-white/5 py-5 md:py-6 mb-12 md:mb-16 relative z-10">
           <div className="max-w-7xl mx-auto px-5 md:px-8">
             <p className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-zinc-500 text-center mb-4">Trusted by developers from</p>
             <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 opacity-30 grayscale hover:grayscale-0 transition-all duration-500">

@@ -39,7 +39,7 @@ export default function MockUI() {
 
   return (
     <PhoneMockup>
-      <div className="flex flex-col h-full min-h-full bg-[#060606] text-white antialiased select-none">
+      <div className="flex flex-col h-full bg-[#060606] text-white antialiased select-none overflow-hidden pb-[4px]">
 
         {/* ── HEADER ───────────────────────────────────── */}
         <div className="px-5 pt-6 pb-3 flex items-center justify-between">
@@ -103,9 +103,9 @@ export default function MockUI() {
 
           {activeTab === "habits" ? (
             <div className="space-y-1">
-              <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
+              <div className="flex items-center justify-between gap-4 pb-2 border-b border-white/[0.06]">
                 <p className="text-[8px] font-bold uppercase tracking-[0.2em] text-zinc-500">Today's objectives</p>
-                <p className="text-[8px] font-black text-orange-500">{completed} / {habits.length}</p>
+                <p className="text-[8px] font-black text-orange-500 whitespace-nowrap">{completed} / {habits.length}</p>
               </div>
 
               {habits.map(habit => (
@@ -194,7 +194,7 @@ export default function MockUI() {
         </div>
 
         {/* ── BOTTOM NAV ───────────────────────────────── */}
-        <div className="px-7 pt-3 pb-4 border-t border-white/[0.06] flex items-center justify-between">
+        <div className="px-7 pt-3 pb-5 border-t border-white/[0.06] flex items-center justify-between shrink-0 bg-[#060606] relative z-20">
           {[
             { Icon: LayoutGrid, active: activeTab === "habits" },
             { Icon: BarChart3,  active: false },

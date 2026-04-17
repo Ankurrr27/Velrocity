@@ -115,14 +115,13 @@ export default function PhoneMockup({ children }: { children: React.ReactNode })
               </div>
             </div>
 
-            {/* Scrollable children area */}
+            {/* Area for children */}
             <div className="
               absolute inset-0
-              pt-14 pb-2
-              overflow-y-auto overflow-x-hidden
-              [scrollbar-width:none] [&::-webkit-scrollbar]:hidden
+              pt-14 pb-1
+              z-10
             ">
-              <div className="min-h-full">{children}</div>
+              {children}
             </div>
 
             {/* Screen glare — top-left specular */}
