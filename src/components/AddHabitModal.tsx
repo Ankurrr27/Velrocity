@@ -87,8 +87,8 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
             {/* Header */}
             <div className="px-8 pt-8 pb-6 flex items-center justify-between border-b border-zinc-100 dark:border-white/5">
               <div className="space-y-0.5">
-                <div className="label-elite uppercase text-[rgb(var(--primary))] opacity-70">Sector Initialization</div>
-                <h2 className="text-xl font-bold tracking-tight text-zinc-900 dark:text-white">New Objective</h2>
+                <div className="label-elite uppercase text-[rgb(var(--primary))] opacity-70">New Goal</div>
+                <h2 className="text-xl font-black tracking-tighter text-zinc-900 dark:text-white italic">SET UP HABIT</h2>
               </div>
               <button 
                 onClick={onClose} 
@@ -100,18 +100,17 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
 
             {success ? (
               <div className="px-8 py-16 flex flex-col items-center justify-center text-center space-y-4">
-                <div className="w-16 h-16 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mb-2 shadow-xl shadow-emerald-500/5">
+                <div className="w-16 h-16 rounded-3xl bg-[rgba(var(--primary-rgb),0.1)] text-[rgb(var(--primary))] flex items-center justify-center mb-2 shadow-xl shadow-[rgba(var(--primary-rgb),0.05)]">
                   <CheckCircle2 size={32} />
                 </div>
-                <h3 className="text-lg font-bold text-zinc-900 dark:text-white">Protocol Latched</h3>
-                <p className="text-zinc-500 text-xs font-medium">Tracking engine has been initiated.</p>
+                <h3 className="text-lg font-black text-zinc-900 dark:text-white uppercase tracking-tighter italic">Goal Created</h3>
+                <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Your tracking engine is now active.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="px-8 py-7 space-y-7">
                 
-                {/* Designation */}
                 <div className="space-y-2">
-                  <label className="label-elite uppercase text-zinc-400 dark:text-zinc-500 ml-1">Designation</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-zinc-500 ml-1">What is the goal?</label>
                   <div className="relative group">
                     <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-zinc-400/60 group-focus-within:text-[rgb(var(--primary))] transition-colors">
                       <Target size={14} />
@@ -120,7 +119,7 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                       autoFocus
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
-                      placeholder="Enter mission title..."
+                      placeholder="Title of your habit..."
                       className={`w-full bg-zinc-50 dark:bg-zinc-900/60 border ${error ? 'border-rose-500' : 'border-zinc-200 dark:border-white/10'} rounded-xl pl-12 pr-4 py-3 text-sm font-semibold text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400/50 focus:border-[rgb(var(--primary))] outline-none transition-all shadow-sm`}
                     />
                   </div>
@@ -129,14 +128,14 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                 {/* Grid Fields */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div className="space-y-2">
-                    <label className="label-elite uppercase text-zinc-400 dark:text-zinc-500 ml-1">Asset Class</label>
+                    <label className="text-[9px] font-black uppercase tracking-widest text-zinc-500 ml-1">Goal Type</label>
                     <div className="relative">
                       <select
                         value={type}
                         onChange={(e) => setType(e.target.value)}
                         className="w-full h-10 bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-white/10 rounded-xl px-4 text-[12px] font-bold text-zinc-700 dark:text-zinc-300 appearance-none cursor-pointer focus:border-[rgb(var(--primary))] outline-none transition-all shadow-sm"
                       >
-                        <option value="habit">Elite Habit</option>
+                        <option value="habit">Elite habit</option>
                         <option value="hobby">Hobby Flow</option>
                       </select>
                       <Plus size={10} className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-zinc-400 rotate-45" />
@@ -144,7 +143,7 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                   </div>
 
                   <div className="space-y-2">
-                    <label className="label-elite uppercase text-zinc-400 dark:text-zinc-500 ml-1">Engine</label>
+                    <label className="text-[9px] font-black uppercase tracking-widest text-zinc-500 ml-1">Frequency</label>
                     <div className="flex h-10 w-full bg-zinc-100/50 dark:bg-zinc-900/80 p-1 rounded-xl border border-zinc-200 dark:border-white/10">
                       {['daily', 'weekly', 'interval'].map(f => (
                         <button
@@ -182,7 +181,7 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                               onClick={() => toggleDay(d)}
                               className={`w-9 h-9 rounded-lg transition-all border font-bold text-[10px] uppercase ${
                                 days.includes(d) 
-                                  ? 'bg-[rgb(var(--primary))] border-[rgb(var(--primary))] text-white shadow-lg shadow-[rgba(var(--primary),0.2)]' 
+                                  ? 'bg-[rgb(var(--primary))] border-[rgb(var(--primary))] text-white shadow-lg shadow-[rgba(var(--primary-rgb),0.2)]' 
                                   : 'bg-zinc-100/50 dark:bg-zinc-900/40 border-zinc-200 dark:border-white/5 text-zinc-400 hover:border-zinc-300'
                               }`}
                             >
@@ -205,9 +204,8 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                   )}
                 </AnimatePresence>
 
-                {/* Verification (Two Column) */}
                 <div className="space-y-2">
-                  <label className="label-elite uppercase text-zinc-400 dark:text-zinc-500 ml-1">Verification Protocol</label>
+                  <label className="text-[9px] font-black uppercase tracking-widest text-zinc-500 ml-1">Tracking Mode</label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="relative">
                       <select
@@ -247,7 +245,7 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                     disabled={loading || !title.trim()}
                     className="w-full py-3.5 rounded-xl bg-zinc-950 dark:bg-[rgb(var(--primary))] text-white label-elite uppercase shadow-lg hover:shadow-[rgba(var(--primary),0.2)] hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-30"
                   >
-                    {loading ? 'Processing...' : 'Initialize Objective'}
+                    {loading ? 'Starting...' : 'Start Tracking'}
                   </button>
                 </div>
               </form>
@@ -256,10 +254,10 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
             {/* Footer */}
             <div className="px-8 py-4 border-t border-zinc-100 dark:border-white/5 flex items-center justify-between opacity-60">
                <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="label-elite uppercase text-zinc-400">Integrity Active</span>
+                  <div className="w-1.5 h-1.5 rounded-full bg-[rgb(var(--primary))] animate-pulse" />
+                  <span className="text-[9px] font-black uppercase tracking-widest text-zinc-500">Live Secure</span>
                </div>
-               <div className="label-elite uppercase text-zinc-400 italic">+10 XP Score</div>
+               <div className="text-[9px] font-black uppercase tracking-widest text-[rgb(var(--primary))] italic">+10 Bonus XP</div>
             </div>
           </motion.div>
         </div>

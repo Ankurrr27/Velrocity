@@ -13,11 +13,12 @@ type Habit = {
   isCompletedToday: boolean;
 };
 
-export default function HabitList({ initialHabits }: { initialHabits: Habit[] }) {
+export default function HabitList({ initialHabits, isToday = true }: { initialHabits: Habit[], isToday?: boolean }) {
   const [habits, setHabits] = useState(initialHabits);
   const [loadingId, setLoadingId] = useState<string | null>(null);
 
   const handleToggle = async (habitId: string) => {
+    if (!isToday) return;
     setHabits(current => 
       current.map(h => 
         h._id === habitId ? { ...h, isCompletedToday: !h.isCompletedToday } : h
@@ -30,6 +31,7 @@ export default function HabitList({ initialHabits }: { initialHabits: Habit[] })
   };
 
   const handleDelete = async (habit: Habit) => {
+    if (!isToday) return;
     const confirmation = window.confirm(`Delete habit "${habit.title}"?`);
     if (confirmation) {
       setHabits(current => current.filter(h => h._id !== habit._id));
@@ -60,10 +62,9 @@ export default function HabitList({ initialHabits }: { initialHabits: Habit[] })
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
             className={`
-              group flex items-center justify-between px-4 py-3.5 rounded-[2rem] transition-all duration-500 border
               ${habit.isCompletedToday 
-                ? 'bg-indigo-500/5 border-indigo-500/20 opacity-80' 
-                : 'bg-zinc-100 dark:bg-zinc-800/40 border-zinc-200 dark:border-white/5 hover:border-indigo-500/30 hover:bg-zinc-100 dark:hover:bg-zinc-800/60 shadow-xl shadow-black/5'}
+                ? 'bg-[rgba(var(--primary-rgb),0.05)] border-[rgba(var(--primary-rgb),0.2)] opacity-80' 
+                : 'bg-zinc-100 dark:bg-zinc-800/40 border-zinc-200 dark:border-white/5 hover:border-[rgba(var(--primary-rgb),0.3)] hover:bg-zinc-100 dark:hover:bg-zinc-800/60 shadow-xl shadow-black/5'}
             `}
           >
              <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -75,8 +76,8 @@ export default function HabitList({ initialHabits }: { initialHabits: Habit[] })
                  className={`
                    w-10 h-10 rounded-2xl border-2 flex items-center justify-center transition-all duration-500 focus:outline-none shrink-0
                    ${habit.isCompletedToday
-                     ? "bg-indigo-500 border-indigo-500 shadow-[0_0_30px_rgba(99,102,241,0.6)]"
-                     : "border-zinc-300 dark:border-zinc-700 group-hover:border-indigo-500 bg-transparent"
+                     ? "bg-[rgb(var(--primary))] border-[rgb(var(--primary))] shadow-[0_0_30px_rgba(var(--primary-rgb),0.6)]"
+                     : "border-zinc-300 dark:border-zinc-700 group-hover:border-[rgb(var(--primary))] bg-transparent"
                    }
                    ${loadingId === habit._id ? "opacity-30" : ""}
                  `}
@@ -111,7 +112,7 @@ export default function HabitList({ initialHabits }: { initialHabits: Habit[] })
                     {habit.title}
                   </span>
                   <div className="flex items-center gap-2">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-indigo-500 opacity-80 italic">
+                    <span className="text-[9px] font-black uppercase tracking-widest text-[rgb(var(--primary))] opacity-80 italic">
                       {habit.type}
                     </span>
                     <span className="w-1 h-1 rounded-full bg-zinc-600" />
@@ -127,7 +128,7 @@ export default function HabitList({ initialHabits }: { initialHabits: Habit[] })
                   className={`
                     flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black tracking-[0.15em] transition-all duration-500
                     ${habit.isCompletedToday
-                       ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 scale-105"
+                       ? "bg-[rgb(var(--primary))] text-white shadow-lg shadow-[rgba(var(--primary-rgb),0.2)] scale-105"
                        : "bg-white/5 text-zinc-500 dark:text-zinc-400 border border-white/5"
                     }
                    `}

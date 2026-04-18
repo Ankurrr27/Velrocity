@@ -71,6 +71,8 @@ const userSchema = new mongoose.Schema(
     tagline: { type: String, maxLength: 50, default: "" },
     location: { type: String, maxLength: 32, default: "" },
     currentFocus: { type: String, maxLength: 50, default: "" },
+    college: { type: String, maxLength: 100, default: "" },
+    lastActive: { type: Date, default: null },
     accentColor: { type: String, default: "indigo" }, 
   },
   {

@@ -128,34 +128,34 @@ export default function Sidebar() {
 
       <nav className="
         fixed inset-x-0 bottom-0 z-50 md:hidden
-        bg-zinc-950/95 backdrop-blur-2xl
-        border-t border-white/10
-        px-4 pt-3 pb-3 sm:pb-4
-        shadow-[0_-20px_40px_rgba(0,0,0,0.4)]
+        bg-white/80 dark:bg-zinc-950/95 backdrop-blur-2xl
+        border-t border-zinc-200 dark:border-white/10
+        px-4 pt-1 pb-1 sm:pb-2
+        shadow-[0_-10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_-20px_40px_rgba(0,0,0,0.4)]
       ">
         <div className="flex items-center justify-between max-w-sm mx-auto">
-          <MobileNavButton icon={<Home size={22} />} active={isActive("/dashboard")} onClick={() => router.push("/dashboard")} label="Home" />
-          <MobileNavButton icon={<Search size={22} />} active={isActive("/users")} onClick={() => router.push("/users")} label="Search" />
+          <MobileNavButton icon={<Home size={20} />} active={isActive("/dashboard")} onClick={() => router.push("/dashboard")} label="Home" />
+          <MobileNavButton icon={<Search size={20} />} active={isActive("/users")} onClick={() => router.push("/users")} label="Search" />
           
           {/* FAB */}
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[rgb(var(--primary))] text-white shadow-2xl shadow-[rgba(var(--primary-rgb),0.4)] transition hover:opacity-90 active:scale-90 -translate-y-4 border-4 border-zinc-950"
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[rgb(var(--primary))] text-white shadow-2xl shadow-[rgba(var(--primary-rgb),0.4)] transition hover:opacity-90 active:scale-90 -translate-y-3 border-[3px] border-white dark:border-zinc-950"
             aria-label="Add habit"
           >
-            <Plus size={22} strokeWidth={3} />
+            <Plus size={20} strokeWidth={3} />
           </button>
 
-          <MobileNavButton icon={<Download size={22} />} active={isActive("/extension")} onClick={() => router.push("/extension")} label="Extension" />
+          <MobileNavButton icon={<Download size={20} />} active={isActive("/extension")} onClick={() => router.push("/extension")} label="Extension" />
 
           {/* Profile */}
-          <button
+            <button
             onClick={() => router.push("/profile")}
             className={`
-              flex h-10 w-10 items-center justify-center overflow-hidden rounded-full transition border-2
+              flex h-9 w-9 items-center justify-center overflow-hidden rounded-full transition border-2
               ${isActive("/profile")
                 ? "border-[rgb(var(--primary))] ring-2 ring-[rgba(var(--primary-rgb),0.2)]"
-                : "border-zinc-700 hover:border-zinc-500"
+                : "border-zinc-300 dark:border-zinc-700 hover:border-zinc-500"
               }
             `}
             aria-label="Profile"
@@ -211,10 +211,10 @@ function MobileNavButton({ icon, onClick, active, label }: { icon: React.ReactNo
       onClick={onClick}
       aria-label={label}
       className={`
-        flex h-12 w-12 items-center justify-center rounded-2xl transition
+        flex h-10 w-10 items-center justify-center rounded-xl transition
         ${active
           ? "bg-[rgba(var(--primary),0.1)] text-[rgb(var(--primary))]"
-          : "text-zinc-200 hover:text-white"
+          : "text-zinc-500 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white"
         }
       `}
     >

@@ -17,7 +17,7 @@ export async function updateProfile(data: any) {
     
     // Whitelist fields to prevent injection
     const allowedFields = [
-      'name', 'bio', 'tagline', 'location', 'currentFocus',
+      'name', 'bio', 'tagline', 'location', 'currentFocus', 'college',
       'accentColor', 'profilePublic', 'externalProfiles', 'banner', 'avatar'
     ];
     

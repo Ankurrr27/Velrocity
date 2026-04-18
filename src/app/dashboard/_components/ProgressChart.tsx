@@ -79,12 +79,12 @@ export default function ProgressChart({ loading = false, data = [] }: ProgressCh
               contentStyle={{
                 borderRadius: "16px",
                 border: "none",
-                backgroundColor: "rgba(0, 0, 0, 0.9)",
+                backgroundColor: "rgba(var(--bg-card-rgb, 0,0,0), 0.95)",
                 backdropFilter: "blur(12px)",
-                color: "#fff",
-                boxShadow: "0 10px 30px rgba(0,0,0,0.5)"
+                color: "inherit",
+                boxShadow: "0 10px 30px rgba(0,0,0,0.1)"
               }}
-              itemStyle={{ color: "#fff", fontWeight: "800", fontSize: "11px" }}
+              itemStyle={{ fontWeight: "800", fontSize: "11px" }}
               cursor={{ stroke: "rgba(var(--primary-rgb), 0.2)", strokeWidth: 1 }}
             />
             <Area

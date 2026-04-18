@@ -98,22 +98,32 @@ export default function HabitTimeline({ data, loading }: HabitTimelineProps) {
       </div>
 
       <div className="overflow-x-auto no-scrollbar pb-6">
-        <div className="min-w-[800px]">
+        <div className="w-full">
           {/* Header Row */}
           <div className="flex mb-4">
-            <div className="w-40 shrink-0" />
-            <div className="flex flex-1 justify-between">
-              {daysHeader.map((d, i) => (
-                <div key={i} className={`flex flex-col items-center w-8 ${d.isSelected ? 'relative' : ''}`}>
-                  <span className="text-[9px] font-medium text-zinc-400 mb-1">{d.day}</span>
-                  <span className={`text-[10px] font-bold ${d.isSelected ? 'text-[rgb(var(--primary))]' : 'text-zinc-500'}`}>{d.date}</span>
-                  {d.isSelected && (
-                    <div className="absolute -top-4 inset-x-0 flex justify-center">
-                       <div className="w-px h-60 bg-zinc-200/50 dark:bg-zinc-800/50 absolute top-10 pointer-events-none" />
-                    </div>
-                  )}
-                </div>
-              ))}
+            <div className="w-32 sm:w-40 shrink-0" />
+            <div className="flex flex-1 justify-between gap-1 sm:gap-2">
+              {daysHeader.map((d, i) => {
+                const isMobileSpecial = i >= 8 && i <= 12;
+                return (
+                  <div 
+                    key={i} 
+                    className={`
+                      flex flex-col items-center w-full max-w-[32px] 
+                      ${isMobileSpecial ? 'flex' : 'hidden lg:flex'}
+                      ${d.isSelected ? 'relative' : ''}
+                    `}
+                  >
+                    <span className="text-[9px] font-medium text-zinc-400 mb-1">{d.day}</span>
+                    <span className={`text-[10px] font-bold ${d.isSelected ? 'text-[rgb(var(--primary))]' : 'text-zinc-500'}`}>{d.date}</span>
+                    {d.isSelected && (
+                      <div className="absolute -top-4 inset-x-0 flex justify-center">
+                         <div className="w-px h-60 bg-zinc-200/50 dark:bg-zinc-800/50 absolute top-10 pointer-events-none" />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -121,31 +131,40 @@ export default function HabitTimeline({ data, loading }: HabitTimelineProps) {
           <div className="space-y-1">
             {habits.map((habit, habitIdx) => (
               <div key={habit._id} className="group flex items-center hover:bg-zinc-50/50 dark:hover:bg-white/5 rounded-xl transition-colors py-1">
-                <div className="w-40 shrink-0 text-xs font-medium text-zinc-600 dark:text-zinc-300 px-2 truncate">
+                <div className="w-32 sm:w-40 shrink-0 text-[10px] sm:text-xs font-medium text-zinc-600 dark:text-zinc-300 px-2 truncate">
                   {habit.title}
                 </div>
-                <div className="flex flex-1 justify-between">
-                  {gridData[habitIdx].map((cell, dayIdx) => (
-                    <div key={dayIdx} className="w-8 flex justify-center">
-                       {cell.isScheduled || cell.isActive ? (
-                         <motion.div 
-                           initial={{ scale: 0.8, opacity: 0 }}
-                           animate={{ scale: 1, opacity: 1 }}
-                           transition={{ delay: (habitIdx * 0.02) + (dayIdx * 0.01) }}
-                           className={`
-                             w-5 h-5 rounded-[6px] transition-all duration-300
-                             ${cell.isActive 
-                               ? 'bg-[rgb(var(--primary))] shadow-sm'
-                               : 'bg-zinc-100 dark:bg-zinc-900/40 border border-zinc-200/20 dark:border-white/5'
-                             }
-                             ${daysHeader[dayIdx].isSelected ? 'ring-2 ring-[rgba(var(--primary),0.1)] ring-offset-2 dark:ring-offset-zinc-950' : ''}
-                           `}
-                         />
-                       ) : (
-                         <div className="w-5 h-5" /> // Empty placeholder space
-                       )}
-                    </div>
-                  ))}
+                <div className="flex flex-1 justify-between gap-1 sm:gap-2">
+                  {gridData[habitIdx].map((cell, dayIdx) => {
+                    const isMobileSpecial = dayIdx >= 8 && dayIdx <= 12;
+                    return (
+                      <div 
+                        key={dayIdx} 
+                        className={`
+                          w-full max-w-[32px] flex justify-center
+                          ${isMobileSpecial ? 'flex' : 'hidden lg:flex'}
+                        `}
+                      >
+                         {cell.isScheduled || cell.isActive ? (
+                           <motion.div 
+                             initial={{ scale: 0.8, opacity: 0 }}
+                             animate={{ scale: 1, opacity: 1 }}
+                             transition={{ delay: (habitIdx * 0.02) + (dayIdx * 0.01) }}
+                             className={`
+                               w-5 h-5 rounded-[6px] transition-all duration-300
+                               ${cell.isActive 
+                                 ? 'bg-[rgb(var(--primary))] shadow-sm'
+                                 : 'bg-zinc-100 dark:bg-zinc-900/40 border border-zinc-200/20 dark:border-white/5'
+                               }
+                               ${daysHeader[dayIdx].isSelected ? 'ring-2 ring-[rgba(var(--primary),0.1)] ring-offset-2 dark:ring-offset-zinc-950' : ''}
+                             `}
+                           />
+                         ) : (
+                           <div className="w-5 h-5" />
+                         )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ))}

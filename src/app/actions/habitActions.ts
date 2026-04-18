@@ -10,6 +10,9 @@ import { revalidatePath } from 'next/cache';
 export async function fetchHabits(dateIso?: string) {
   try {
     const userId = await getUserId();
+    await connectToDatabase();
+    const User = (await import('@/models/User')).default;
+    await User.findByIdAndUpdate(userId, { lastActive: new Date() });
     return await fetchHabitsForUser(userId, dateIso);
   } catch (error) {
     console.error('Fetch habits error:', error);
@@ -350,12 +353,16 @@ export async function fetchUserProfile(username?: string) {
       externalProfiles: user.externalProfiles || {
         github: "", leetcode: "", codeforces: "", codechef: "", gfg: "", codolio: ""
       },
+      college: user.college || "",
+      lastActive: user.lastActive,
       stats: {
         habitCount,
         logCount,
         currentStreak: user.streak || 0,
         totalTicks: logCount,
-        activeDays: logCount
+        activeDays: logCount,
+        successRate: logCount > 0 ? Math.min(100, Math.round((logCount / Math.max(1, habitCount * 30)) * 100)) : 0,
+        rank: await User.countDocuments({ credibilityScore: { $gt: user.credibilityScore } }) + 1
       },
       recentHabits: recentHabits.map(h => ({
         title: h.habit.title,

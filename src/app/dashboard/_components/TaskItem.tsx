@@ -71,10 +71,10 @@ export default function TaskItem({ task, onToggle, onDelete, onSetDeadline }: Ta
           className={`
             w-8 h-8 shrink-0 rounded-xl border-2 flex items-center justify-center transition-all duration-500
             ${isDone 
-              ? "bg-indigo-500 border-indigo-500 shadow-[0_0_20px_rgba(99,102,241,0.4)]" 
+              ? "bg-[rgb(var(--primary))] border-[rgb(var(--primary))] shadow-[0_0_20px_rgba(var(--primary-rgb),0.4)]" 
               : isDeadlinePassed 
                 ? "border-rose-500/50 bg-rose-500/10" 
-                : "border-zinc-300 dark:border-zinc-700 group-hover:border-indigo-500 bg-transparent"
+                : "border-zinc-300 dark:border-zinc-700 group-hover:border-[rgb(var(--primary))] bg-transparent"
             }
           `}
         >
@@ -87,13 +87,13 @@ export default function TaskItem({ task, onToggle, onDelete, onSetDeadline }: Ta
               ? "text-zinc-500 dark:text-zinc-600 line-through" 
               : isDeadlinePassed 
                 ? "text-rose-500"
-                : "text-zinc-900 dark:text-zinc-100"
+                : "text-zinc-900 dark:text-white"
           }`}>
             {task.title}
           </span>
           
           <div className="flex items-center gap-2 mt-0.5">
-            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-500">Registry</span>
+            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-500">Log</span>
             {isRolledOver && (
               <>
                 <span className="w-1 h-1 rounded-full bg-orange-500" />
@@ -129,7 +129,7 @@ export default function TaskItem({ task, onToggle, onDelete, onSetDeadline }: Ta
       <div className="flex items-center gap-1 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
         <button 
           onClick={() => setShowDatePicker(!showDatePicker)}
-          className="text-zinc-500 hover:text-indigo-400 transition-all p-2"
+          className="text-zinc-500 hover:text-[rgb(var(--primary))] transition-all p-2"
           title="Set deadline"
         >
           <CalendarClock size={16} />

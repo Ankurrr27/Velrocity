@@ -20,9 +20,9 @@ const packageHref = "https://github.com/Ankurrr27/Velrocity-Extension/archive/re
 const releaseHref = "https://github.com/Ankurrr27/Velrocity-Extension";
 
 const tabs = [
-  { id: "install", label: "Installation" },
-  { id: "spec", label: "Package Spec" },
-  { id: "connect", label: "Connectivity" },
+  { id: "install", label: "Get Started" },
+  { id: "spec", label: "Specs" },
+  { id: "connect", label: "Connection" },
 ];
 
 const features = [
@@ -41,7 +41,7 @@ const features = [
   {
     icon: <Zap size={18} />,
     title: "Instant Toggle",
-    description: "Mark habits done directly from the side panel.",
+    description: "Mark habits done directly from the companion.",
     color: "bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400",
   },
 ];
@@ -52,7 +52,7 @@ const steps = [
   { step: "03", text: "Open chrome://extensions in your browser." },
   { step: "04", text: "Enable Developer mode in the top-right corner." },
   { step: "05", text: "Choose Load unpacked and select the extracted folder." },
-  { step: "06", text: "Pin the extension and open the side panel." },
+  { step: "06", text: "Pin the extension and open the companion." },
 ];
 
 const specs = [
@@ -73,11 +73,11 @@ export default function ExtensionPage() {
       {/* Sidebar Info */}
       <aside className="w-full lg:w-[360px] lg:shrink-0 border-r border-zinc-200 dark:border-white/5 p-6 lg:p-10 space-y-10 overflow-y-auto">
         <header className="space-y-4">
-           <div className="flex items-center gap-2">
-              <Globe size={14} className="text-[rgb(var(--primary))]" />
-              <span className="label-elite uppercase text-[rgb(var(--primary))]">Browser Extension</span>
-           </div>
-           <h1 className="text-2xl lg:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">Side Panel</h1>
+            <div className="flex items-center gap-2">
+              <Globe size={14} className="text-zinc-400" />
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Browser Add-on</span>
+            </div>
+            <h1 className="text-2xl lg:text-4xl font-black tracking-tighter text-zinc-900 dark:text-white italic">EXTENSION</h1>
            <p className="text-sm text-zinc-500 font-medium leading-relaxed">
              Velrocity stays close to your browser flow so habits and tasks are always one panel away.
            </p>
@@ -151,12 +151,12 @@ export default function ExtensionPage() {
                 className="max-w-2xl space-y-10"
               >
                 <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
-                    <Terminal size={24} />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400 border border-zinc-200 dark:border-white/5">
+                    <Terminal size={20} />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-zinc-900 dark:text-white">Installation Phase</h2>
-                    <p className="label-elite uppercase text-zinc-400">Operational Readiness in 60s</p>
+                    <h2 className="text-xl font-black text-zinc-900 dark:text-white italic uppercase tracking-tighter">Get Started</h2>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Setup in 60 seconds</p>
                   </div>
                 </div>
 
@@ -184,12 +184,12 @@ export default function ExtensionPage() {
                 className="max-w-2xl space-y-10"
               >
                 <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400">
-                    <Key size={24} />
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-zinc-100 text-zinc-600 dark:bg-zinc-900 dark:text-zinc-400 border border-zinc-200 dark:border-white/5">
+                    <Key size={20} />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-zinc-900 dark:text-white">Extension Key</h2>
-                    <p className="label-elite uppercase text-zinc-400">Secure Handshake Protocol</p>
+                    <h2 className="text-xl font-black text-zinc-900 dark:text-white italic uppercase tracking-tighter">Setup Key</h2>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Secure connection key</p>
                   </div>
                 </div>
 

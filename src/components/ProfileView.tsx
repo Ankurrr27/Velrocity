@@ -32,10 +32,9 @@ const profileFields = [
 
 const bannerPresets = [
   { id: 'none', label: 'Classic', url: '' },
-  { id: 'grid', label: 'Matrix Grid', url: 'https://www.transparenttextures.com/patterns/carbon-fibre.png' },
-  { id: 'dots', label: 'Neural Dots', url: 'https://www.transparenttextures.com/patterns/60-lines.png' },
-  { id: 'glitch', label: 'Glitch', url: 'https://img.freepik.com/premium-photo/abstract-dark-blue-background-glitch-effect_1034449-36868.jpg' },
-  { id: 'nebula', label: 'Nebula', url: 'https://images.unsplash.com/photo-1464802686167-b939a67e06a1?q=80&w=2069&auto=format&fit=crop' },
+  { id: 'grid', label: 'Cyber Grid', url: '/banners/cyber_grid.png' },
+  { id: 'nebula', label: 'Deep Nebula', url: '/banners/nebula.png' },
+  { id: 'glass', label: 'Abstract Glass', url: '/banners/glass.png' },
 ];
 
 interface ProfileViewProps {
@@ -55,6 +54,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
   const [tagline, setTagline] = useState(profile.tagline || "");
   const [location, setLocation] = useState(profile.location || "");
   const [currentFocus, setCurrentFocus] = useState(profile.currentFocus || "");
+  const [college, setCollege] = useState(profile.college || "");
   const [accentColor, setAccentColor] = useState(profile.accentColor || "indigo");
   const [profilePublic, setProfilePublic] = useState(profile.profilePublic || false);
   const [externalProfiles, setExternalProfiles] = useState(profile.externalProfiles || {});
@@ -140,7 +140,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
     setSaving(true);
     setMessage("");
     const result = await updateProfile({
-      name, bio, tagline, location, currentFocus, accentColor, profilePublic, externalProfiles, banner, avatar
+      name, bio, tagline, location, currentFocus, college, accentColor, profilePublic, externalProfiles, banner, avatar
     });
     
     if (result.success) {
@@ -184,6 +184,16 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                     {profile.username[0]}
                   </div>
                 )}
+                {/* ONLINE PULSE */}
+                {(profile.lastActive && (new Date().getTime() - new Date(profile.lastActive).getTime()) < 5 * 60 * 1000) && (
+                   <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
+                      <div className="relative flex h-3 w-3">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                      </div>
+                      <span className="text-[8px] font-black text-emerald-500 uppercase tracking-widest bg-zinc-950/80 px-2 py-0.5 rounded-full border border-emerald-500/20 backdrop-blur-md">Online</span>
+                   </div>
+                )}
                 {isOwnProfile && (
                   <>
                     <div 
@@ -202,9 +212,9 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                   </>
                 )}
              </div>
-             <div className="absolute -bottom-2 sm:-bottom-4 left-1/2 -translate-x-1/2 bg-white dark:bg-zinc-100 text-black px-4 py-1.5 rounded-full text-[8px] font-black uppercase tracking-[0.3em] shadow-xl whitespace-nowrap">
-                Rank #{profile.credibilityScore > 1000 ? '001' : '012'}
-             </div>
+              <div className="absolute -bottom-2 sm:-bottom-4 left-1/2 -translate-x-1/2 bg-white dark:bg-zinc-100 text-black px-4 py-1.5 rounded-full text-[8px] font-black uppercase tracking-[0.3em] shadow-xl whitespace-nowrap">
+                 Level {profile.credibilityScore > 1000 ? '99' : '12'}
+              </div>
           </motion.div>
 
           <div className="flex-1 text-center sm:text-left pb-4 space-y-4">
@@ -228,9 +238,17 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
              </div>
 
              {profile.currentFocus && (
-               <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 rounded-xl">
-                  <Target size={14} className="text-indigo-500" />
-                  <span className="text-[10px] font-black uppercase tracking-[0.1em] text-white">Current Focus: <span className="text-indigo-400 italic">{profile.currentFocus}</span></span>
+               <div className="flex flex-wrap gap-2">
+                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 rounded-xl">
+                    <Target size={14} className="text-indigo-500" />
+                    <span className="text-[10px] font-black uppercase tracking-[0.1em] text-zinc-900 dark:text-white">Current Focus: <span className="text-indigo-600 dark:text-indigo-400 italic">{profile.currentFocus}</span></span>
+                 </div>
+                 {profile.college && (
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-500/10 border border-zinc-500/10 rounded-xl">
+                       <ShieldCheck size={14} className="text-zinc-500" />
+                       <span className="text-[10px] font-black uppercase tracking-[0.1em] text-zinc-400">{profile.college}</span>
+                    </div>
+                 )}
                </div>
              )}
           </div>
@@ -246,7 +264,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                   "
                  >
                    <SettingsIcon size={16} className="group-hover:rotate-90 transition-transform duration-500" />
-                   <span className="text-[10px] font-black uppercase tracking-[0.2em]">Adjust Matrix</span>
+                   <span className="text-[10px] font-black uppercase tracking-[0.2em]">Edit Profile</span>
                  </button>
                  <button className="w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-all">
                     <Share2 size={16} />
@@ -283,7 +301,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
            <div className="bg-white dark:bg-zinc-900/40 border border-zinc-100 dark:border-white/5 rounded-[2rem] p-8 flex items-start gap-6 transition-all hover:bg-zinc-50 dark:hover:bg-zinc-900/60 shadow-xl shadow-black/5">
               <Quote size={24} className="text-indigo-500 shrink-0 mt-1 opacity-40" />
               <div className="space-y-2">
-                 <div className="label-elite uppercase text-zinc-500 font-black tracking-[0.2em]">Personal Directive</div>
+                 <div className="label-elite uppercase text-zinc-500 font-black tracking-[0.2em]">My Motto</div>
                  <p className="text-base font-medium italic text-zinc-800 dark:text-zinc-100 leading-relaxed">
                    "{profile.tagline || "Mission in progress. Architecting absolute consistency."}"
                  </p>
@@ -291,7 +309,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
            </div>
            <div className="lg:col-span-2 bg-white dark:bg-zinc-900/40 border border-zinc-100 dark:border-white/5 rounded-[2rem] p-8 flex flex-col md:flex-row items-center justify-between gap-10 shadow-xl shadow-black/5">
               <div className="space-y-3 w-full md:w-auto">
-                 <div className="label-elite uppercase text-zinc-500 font-black tracking-[0.2em]">Operational Log</div>
+                 <div className="label-elite uppercase text-zinc-500 font-black tracking-[0.2em]">About Me</div>
                  <p className="text-sm font-medium text-zinc-500 leading-relaxed max-w-lg">{profile.bio || "No historical logs captured for this operative. Session initial."}</p>
               </div>
               <div className="flex items-center gap-12 shrink-0 w-full md:w-auto justify-between md:justify-end border-t border-zinc-100 dark:border-white/5 pt-6 md:pt-0 md:border-t-0">
@@ -332,9 +350,9 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                     <motion.div key="stats" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="space-y-6">
                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                           {[
-                            { label: 'Success Rate', val: '94.2%', icon: Star, color: 'text-amber-500', bg: 'bg-amber-500/10' },
+                            { label: 'Success Rate', val: `${profile.stats?.successRate || 0}%`, icon: Star, color: 'text-amber-500', bg: 'bg-amber-500/10' },
                             { label: 'Matrix Score', val: profile.credibilityScore, icon: ShieldCheck, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
-                            { label: 'Global Rank', val: '#12', icon: Trophy, color: 'text-indigo-500', bg: 'bg-indigo-500/10' }
+                            { label: 'Global Rank', val: `#${profile.stats?.rank || '---'}`, icon: Trophy, color: 'text-indigo-500', bg: 'bg-indigo-500/10' }
                           ].map((item, i) => (
                             <div key={i} className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-white/5 rounded-[2.5rem] p-10 flex flex-col items-center text-center gap-6 transition-all hover:border-indigo-500/30 group shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)]">
                                <div className={`w-16 h-16 rounded-[2rem] ${item.bg} flex items-center justify-center ${item.color} group-hover:scale-110 transition-transform duration-500`}>
@@ -343,7 +361,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                                <div className="space-y-2">
                                   <div className="text-4xl font-black tracking-tighter text-zinc-900 dark:text-white leading-none">{item.val}</div>
                                   <div className="label-elite uppercase text-zinc-500 font-bold tracking-[0.2em]">{item.label}</div>
-                               </div>
+                                </div>
                             </div>
                           ))}
                        </div>
@@ -359,7 +377,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                              return (
                                <div key={field.key} className="bg-white dark:bg-zinc-900/40 border border-zinc-100 dark:border-white/5 rounded-3xl p-6 space-y-4 hover:border-indigo-500/20 transition-all shadow-xl shadow-black/5">
                                   <div className="flex items-center justify-between px-1">
-                                     <span className="text-[10px] font-black uppercase tracking-[0.25em] text-zinc-500">{field.label}</span>
+                                     <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">{field.label}</span>
                                      <Link2 size={14} className="text-zinc-600" />
                                   </div>
                                   {isOwnProfile ? (
@@ -382,25 +400,34 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                        
                        {isOwnProfile && (
                          <div className="pt-6">
-                            <button onClick={handleSave} disabled={saving} className="w-full py-5 rounded-3xl bg-indigo-500 text-white text-[11px] font-black uppercase tracking-[0.25em] flex items-center justify-center gap-4 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-indigo-500/30 disabled:opacity-50">
+                            <button onClick={handleSave} disabled={saving} className="w-full py-5 rounded-3xl bg-indigo-600 text-white text-[11px] font-black uppercase tracking-[0.25em] flex items-center justify-center gap-4 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-indigo-500/30 disabled:opacity-50">
                                {saving ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save size={18} />}
-                               {saving ? "Deploying Code..." : "Synchronize Network"}
+                               {saving ? "Deploying Changes..." : "Save Links"}
                             </button>
                          </div>
                        )}
                     </motion.div>
                   )}
 
-                 {activeTab === 'settings' && isOwnProfile && (
+                  {activeTab === 'settings' && isOwnProfile && (
                     <motion.div key="settings" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="space-y-10">
                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                          <div className="bg-white dark:bg-zinc-950/40 border border-zinc-100 dark:border-white/5 rounded-[2.5rem] p-10 space-y-6 shadow-xl">
+                           <div className="bg-white dark:bg-zinc-950/40 border border-zinc-100 dark:border-white/5 rounded-[2.5rem] p-10 space-y-6 shadow-xl">
                              <div className="flex items-center gap-3 mb-2">
                                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                               <div className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500">Identity Matrix</div>
+                               <div className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500">My Profile</div>
                              </div>
                              <div className="space-y-6">
                                <div className="space-y-2">
+                                  <label className="text-[9px] font-black uppercase tracking-widest text-zinc-600 pl-1">College/University</label>
+                                  <input 
+                                    value={college} 
+                                    onChange={(e) => setCollege(e.target.value)} 
+                                    placeholder="Which college are you in?"
+                                    className="w-full bg-indigo-50/50 dark:bg-indigo-500/5 border border-indigo-200 dark:border-indigo-500/20 rounded-2xl px-6 py-5 text-sm font-black truncate focus:border-indigo-500 outline-none transition-all placeholder:text-zinc-400" 
+                                  />
+                               </div>
+                               <div className="space-y-2 border-t border-zinc-100 dark:border-white/5 pt-4">
                                   <label className="text-[9px] font-black uppercase tracking-widest text-zinc-600 pl-1">Display Name</label>
                                   <input 
                                     value={name} 
@@ -410,7 +437,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                                   />
                                </div>
                                <div className="space-y-2">
-                                  <label className="text-[9px] font-black uppercase tracking-widest text-zinc-600 pl-1">Primary Objective</label>
+                                  <label className="text-[9px] font-black uppercase tracking-widest text-zinc-600 pl-1">What are you building?</label>
                                   <input 
                                     value={currentFocus} 
                                     onChange={(e) => setCurrentFocus(e.target.value)} 
@@ -424,7 +451,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                           <div className="bg-white dark:bg-zinc-950/40 border border-zinc-100 dark:border-white/5 rounded-[2.5rem] p-10 space-y-6 shadow-xl">
                              <div className="flex items-center gap-3 mb-2">
                                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                               <div className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500">Environmental Data</div>
+                               <div className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500">Location & Bio</div>
                              </div>
                              <div className="space-y-6">
                                <div className="space-y-2">
@@ -437,11 +464,11 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                                   />
                                </div>
                                <div className="space-y-2">
-                                  <label className="text-[9px] font-black uppercase tracking-widest text-zinc-600 pl-1">Personal Directive</label>
+                                  <label className="text-[9px] font-black uppercase tracking-widest text-zinc-600 pl-1">My Motto</label>
                                   <input 
                                     value={tagline} 
                                     onChange={(e) => setTagline(e.target.value)} 
-                                    placeholder="Final mission statement..."
+                                    placeholder="Your motto..."
                                     className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-6 py-5 text-sm font-black truncate focus:border-indigo-500 outline-none transition-all" 
                                   />
                                </div>
@@ -452,7 +479,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                              <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-3">
                                   <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
-                                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500">Aesthetics Calibration</div>
+                                  <div className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500">Design Settings</div>
                                 </div>
                                 <div className="text-[8px] font-black uppercase text-indigo-500">Visual Enhancement Area</div>
                              </div>
@@ -504,7 +531,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                           </div>
                           
                           <div className="bg-white dark:bg-zinc-950/40 border border-zinc-100 dark:border-white/5 rounded-[2.5rem] p-10 space-y-6 shadow-xl">
-                             <div className="label-elite uppercase text-zinc-600 font-black tracking-[0.2em]">Spectrum Sync</div>
+                             <div className="label-elite uppercase text-zinc-600 font-black tracking-[0.2em]">Pick Color</div>
                              <div className="flex flex-wrap gap-4 justify-between lg:justify-start">
                                 {Object.keys(accentSwatches).map(color => (
                                   <button 
@@ -519,23 +546,23 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                           <div className="bg-white dark:bg-zinc-950/40 border border-zinc-100 dark:border-white/5 rounded-[2.5rem] p-10 flex flex-col justify-between gap-6 shadow-xl">
                              <div className="flex items-center justify-between">
                                <div className="space-y-1">
-                                  <div className="label-elite uppercase text-zinc-600 font-black tracking-[0.2em]">Visibility Sector</div>
-                                  <div className="text-xs font-black text-zinc-900 dark:text-white uppercase tracking-tighter">{profilePublic ? 'Operational / Global' : 'Stealth / Restricted'}</div>
+                                  <div className="label-elite uppercase text-zinc-600 font-black tracking-[0.2em]">Profile Status</div>
+                                  <div className="text-xs font-black text-zinc-900 dark:text-white uppercase tracking-tighter">{profilePublic ? 'Public Profile' : 'Private Profile'}</div>
                                </div>
                                <button onClick={() => setProfilePublic(!profilePublic)} className={`w-14 h-7 rounded-full transition-all flex items-center px-1.5 ${profilePublic ? 'bg-indigo-500 justify-end shadow-[0_0_20px_rgba(99,102,241,0.5)]' : 'bg-zinc-200 dark:bg-zinc-800 justify-start'}`}>
                                   <div className="w-4 h-4 bg-white rounded-full shadow-md" />
-                               </button>
+                                </button>
                              </div>
-                             <p className="text-[10px] font-medium text-zinc-500">Public profiles are visible to all operatives in the network and appear in the global leaderboards.</p>
+                             <p className="text-[10px] font-medium text-zinc-500">{profilePublic ? 'Your profile is visible to everyone in the network.' : 'Your profile is hidden from the public network.'}</p>
                           </div>
                        </div>
   
                        <div className="pt-6">
-                          <button onClick={handleSave} disabled={saving} className="w-full py-6 rounded-[2.5rem] bg-indigo-550 dark:bg-indigo-600 text-white text-[12px] font-black uppercase tracking-[0.3em] flex items-center justify-center gap-4 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-indigo-500/20">
-                             <ArrowRight size={20} />
-                             {saving ? "Deploying Core Changes..." : "Finalize Global Synchronization"}
-                          </button>
-                          {message && <div className="mt-8 text-center text-[10px] font-black uppercase tracking-[0.5em] text-indigo-500 animate-pulse">{message}</div>}
+                           <button onClick={handleSave} disabled={saving} className="w-full py-6 rounded-[2.5rem] bg-indigo-600 text-white text-[12px] font-black uppercase tracking-[0.3em] flex items-center justify-center gap-4 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-indigo-500/30">
+                              <ArrowRight size={20} />
+                              {saving ? "Deploying Changes..." : "Save All Changes"}
+                           </button>
+                           {message && <div className="mt-8 text-center text-[10px] font-black uppercase tracking-[0.5em] text-indigo-500 animate-pulse">{message}</div>}
                        </div>
                     </motion.div>
                  )}
@@ -613,12 +640,12 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                   >
                     Abort
                   </button>
-                  <button 
-                    onClick={handleApplyCrop}
-                    className="flex-2 py-4 px-10 rounded-2xl bg-indigo-500 text-white text-[10px] font-black uppercase tracking-[0.3em] shadow-xl shadow-indigo-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
-                  >
-                    Confirm & Deploy
-                  </button>
+                    <button 
+                      onClick={handleApplyCrop}
+                      className="flex-2 py-4 px-10 rounded-2xl bg-indigo-500 text-white text-[10px] font-black uppercase tracking-[0.3em] shadow-xl shadow-indigo-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                    >
+                      Apply Photo
+                    </button>
                 </div>
               </div>
             </motion.div>

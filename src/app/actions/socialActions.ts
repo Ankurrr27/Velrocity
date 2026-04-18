@@ -24,7 +24,8 @@ export async function fetchUsers(query?: string) {
     }
 
     const users = (await User.find(filter)
-      .select('name username avatar followers credibilityScore')
+      .select('name username avatar followers credibilityScore lastActive')
+      .sort({ lastActive: -1, credibilityScore: -1 })
       .lean()) as any[];
 
     const formattedUsers = users.map((u: any) => ({

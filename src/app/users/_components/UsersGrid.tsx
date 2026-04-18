@@ -19,8 +19,8 @@ export default function UsersGrid({
   return (
     <div className="flex flex-col gap-3 px-0 md:px-10 pb-20">
       <div className="flex items-center justify-between mb-4 px-4 md:px-1">
-         <span className="label-elite uppercase text-zinc-400">Available Users</span>
-         <span className="label-elite uppercase text-zinc-400">{users.length} Nodes</span>
+         <span className="label-elite uppercase text-zinc-400">Listed Users</span>
+         <span className="label-elite uppercase text-zinc-400">{users.length} Users</span>
       </div>
       <AnimatePresence mode="popLayout">
         {loading ? (
@@ -34,7 +34,7 @@ export default function UsersGrid({
           <div className="space-y-4 rounded-3xl border-2 border-dashed border-zinc-100 dark:border-white/5 px-6 py-20 text-center">
             <UsersIcon size={48} className="mx-auto text-zinc-200 dark:text-zinc-800" />
             <p className="label-elite uppercase text-zinc-400">
-              Zero entities detected in this sector.
+              No users found matching your search.
             </p>
           </div>
         ) : (

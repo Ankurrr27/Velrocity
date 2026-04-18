@@ -140,12 +140,13 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
               className="space-y-4"
             >
               <div className="flex items-center justify-between px-2">
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Objectives</span>
-                <div className="bg-indigo-500/10 px-2 py-1 rounded-lg text-indigo-500 text-[10px] font-black uppercase tracking-wider border border-indigo-500/20">{habits.length} Active</div>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Goals</span>
+                <div className="bg-[rgba(var(--primary-rgb),0.1)] px-2 py-1 rounded-lg text-[rgb(var(--primary))] text-[10px] font-black uppercase tracking-wider border border-[rgba(var(--primary-rgb),0.2)]">{habits.length} Active</div>
               </div>
               <HabitList
+                isToday={isToday}
                 initialHabits={habits}
-                key={habits.length + (habits[0]?.isCompletedToday ? 1 : 0)}
+                key={habits.length + (habits[0]?.isCompletedToday ? 1 : 0) + (isToday ? 'today' : 'past')}
               />
             </motion.div>
           ) : (
@@ -161,13 +162,13 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
                   <input
                     value={newTaskTitle}
                     onChange={(e) => onTaskTitleChange(e.target.value)}
-                    placeholder="Capture objective..."
-                    className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl py-4 pl-5 pr-12 text-[12px] font-black text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 outline-none focus:border-indigo-500/50 shadow-inner transition-all"
+                    placeholder="Type task..."
+                    className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl py-4 pl-5 pr-12 text-[12px] font-black text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 outline-none focus:border-[rgba(var(--primary-rgb),0.5)] shadow-inner transition-all"
                   />
                   <button
                     type="submit"
                     disabled={!newTaskTitle.trim()}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-indigo-500 text-white flex items-center justify-center hover:scale-110 active:scale-95 disabled:opacity-30 disabled:hover:scale-100 transition-all shadow-lg"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-[rgb(var(--primary))] text-white flex items-center justify-center hover:scale-110 active:scale-95 disabled:opacity-30 disabled:hover:scale-100 transition-all shadow-lg shadow-[rgba(var(--primary-rgb),0.3)]"
                   >
                     <Plus size={16} strokeWidth={3} />
                   </button>
@@ -179,6 +180,7 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
                   {tasks.map((task) => (
                     <TaskItem
                       key={task._id}
+                      isToday={isToday}
                       task={task}
                       onToggle={onToggleTask}
                       onDelete={onDeleteTask}

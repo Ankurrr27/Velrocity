@@ -31,12 +31,12 @@ export default function HabitHeatmap({
 
   const getIntensityColor = (intensity: number) => {
     switch (intensity) {
-      case 0: return 'bg-zinc-100 dark:bg-zinc-800/40 border-zinc-200 dark:border-white/5';
+      case 0: return 'bg-zinc-200/50 dark:bg-zinc-800/40 border-zinc-300/20 dark:border-white/5';
       case 1: return 'bg-[rgba(var(--primary-rgb),0.2)]';
       case 2: return 'bg-[rgba(var(--primary-rgb),0.45)]';
       case 3: return 'bg-[rgba(var(--primary-rgb),0.75)]';
       case 4: return 'bg-[rgb(var(--primary-rgb))]';
-      default: return 'bg-zinc-100 dark:bg-zinc-800/40';
+      default: return 'bg-zinc-200/50 dark:bg-zinc-800/40';
     }
   };
 
