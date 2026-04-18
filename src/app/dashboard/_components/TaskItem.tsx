@@ -54,52 +54,61 @@ export default function TaskItem({ task, onToggle, onDelete, onSetDeadline }: Ta
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, x: -10 }}
-      animate={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       className={`
-        group flex items-center justify-between px-2 py-2 transition-all duration-300 rounded-xl
-        ${isDeadlinePassed ? "bg-red-50 dark:bg-red-950/20" : ""}
+        group flex items-center justify-between px-3 py-3 transition-all duration-300 rounded-[1.25rem] border
+        ${isDeadlinePassed 
+          ? "bg-rose-500/5 border-rose-500/20" 
+          : "bg-white/5 border-transparent hover:border-white/10 hover:bg-white/[0.08]"
+        }
       `}
     >
       <div className="flex items-center gap-4 flex-1 min-w-0">
         <button
           onClick={() => onToggle(task._id)}
           className={`
-            w-6 h-6 shrink-0 rounded-full border-2 flex items-center justify-center transition-all
+            w-8 h-8 shrink-0 rounded-xl border-2 flex items-center justify-center transition-all duration-500
             ${isDone 
-              ? "bg-zinc-900 dark:bg-zinc-100 border-zinc-900 dark:border-zinc-100 shadow-[0_4px_12px_rgba(0,0,0,0.1)]" 
+              ? "bg-indigo-500 border-indigo-500 shadow-[0_0_20px_rgba(99,102,241,0.4)]" 
               : isDeadlinePassed 
-                ? "border-red-500" 
-                : "border-zinc-200 dark:border-zinc-800 group-hover:border-[rgb(var(--primary))]"
+                ? "border-rose-500/50 bg-rose-500/10" 
+                : "border-zinc-300 dark:border-zinc-700 group-hover:border-indigo-500 bg-transparent"
             }
           `}
         >
-          {isDone && <Check size={12} className="text-white dark:text-black" strokeWidth={4} />}
+          {isDone && <Check size={14} className="text-white" strokeWidth={4} />}
         </button>
 
         <div className="flex flex-col flex-1 min-w-0">
-          <span className={`text-sm font-bold uppercase tracking-tight truncate transition-all ${
+          <span className={`text-[12px] font-black uppercase tracking-tight truncate transition-all duration-500 ${
             isDone 
-              ? "text-zinc-400 dark:text-zinc-600 line-through" 
+              ? "text-zinc-500 dark:text-zinc-600 line-through" 
               : isDeadlinePassed 
-                ? "text-red-600 dark:text-red-400"
-                : "text-zinc-800 dark:text-zinc-200"
+                ? "text-rose-500"
+                : "text-zinc-900 dark:text-zinc-100"
           }`}>
             {task.title}
           </span>
           
           <div className="flex items-center gap-2 mt-0.5">
+            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-500">Registry</span>
             {isRolledOver && (
-              <span className="text-[10px] font-bold text-orange-500 tracking-wider">
-                +{rolledOverDays}d Rollover
-              </span>
+              <>
+                <span className="w-1 h-1 rounded-full bg-orange-500" />
+                <span className="text-[8px] font-black uppercase tracking-[0.15em] text-orange-500">
+                  +{rolledOverDays}d rollover
+                </span>
+              </>
             )}
             {!isDone && task.deadline && (
-              <span className={`text-[10px] font-bold tracking-wider flex items-center gap-1 ${isDeadlinePassed ? 'text-red-500' : isDeadlineNear ? 'text-amber-500' : 'text-zinc-400'}`}>
-                {isDeadlinePassed ? <AlertCircle size={10} /> : <CalendarClock size={10} />}
-                {new Date(task.deadline).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
-              </span>
+              <>
+                <span className="w-1 h-1 rounded-full bg-zinc-700" />
+                <span className={`text-[8px] font-black uppercase tracking-[0.15em] flex items-center gap-1 ${isDeadlinePassed ? 'text-rose-500' : isDeadlineNear ? 'text-amber-500' : 'text-zinc-500'}`}>
+                   {new Date(task.deadline).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
+                </span>
+              </>
             )}
           </div>
           
@@ -107,7 +116,7 @@ export default function TaskItem({ task, onToggle, onDelete, onSetDeadline }: Ta
             <input 
               type="date" 
               autoFocus
-              className="mt-2 text-xs p-1 rounded border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 outline-none text-zinc-900 dark:text-zinc-100"
+              className="mt-3 text-[10px] p-2 rounded-xl border border-white/10 bg-black/40 outline-none text-white font-black uppercase tracking-widest"
               defaultValue={task.deadline ? new Date(task.deadline).toISOString().split('T')[0] : ''}
               onChange={handleDateChange}
               onBlur={() => setShowDatePicker(false)}
@@ -117,21 +126,21 @@ export default function TaskItem({ task, onToggle, onDelete, onSetDeadline }: Ta
         </div>
       </div>
 
-      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="flex items-center gap-1 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
         <button 
           onClick={() => setShowDatePicker(!showDatePicker)}
-          className="text-zinc-400 hover:text-[rgb(var(--primary))] transition-all p-1.5"
+          className="text-zinc-500 hover:text-indigo-400 transition-all p-2"
           title="Set deadline"
         >
-          <CalendarClock size={14} />
+          <CalendarClock size={16} />
         </button>
 
         <button 
           onClick={() => onDelete(task._id)}
-          className="text-zinc-400 hover:text-rose-500 transition-all p-1.5"
+          className="text-zinc-500 hover:text-rose-500 transition-all p-2"
           title="Delete task"
         >
-          <Trash2 size={14} />
+          <Trash2 size={16} />
         </button>
       </div>
     </motion.div>

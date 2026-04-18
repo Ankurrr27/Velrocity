@@ -57,7 +57,7 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
     <aside
       style={{ ['--sidebar-w' as string]: `${sidebarWidth}px` } as React.CSSProperties}
       className="relative flex shrink-0 flex-col overflow-hidden border-b border-zinc-200 bg-white dark:bg-zinc-950 dark:border-white/5
-        h-[65vh] max-h-[65vh] w-full
+        h-[72vh] max-h-[72vh] w-full
         lg:h-full lg:max-h-full lg:w-[var(--sidebar-w)] lg:border-b-0 lg:border-r"
     >
       <div
@@ -66,15 +66,14 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
           }`}
       />
 
-      <div className="border-b border-zinc-100 dark:border-white/5 px-6 pb-4 pt-6">
-
-        <div className="flex items-center rounded-2xl border border-zinc-200 dark:border-white/10 bg-zinc-100 dark:bg-white/5 p-1.5 shadow-inner">
+      <div className="border-b border-zinc-100 dark:border-white/5 px-6 pb-2 pt-4 lg:pb-6 lg:pt-8">
+        <div className="flex items-center rounded-2xl border border-zinc-200 dark:border-white/10 bg-zinc-100/50 dark:bg-white/5 p-1 lg:p-1.5 shadow-inner backdrop-blur-sm">
           {(["habits", "tasks"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => onSetActiveTab(tab)}
-              className={`flex-1 rounded-xl px-4 py-2.5 text-[12px] font-bold capitalize tracking-wide transition-all duration-300 ${activeTab === tab
-                  ? "bg-white dark:bg-zinc-100 text-zinc-900 dark:text-black shadow-[0_4px_12px_rgba(0,0,0,0.05)]"
+              className={`flex-1 rounded-xl px-2 py-2 sm:px-4 sm:py-3 text-[10px] sm:text-[11px] font-black uppercase tracking-[0.1em] transition-all duration-300 ${activeTab === tab
+                  ? "bg-white dark:bg-zinc-100 text-zinc-900 dark:text-black shadow-[0_4px_20px_rgba(0,0,0,0.1)] scale-[1.02]"
                   : "text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
                 }`}
             >
@@ -84,7 +83,7 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
         </div>
       </div>
 
-      <div className="mb-4 shrink-0 px-4 pt-4">
+      <div className="mb-2 lg:mb-6 shrink-0 px-4 pt-2">
         {loading ? (
           <div className="flex gap-2 overflow-hidden px-1 animate-pulse">
              {[1,2,3,4,5,6,7,8].map(i => (
@@ -135,14 +134,14 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
           ) : activeTab === "habits" ? (
             <motion.div
               key="habits-area"
-              initial={{ opacity: 0, x: -10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 10 }}
-              className="space-y-3"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              className="space-y-4"
             >
-              <div className="flex items-center justify-between px-1">
-                <span className="text-xs font-semibold text-zinc-400">Habits</span>
-                <div className="bg-zinc-100 dark:bg-white/5 px-2 py-1 rounded-lg text-zinc-500 dark:text-zinc-400 text-[10px] font-medium border border-zinc-200 dark:border-white/5">{habits.length} active</div>
+              <div className="flex items-center justify-between px-2">
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Objectives</span>
+                <div className="bg-indigo-500/10 px-2 py-1 rounded-lg text-indigo-500 text-[10px] font-black uppercase tracking-wider border border-indigo-500/20">{habits.length} Active</div>
               </div>
               <HabitList
                 initialHabits={habits}
@@ -152,49 +151,49 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
           ) : (
             <motion.div
               key="tasks-area"
-              initial={{ opacity: 0, x: 10 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -10 }}
-              className="space-y-4"
+              initial={{ opacity: 0, scale: 0.98 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              className="space-y-6"
             >
-              <div className="rounded-[24px] p-4 lg:p-5 relative overflow-hidden bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-100 dark:border-white/5">
-                <div className="flex items-center justify-between px-1 mb-3">
-                  <div className="flex items-center gap-2">
-                    <div className="h-2 w-2 rounded-full bg-[rgb(var(--primary))] shadow-[0_0_10px_rgba(var(--primary-rgb),0.3)] animate-pulse" />
-                    <span className="text-[12px] font-semibold text-zinc-900 dark:text-zinc-100">Tasks</span>
-                  </div>
-                </div>
+              {isToday && (
+                <form onSubmit={onAddTask} className="group relative">
+                  <input
+                    value={newTaskTitle}
+                    onChange={(e) => onTaskTitleChange(e.target.value)}
+                    placeholder="Capture objective..."
+                    className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl py-4 pl-5 pr-12 text-[12px] font-black text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 outline-none focus:border-indigo-500/50 shadow-inner transition-all"
+                  />
+                  <button
+                    type="submit"
+                    disabled={!newTaskTitle.trim()}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-xl bg-indigo-500 text-white flex items-center justify-center hover:scale-110 active:scale-95 disabled:opacity-30 disabled:hover:scale-100 transition-all shadow-lg"
+                  >
+                    <Plus size={16} strokeWidth={3} />
+                  </button>
+                </form>
+              )}
 
-                <div className="space-y-1">
-                  <AnimatePresence initial={false}>
-                    {tasks.map((task) => (
-                      <TaskItem
-                        key={task._id}
-                        task={task}
-                        onToggle={onToggleTask}
-                        onDelete={onDeleteTask}
-                        onSetDeadline={onSetDeadline}
-                      />
-                    ))}
-                  </AnimatePresence>
-                </div>
-
-                {isToday && (
-                  <form onSubmit={onAddTask} className="group relative pt-4">
-                    <input
-                      value={newTaskTitle}
-                      onChange={(e) => onTaskTitleChange(e.target.value)}
-                      placeholder="Add a task..."
-                      className="w-full bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 rounded-2xl py-3 pl-4 pr-10 text-[12px] font-bold text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 outline-none focus:border-[rgb(var(--primary))] transition-all"
+              <div className="space-y-2">
+                <AnimatePresence initial={false}>
+                  {tasks.map((task) => (
+                    <TaskItem
+                      key={task._id}
+                      task={task}
+                      onToggle={onToggleTask}
+                      onDelete={onDeleteTask}
+                      onSetDeadline={onSetDeadline}
                     />
-                    <button
-                      type="submit"
-                      disabled={!newTaskTitle.trim()}
-                      className="absolute right-3 top-[calc(50%+8px)] -translate-y-1/2 text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-transform hover:scale-110 disabled:opacity-30"
-                    >
-                      <Plus size={14} strokeWidth={3} />
-                    </button>
-                  </form>
+                  ))}
+                </AnimatePresence>
+                
+                {tasks.length === 0 && (
+                  <div className="py-8 flex flex-col items-center justify-center gap-3 opacity-30">
+                      <div className="w-12 h-12 rounded-2xl border border-dashed border-zinc-400 dark:border-zinc-100 flex items-center justify-center">
+                        <Plus size={20} className="text-zinc-400 dark:text-zinc-100" />
+                      </div>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400 dark:text-zinc-100">No active tasks</p>
+                  </div>
                 )}
               </div>
             </motion.div>

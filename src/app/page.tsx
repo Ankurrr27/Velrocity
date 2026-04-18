@@ -9,36 +9,48 @@ import { motion } from "framer-motion";
 
 export default function Home() {
   return (
-    <div className="dark min-h-screen bg-[#050505] text-white selection:bg-indigo-500/30 font-sans antialiased">
+    <div className="dark min-h-screen bg-[#050505] text-white selection:bg-indigo-500/30 font-sans antialiased overflow-x-hidden">
       
-      {/* PROFESSIONAL DOT GRID */}
+      {/* PROFESSIONAL BACKGROUND LAYER */}
+      <div className="fixed inset-0 mesh-gradient -z-10" />
+      
+      {/* DOT GRID */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.03] -z-10" 
            style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
 
       {/* BACKGROUND GLOW EFFECTS */}
       <div className="fixed inset-0 pointer-events-none -z-20">
-        <div className="absolute top-[-10%] right-[-10%] w-[800px] h-[800px] bg-indigo-500/[0.03] rounded-full blur-[120px]" />
-        <div className="absolute bottom-[10%] left-[-10%] w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-[120px]" />
+        <div className="absolute top-[-10%] right-[-10%] w-[1000px] h-[1000px] bg-indigo-600/[0.05] rounded-full blur-[140px]" />
+        <div className="absolute bottom-[5%] left-[-10%] w-[800px] h-[800px] bg-white/[0.02] rounded-full blur-[140px]" />
       </div>
 
       <Navbar />
 
-      <main className="relative pt-16 md:pt-24 pb-12">
+      <main className="relative pt-24 md:pt-32 pb-12">
         {/* HERO SECTION */}
-        <section className="max-w-7xl mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-10 md:gap-12 items-center mb-12 md:mb-16">
+        <section className="max-w-7xl mx-auto px-5 md:px-8 grid lg:grid-cols-2 gap-12 lg:gap-20 items-center mb-20 md:mb-32">
           <Hero />
-          <div className="flex justify-center lg:justify-end mt-10 lg:mt-0 relative z-20">
-            <MockUI />
-          </div>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="flex justify-center lg:justify-end mt-10 lg:mt-0 relative z-20"
+          >
+            <div className="relative">
+               {/* Ambient glow behind mockup */}
+               <div className="absolute inset-0 bg-indigo-500/20 blur-[100px] -z-10 rounded-full animate-pulse" />
+               <MockUI />
+            </div>
+          </motion.div>
         </section>
 
         {/* TRUST / SOCIAL PROOF STRIP */}
-        <div className="border-y border-white/5 py-5 md:py-6 mb-12 md:mb-16 relative z-10">
+        <div className="border-y border-white/[0.03] py-8 md:py-12 mb-20 md:mb-32 relative z-10 bg-white/[0.01] backdrop-blur-sm">
           <div className="max-w-7xl mx-auto px-5 md:px-8">
-            <p className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] text-zinc-500 text-center mb-4">Trusted by developers from</p>
-            <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 opacity-30 grayscale hover:grayscale-0 transition-all duration-500">
+            <p className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.4em] text-zinc-500 text-center mb-8 opacity-60">Engineered for industry standards</p>
+            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-20 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-700 ease-in-out cursor-default">
               {['Google', 'Meta', 'Amazon', 'Netflix', 'Microsoft'].map(company => (
-                <span key={company} className="text-base md:text-xl font-black tracking-tighter">{company}</span>
+                <span key={company} className="text-xl md:text-3xl font-black tracking-tighter hover:text-indigo-400 transition-colors uppercase italic">{company}</span>
               ))}
             </div>
           </div>
@@ -48,54 +60,65 @@ export default function Home() {
         <Features />
 
         {/* TESTIMONIAL / QUOTE */}
-        <section className="py-12 md:py-20 px-5 md:px-8 max-w-4xl mx-auto text-center">
+        <section className="py-20 md:py-32 px-5 md:px-8 max-w-5xl mx-auto text-center">
            <motion.div
-             initial={{ opacity: 0, y: 20 }}
-             whileInView={{ opacity: 1, y: 0 }}
+             initial={{ opacity: 0, scale: 0.98 }}
+             whileInView={{ opacity: 1, scale: 1 }}
              viewport={{ once: true }}
-             className="relative surface-card p-10 md:p-14 border border-white/5 bg-gradient-to-b from-white/[0.04] to-transparent overflow-hidden rounded-[2rem]"
+             className="relative glass-premium p-12 md:p-20 border border-white/5 overflow-hidden rounded-[3rem]"
            >
               {/* background accent for testimonial */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 blur-[80px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+              <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500/10 blur-[100px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
               
-              <span className="text-6xl md:text-8xl absolute top-4 left-6 text-indigo-500/10 font-serif leading-none select-none">"</span>
+              <span className="text-8xl md:text-[12rem] absolute top-2 left-6 text-indigo-500/10 font-black leading-none select-none italic tracking-tighter">"</span>
               
-              <h2 className="text-xl md:text-3xl font-black leading-tight tracking-tight text-white/90 relative z-10 mb-8 max-w-3xl mx-auto">
-                Velrocity completely changed how I track my coding progress. It's not just a tracker, it's a <span className="text-indigo-400">momentum engine</span>.
+              <h2 className="text-2xl md:text-4xl font-black leading-[1.15] tracking-tight text-white/95 relative z-10 mb-12 max-w-4xl mx-auto">
+                Velrocity completely changed how I track my coding progress. It's not just a tracker, it's <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-400">the ultimate momentum engine</span>.
               </h2>
               
-              <div className="relative z-10 flex items-center justify-center gap-4">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-zinc-700 to-zinc-900 border-2 border-indigo-500/30 flex items-center justify-center shadow-lg">
-                  <span className="text-xs font-black text-white/80">AR</span>
+              <div className="relative z-10 flex items-center justify-center gap-6">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-zinc-800 to-zinc-950 border border-white/10 flex items-center justify-center shadow-2xl relative">
+                  <span className="text-sm font-black text-white/90">AR</span>
+                  <div className="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-green-500 border-2 border-[#050505]" />
                 </div>
                 <div className="text-left">
-                  <p className="font-black text-sm md:text-base text-zinc-100">Alex Rivers</p>
-                  <p className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] text-indigo-500/80">Fullstack Developer @ Stealth</p>
+                  <p className="font-black text-lg text-zinc-100 leading-none mb-1">Alex Rivers</p>
+                  <p className="text-[10px] font-black uppercase tracking-[0.25em] text-indigo-500/90">Fullstack Architect @ Stealth</p>
                 </div>
               </div>
            </motion.div>
         </section>
 
         {/* CALL TO ACTION */}
-        <section className="py-20 px-5 md:px-8 mb-10 w-full flex justify-center">
+        <section className="py-24 px-5 md:px-8 mb-20 w-full flex justify-center">
           <motion.div 
-             initial={{ opacity: 0, scale: 0.95 }}
-             whileInView={{ opacity: 1, scale: 1 }}
+             initial={{ opacity: 0, y: 40 }}
+             whileInView={{ opacity: 1, y: 0 }}
              viewport={{ once: true }}
-             className="w-full max-w-5xl rounded-[2rem] border border-indigo-500/20 bg-gradient-to-br from-indigo-500/10 via-[#050505] to-[#050505] p-10 md:p-16 text-center shadow-2xl overflow-hidden relative"
+             className="w-full max-w-6xl rounded-[3rem] border border-white/5 bg-gradient-to-br from-indigo-600/20 via-[#0a0a0a] to-[#050505] p-12 md:p-24 text-center shadow-[0_50px_100px_-30px_rgba(0,0,0,0.7)] overflow-hidden relative"
           >
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay pointer-events-none" />
+            {/* Ambient inner glow */}
+            <div className="absolute -top-24 -left-24 w-96 h-96 bg-indigo-600/20 blur-[120px] rounded-full pointer-events-none" />
             
-            <h2 className="text-3xl md:text-5xl font-black tracking-tight mb-4 text-white relative z-10">
-              Ready to <span className="text-indigo-500">accelerate?</span>
+            <h2 className="text-4xl md:text-7xl font-black tracking-tighter mb-6 text-white relative z-10 leading-[0.9]">
+              Start your <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-500 italic">acceleration.</span>
             </h2>
-            <p className="text-zinc-400 font-medium mb-10 max-w-xl mx-auto relative z-10">
-              Join thousands of developers prioritizing consistency over intensity. Start tracking your progress today.
+            <p className="text-zinc-400 text-base md:text-xl font-medium mb-12 max-w-2xl mx-auto relative z-10 leading-relaxed">
+              Join the elite circle of developers who prioritize deep-work consistency over burnout intensity.
             </p>
             
-            <a href="/register" className="relative z-10 inline-flex items-center gap-2 px-8 py-4 bg-indigo-500 hover:bg-indigo-400 text-white text-[12px] font-black uppercase tracking-[0.2em] rounded-xl transition-all shadow-[0_0_40px_-10px_rgba(99,102,241,0.8)] hover:shadow-[0_0_60px_-10px_rgba(99,102,241,1)] hover:scale-105">
-              Launch Velrocity
-            </a>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 relative z-10">
+               <a href="/register" className="group px-10 py-5 bg-white text-black text-[11px] font-black uppercase tracking-[0.25em] rounded-2xl transition-all shadow-[0_20px_40px_-10px_rgba(255,255,255,0.2)] hover:shadow-[0_25px_50px_-10px_rgba(255,255,255,0.4)] hover:scale-105 active:scale-95">
+                 Launch Engine
+               </a>
+               <a href="/login" className="px-10 py-5 border border-white/10 hover:border-white/30 text-white text-[11px] font-black uppercase tracking-[0.25em] rounded-2xl transition-all">
+                 Operator Login
+               </a>
+            </div>
+            
+            {/* Visual bottom accent */}
+            <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent" />
           </motion.div>
         </section>
       </main>

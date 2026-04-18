@@ -488,3 +488,27 @@ export async function fetchHeatmapData() {
     return [];
   }
 }
+export async function deleteHabit(habitId: string) {
+  await connectToDatabase();
+  try {
+    const userId = await getUserId();
+    
+    // First verify ownership
+    const habit = await Habit.findOne({ _id: habitId, user: userId });
+    if (!habit) throw new Error("Habit not found or unauthorized");
+
+    // Delete associated activity logs
+    await ActivityLog.deleteMany({ habit: habitId, user: userId });
+    
+    // Delete the habit itself
+    await Habit.deleteOne({ _id: habitId, user: userId });
+
+    revalidatePath('/dashboard');
+    revalidatePath('/profile');
+
+    return { success: true };
+  } catch (error: any) {
+    console.error('Delete habit error:', error);
+    return { success: false, error: error.message };
+  }
+}

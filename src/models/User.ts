@@ -47,6 +47,9 @@ const userSchema = new mongoose.Schema(
       codechef: { type: String, trim: true, default: "" },
       gfg: { type: String, trim: true, default: "" },
       codolio: { type: String, trim: true, default: "" },
+      twitter: { type: String, trim: true, default: "" },
+      linkedin: { type: String, trim: true, default: "" },
+      discord: { type: String, trim: true, default: "" },
     },
     profilePublic: {
       type: Boolean,
@@ -67,6 +70,7 @@ const userSchema = new mongoose.Schema(
     bio: { type: String, maxLength: 160, default: "" },
     tagline: { type: String, maxLength: 50, default: "" },
     location: { type: String, maxLength: 32, default: "" },
+    currentFocus: { type: String, maxLength: 50, default: "" },
     accentColor: { type: String, default: "indigo" }, 
   },
   {
@@ -84,6 +88,9 @@ const userSchema = new mongoose.Schema(
           codechef: "",
           gfg: "",
           codolio: "",
+          twitter: "",
+          linkedin: "",
+          discord: "",
         };
       },
     },

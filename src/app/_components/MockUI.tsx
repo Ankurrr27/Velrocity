@@ -15,15 +15,15 @@ type Habit = {
 };
 
 const HABITS: Habit[] = [
-  { id: 1, title: "Solve 2 LeetCode",      category: "Code",   done: true  },
-  { id: 2, title: "Morning HIIT",           category: "Health", done: true  },
-  { id: 3, title: "Deep Work: Project V",   category: "Work",   done: false },
-  { id: 4, title: "10m Deep Breathing",     category: "Health", done: false },
+  { id: 1, title: "Solve 2 LeetCode Problems",      category: "Code",   done: true  },
+  { id: 2, title: "Do Github Contribution",           category: "COde", done: true  },
+  { id: 3, title: "Workout : Gym",   category: "Fitness",   done: false },
+  { id: 4, title: "Book Reading",     category: "Mindset", done: false },
 ];
 
 const PLATFORMS = [
-  { name: "LeetCode",    sub: "Knight · #12.4k",       val: "72.4%", Icon: Trophy   },
-  { name: "GitHub",      sub: "Elite Contributor",      val: "45/wk", Icon: Code2    },
+  { name: "LeetCode",    sub: "Knight ",       val: "72.4%", Icon: Trophy   },
+  { name: "GitHub",      sub: "Contributor",      val: "45/wk", Icon: Code2    },
   { name: "Global Rank", sub: "Top 0.2%",               val: "P42",   Icon: Sparkles },
 ];
 

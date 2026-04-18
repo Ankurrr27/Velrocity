@@ -80,48 +80,52 @@ export default function HabitHeatmap({
            <span>Sat</span>
         </div>
 
-        <div className="flex-1 relative">
-           {/* MONTH LABELS */}
-           <div className="absolute -top-6 left-0 right-0 flex text-[9px] font-medium text-zinc-400 pointer-events-none">
-              {monthLabels.map((m, i) => (
-                <div key={i} style={{ 
-                  position: 'absolute',
-                  left: `${m.index * 17}px`
-                }}>
-                   {m.label}
+        <div className="flex-1 overflow-hidden">
+           <div className="flex justify-end">
+             <div className="relative" style={{ width: `${Math.ceil(displayData.length / 7) * 17}px` }}>
+                {/* MONTH LABELS */}
+                <div className="absolute -top-6 left-0 right-0 flex text-[9px] font-black uppercase tracking-widest text-zinc-500/80 pointer-events-none h-6">
+                   {monthLabels.map((m, i) => (
+                     <div key={i} style={{ 
+                       position: 'absolute',
+                       left: `${m.index * 17}px`
+                     }}>
+                        {m.label}
+                     </div>
+                   ))}
                 </div>
-              ))}
-           </div>
 
-            <div className="grid grid-flow-col grid-rows-7 gap-[4px] overflow-x-auto no-scrollbar pt-1 pr-4">
-              {displayData.map((day: any, i: number) => {
-                const intensity = day.intensity;
-                
-                return (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ 
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 20,
-                      delay: i * 0.001 
-                    }}
-                    title={`${day.date}: ${intensity} units`}
-                    onClick={() => onDateClick?.(day.date)}
-                    className={`
-                      w-[13px] h-[13px] rounded-[3px] cursor-pointer relative group
-                      ${intensity === 0 ? getIntensityColor(0) : getIntensityColor(intensity)}
-                      transition-all duration-300 hover:scale-150 hover:z-20
-                      ${intensity >= 3 ? 'shadow-[0_0_12px_rgba(var(--primary-rgb),0.3)]' : ''}
-                    `}
-                  >
-                    {/* Hover Glow */}
-                    <div className="absolute inset-0 rounded-[3px] bg-[rgb(var(--primary))] opacity-0 group-hover:opacity-20 blur-[2px] transition-opacity" />
-                  </motion.div>
-                );
-              })}
+                <div className="grid grid-flow-col grid-rows-7 gap-[4px] pt-1">
+                  {displayData.map((day: any, i: number) => {
+                    const intensity = day.intensity;
+                    
+                    return (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ 
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 20,
+                          delay: (displayData.length - i) * 0.001 
+                        }}
+                        title={`${day.date}: ${intensity} units`}
+                        onClick={() => onDateClick?.(day.date)}
+                        className={`
+                          w-[13px] h-[13px] rounded-[3px] cursor-pointer relative group
+                          ${intensity === 0 ? getIntensityColor(0) : getIntensityColor(intensity)}
+                          transition-all duration-300 hover:scale-150 hover:z-20
+                          ${intensity >= 3 ? 'shadow-[0_0_12px_rgba(var(--primary-rgb),0.3)]' : ''}
+                        `}
+                      >
+                        {/* Hover Glow */}
+                        <div className="absolute inset-0 rounded-[3px] bg-[rgb(var(--primary))] opacity-0 group-hover:opacity-20 blur-[2px] transition-opacity" />
+                      </motion.div>
+                    );
+                  })}
+                </div>
+             </div>
            </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from "react";
+import { Link2 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import AddHabitModal from "@/components/AddHabitModal";
 import DashboardSidebar from "./_components/DashboardSidebar";
 import DashboardContent from "./_components/DashboardContent";
@@ -148,6 +150,19 @@ export default function DashboardPage() {
     };
   }, []);
 
+  const [userData, setUserData] = useState<any>(null);
+  const [showShareModal, setShowShareModal] = useState(false);
+
+  const fetchUserData = async () => {
+     const { fetchUserProfile } = await import("@/app/actions/habitActions");
+     const data = await fetchUserProfile();
+     setUserData(data);
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
   return (
     <div className="flex h-full flex-1 flex-col overflow-hidden lg:flex-row">
       <DashboardSidebar
@@ -172,25 +187,76 @@ export default function DashboardPage() {
         onSetDeadline={handleSetDeadline}
       />
 
-      <DashboardContent
-        loading={loading}
-        stats={stats}
-        timelineData={timelineData}
-        progressData={progressData}
-        heatmapData={heatmapData}
-        onDateClick={(dateStr) => {
-          const index = weekDates.findIndex(
-            (date) => date.toISOString().split("T")[0] === dateStr
-          );
-          if (index !== -1) setSelectedIndex(index);
-        }}
-      />
+      <div className="flex-1 relative">
+         <DashboardContent
+          loading={loading}
+          stats={stats}
+          timelineData={timelineData}
+          progressData={progressData}
+          heatmapData={heatmapData}
+          onDateClick={(dateStr) => {
+            const index = weekDates.findIndex(
+              (date) => date.toISOString().split("T")[0] === dateStr
+            );
+            if (index !== -1) setSelectedIndex(index);
+          }}
+          onShare={() => setShowShareModal(true)}
+        />
+      </div>
 
       <AddHabitModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
         onSuccess={() => fetchAllForDate(selectedDate.toISOString())}
       />
+
+      {/* SHARE MODAL */}
+      <AnimatePresence>
+        {showShareModal && userData && (
+           <motion.div 
+             initial={{ opacity: 0 }} 
+             animate={{ opacity: 1 }} 
+             exit={{ opacity: 0 }}
+             className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/80 backdrop-blur-xl"
+             onClick={() => setShowShareModal(false)}
+           >
+              <motion.div 
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                className="w-full max-w-sm bg-zinc-900 border border-white/10 rounded-[2.5rem] p-10 overflow-hidden shadow-2xl space-y-8"
+                onClick={e => e.stopPropagation()}
+              >
+                 <div className="space-y-1 text-center">
+                    <div className="w-16 h-16 rounded-[1.5rem] bg-indigo-500/10 flex items-center justify-center text-indigo-500 mx-auto mb-4 border border-indigo-500/20">
+                       <Link2 size={24} />
+                    </div>
+                    <h3 className="text-xl font-black text-white italic tracking-tighter">Deploy Plan</h3>
+                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">Global sync ready</p>
+                 </div>
+
+                 <div className="bg-black/60 border border-white/5 rounded-2xl p-4 flex items-center gap-3">
+                    <input 
+                      readOnly 
+                      value={`${window.location.origin}/profile/${userData.username}`} 
+                      className="flex-1 bg-transparent text-[10px] font-black tracking-widest text-zinc-400 outline-none"
+                    />
+                 </div>
+
+                 <button 
+                   onClick={() => {
+                     navigator.clipboard.writeText(`${window.location.origin}/profile/${userData.username}`);
+                     alert("Vector copied to clipboard.");
+                     setShowShareModal(false);
+                   }}
+                   className="w-full py-5 rounded-2xl bg-indigo-500 text-white text-[11px] font-black uppercase tracking-[0.3em] shadow-xl shadow-indigo-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                 >
+                    Copy Access Key
+                 </button>
+              </motion.div>
+           </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
+

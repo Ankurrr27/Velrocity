@@ -1,13 +1,27 @@
-'use client';
+"use client";
 
 import { motion } from "framer-motion";
 
-export default function PhoneMockup({ children }: { children: React.ReactNode }) {
+export default function PhoneMockup({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <div className="relative flex justify-center items-center w-full" style={{ perspective: "2000px" }}>
+    <div
+      className="relative flex justify-center items-center w-full"
+      style={{ perspective: "2000px" }}
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.85, y: 40, rotateX: 20, rotateY: -20 }}
-        animate={{ opacity: 1, scale: 1, y: 0, rotateX: 4, rotateY: -14, rotateZ: 2 }}
+        animate={{
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          rotateX: 4,
+          rotateY: -14,
+          rotateZ: 2,
+        }}
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         className="relative"
       >
@@ -21,40 +35,51 @@ export default function PhoneMockup({ children }: { children: React.ReactNode })
           transition={{
             duration: 7,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: "easeInOut",
           }}
           className="relative flex justify-center items-center"
         >
-
-      {/* ── AMBIENT GLOW STACK ─────────────────────────────── */}
-      <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+          {/* ── AMBIENT GLOW STACK ─────────────────────────────── */}
+          <div className="pointer-events-none absolute inset-0 -z-10">
+            <div
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
                         w-[120%] h-[120%] rounded-full
                         bg-[radial-gradient(ellipse,rgba(99,102,241,0.15),transparent_65%)]
-                        blur-[80px]" />
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+                        blur-[80px]"
+            />
+            <div
+              className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
                         w-[80%] h-[80%] rounded-full
                         bg-[radial-gradient(ellipse,rgba(59,130,246,0.2),transparent_60%)]
-                        blur-[40px]" />
-      </div>
+                        blur-[40px]"
+            />
+          </div>
 
-      {/* ── PHONE SHELL ────────────────────────────────────── */}
-      <div className="relative w-[280px] sm:w-[300px] lg:w-[320px] h-[580px] sm:h-[620px] lg:h-[660px] transition-all duration-500">
+          {/* ── PHONE SHELL ────────────────────────────────────── */}
+          <div className="relative w-[280px] sm:w-[300px] lg:w-[320px] h-[580px] sm:h-[620px] lg:h-[660px] transition-all duration-500">
+            {/* Left: mute toggle + volume buttons */}
+            <div
+              className="absolute -left-[3px] top-[100px] w-[3px] h-[28px] rounded-l-full
+                        bg-gradient-to-b from-zinc-600 to-zinc-700 shadow-[-1px_0_2px_rgba(0,0,0,0.6)]"
+            />
+            <div
+              className="absolute -left-[3px] top-[148px] w-[3px] h-[52px] rounded-l-full
+                        bg-gradient-to-b from-zinc-600 to-zinc-700 shadow-[-1px_0_2px_rgba(0,0,0,0.6)]"
+            />
+            <div
+              className="absolute -left-[3px] top-[214px] w-[3px] h-[52px] rounded-l-full
+                        bg-gradient-to-b from-zinc-600 to-zinc-700 shadow-[-1px_0_2px_rgba(0,0,0,0.6)]"
+            />
 
-        {/* Left: mute toggle + volume buttons */}
-        <div className="absolute -left-[3px] top-[100px] w-[3px] h-[28px] rounded-l-full
-                        bg-gradient-to-b from-zinc-600 to-zinc-700 shadow-[-1px_0_2px_rgba(0,0,0,0.6)]" />
-        <div className="absolute -left-[3px] top-[148px] w-[3px] h-[52px] rounded-l-full
-                        bg-gradient-to-b from-zinc-600 to-zinc-700 shadow-[-1px_0_2px_rgba(0,0,0,0.6)]" />
-        <div className="absolute -left-[3px] top-[214px] w-[3px] h-[52px] rounded-l-full
-                        bg-gradient-to-b from-zinc-600 to-zinc-700 shadow-[-1px_0_2px_rgba(0,0,0,0.6)]" />
+            {/* Right: power / side button */}
+            <div
+              className="absolute -right-[3px] top-[168px] w-[3px] h-[72px] rounded-r-full
+                        bg-gradient-to-b from-zinc-500 to-zinc-700 shadow-[1px_0_2px_rgba(0,0,0,0.6)]"
+            />
 
-        {/* Right: power / side button */}
-        <div className="absolute -right-[3px] top-[168px] w-[3px] h-[72px] rounded-r-full
-                        bg-gradient-to-b from-zinc-500 to-zinc-700 shadow-[1px_0_2px_rgba(0,0,0,0.6)]" />
-
-        {/* Phone body */}
-        <div className="
+            {/* Phone body */}
+            <div
+              className="
           relative w-full h-full rounded-[3rem]
           bg-gradient-to-b from-zinc-700 via-zinc-800 to-zinc-950
           shadow-[
@@ -65,104 +90,122 @@ export default function PhoneMockup({ children }: { children: React.ReactNode })
             inset_0_-1px_0_rgba(0,0,0,0.8)
           ]
           p-[7px]
-        ">
+        "
+            >
+              {/* Subtle brushed-metal rim highlight */}
+              <div
+                className="absolute inset-[1px] rounded-[2.85rem] pointer-events-none
+                          bg-gradient-to-br from-white/[0.06] via-transparent to-transparent"
+              />
 
-          {/* Subtle brushed-metal rim highlight */}
-          <div className="absolute inset-[1px] rounded-[2.85rem] pointer-events-none
-                          bg-gradient-to-br from-white/[0.06] via-transparent to-transparent" />
-
-          {/* ── SCREEN ───────────────────────────────────────── */}
-          <div className="
+              {/* ── SCREEN ───────────────────────────────────────── */}
+              <div
+                className="
             relative w-full h-full rounded-[2.5rem] overflow-hidden
             bg-[#080808]
             shadow-[inset_0_0_24px_rgba(0,0,0,0.9)]
-          ">
+          "
+              >
+                {/* Screen edge inner glow */}
+                <div
+                  className="absolute inset-0 rounded-[2.5rem] pointer-events-none z-20
+                            shadow-[inset_0_0_0_0.5px_rgba(255,255,255,0.06)]"
+                />
 
-            {/* Screen edge inner glow */}
-            <div className="absolute inset-0 rounded-[2.5rem] pointer-events-none z-20
-                            shadow-[inset_0_0_0_0.5px_rgba(255,255,255,0.06)]" />
-
-            {/* Dynamic Island */}
-            <motion.div
-              initial={{ scaleX: 1.15, opacity: 0.6 }}
-              animate={{ scaleX: 1, opacity: 1 }}
-              transition={{ delay: 0.5, duration: 0.4, ease: [0.34, 1.56, 0.64, 1] }}
-              className="absolute top-[14px] left-1/2 -translate-x-1/2 z-30
+                {/* Dynamic Island */}
+                <motion.div
+                  initial={{ scaleX: 1.15, opacity: 0.6 }}
+                  animate={{ scaleX: 1, opacity: 1 }}
+                  transition={{
+                    delay: 0.5,
+                    duration: 0.4,
+                    ease: [0.34, 1.56, 0.64, 1],
+                  }}
+                  className="absolute top-[14px] left-1/2 -translate-x-1/2 z-30
                          w-[90px] h-[28px] rounded-full bg-black
                          shadow-[0_2px_8px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.04)]
                          flex items-center justify-center gap-[10px] overflow-hidden"
-            >
-              {/* camera dot */}
-              <div className="w-[8px] h-[8px] rounded-full
+                >
+                  {/* camera dot */}
+                  <div
+                    className="w-[8px] h-[8px] rounded-full
                               bg-radial bg-[radial-gradient(circle_at_35%_35%,#1a1a2e,#000)]
                               ring-[0.5px] ring-inset ring-white/10
-                              shadow-[0_0_4px_rgba(99,102,241,0.3)]" />
-              {/* face ID bar */}
-              <div className="w-[20px] h-[3px] rounded-full bg-zinc-800" />
-            </motion.div>
+                              shadow-[0_0_4px_rgba(99,102,241,0.3)]"
+                  />
+                  {/* face ID bar */}
+                  <div className="w-[20px] h-[3px] rounded-full bg-zinc-800" />
+                </motion.div>
 
-            {/* Status bar */}
-            <div className="absolute top-0 left-0 right-0 h-14 flex items-end justify-between
-                            px-7 pb-[6px] text-[9px] font-semibold tracking-wide text-zinc-300 z-20">
-              <span>9:41</span>
-              <div className="flex items-center gap-[5px]">
-                {/* signal bars */}
-                <div className="flex items-end gap-[2px] h-[8px]">
-                  {[40, 60, 80, 100].map((h, i) => (
-                    <div
-                      key={i}
-                      style={{ height: `${h}%`, opacity: i < 3 ? 1 : 0.35 }}
-                      className="w-[2.5px] rounded-[1px] bg-zinc-300"
-                    />
-                  ))}
-                </div>
-                <span>5G</span>
-                {/* battery */}
-                <div className="relative flex items-center">
-                  <div className="w-[17px] h-[9px] rounded-[2px] border border-zinc-500 relative overflow-hidden">
-                    <div className="absolute inset-[1px] right-[3px] rounded-[1px] bg-emerald-400" />
+                {/* Status bar */}
+                <div
+                  className="absolute top-0 left-0 right-0 h-14 flex items-end justify-between
+                            px-7 pb-[6px] text-[9px] font-semibold tracking-wide text-zinc-300 z-20"
+                >
+                  <span>9:41</span>
+                  <div className="flex items-center gap-[5px]">
+                    {/* signal bars */}
+                    <div className="flex items-end gap-[2px] h-[8px]">
+                      {[40, 60, 80, 100].map((h, i) => (
+                        <div
+                          key={i}
+                          style={{ height: `${h}%`, opacity: i < 3 ? 1 : 0.35 }}
+                          className="w-[2.5px] rounded-[1px] bg-zinc-300"
+                        />
+                      ))}
+                    </div>
+                    <span>5G</span>
+                    {/* battery */}
+                    <div className="relative flex items-center">
+                      <div className="w-[17px] h-[9px] rounded-[2px] border border-zinc-500 relative overflow-hidden">
+                        <div className="absolute inset-[1px] right-[3px] rounded-[1px] bg-emerald-400" />
+                      </div>
+                      <div className="absolute -right-[3px] w-[2px] h-[4px] bg-zinc-500 rounded-r-[1px]" />
+                    </div>
                   </div>
-                  <div className="absolute -right-[3px] w-[2px] h-[4px] bg-zinc-500 rounded-r-[1px]" />
                 </div>
-              </div>
-            </div>
 
-            {/* Area for children */}
-            <div className="
+                {/* Area for children */}
+                <div
+                  className="
               absolute inset-0
               pt-14 pb-1
               z-10
-            ">
-              {children}
-            </div>
+            "
+                >
+                  {children}
+                </div>
 
-            {/* Screen glare — top-left specular */}
-            <div className="
+                {/* Screen glare — top-left specular */}
+                <div
+                  className="
               absolute inset-0 pointer-events-none z-10 rounded-[2.5rem]
               bg-gradient-to-br from-white/[0.045] via-transparent to-transparent
-            " />
+            "
+                />
 
-            {/* Bottom home indicator */}
-            <div className="absolute bottom-[6px] left-1/2 -translate-x-1/2 z-30
+                {/* Bottom home indicator */}
+                <div
+                  className="absolute bottom-[6px] left-1/2 -translate-x-1/2 z-30
                             w-[100px] h-[4px] rounded-full bg-white/20
-                            shadow-[0_0_8px_rgba(255,255,255,0.08)]" />
-
+                            shadow-[0_0_8px_rgba(255,255,255,0.08)]"
+                />
+              </div>
+              {/* /SCREEN */}
+            </div>
+            {/* /PHONE BODY */}
           </div>
-          {/* /SCREEN */}
+          {/* /PHONE SHELL */}
 
-        </div>
-        {/* /PHONE BODY */}
-      </div>
-      {/* /PHONE SHELL */}
-
-      {/* Ground shadow beneath the floating phone */}
-      <div className="
+          {/* Ground shadow beneath the floating phone */}
+          <div
+            className="
         absolute -bottom-16 left-1/2 -translate-x-1/2
         w-[200px] h-[30px] rounded-[100%]
         bg-black/80 blur-xl -z-20
         shadow-[0_0_40px_rgba(99,102,241,0.15)]
-      " />
-      
+      "
+          />
         </motion.div>
       </motion.div>
     </div>

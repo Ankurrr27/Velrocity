@@ -1,3 +1,4 @@
+import { Link2, Share2 } from "lucide-react";
 import ProgressOverview from "./ProgressOverview";
 import ProgressChart from "./ProgressChart";
 import HabitHeatmap from "./HabitHeatmap";
@@ -11,6 +12,7 @@ interface DashboardContentProps {
   progressData: ProgressPoint[];
   heatmapData: unknown[];
   onDateClick: (date: string) => void;
+  onShare: () => void;
 }
 
 export default function DashboardContent({
@@ -20,31 +22,47 @@ export default function DashboardContent({
   progressData,
   heatmapData,
   onDateClick,
+  onShare,
 }: DashboardContentProps) {
   return (
-    <main className="custom-scrollbar h-full w-full flex-1 overflow-y-auto bg-transparent">
-      <div className="w-full space-y-8 py-4 md:p-5 lg:p-8 overflow-hidden">
-        <section className="space-y-4">
-          <div className="flex flex-col justify-between gap-4 xl:flex-row xl:items-center px-4 md:px-0">
-            <div className="space-y-2">
-              <span className="section-kicker">Performance View</span>
+    <main className="custom-scrollbar h-full w-full flex-1 overflow-y-auto bg-transparent relative">
+      {/* Background Subtle Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.02] to-transparent pointer-events-none -z-10" />
 
+      <div className="w-full space-y-10 pt-16 pb-6 md:p-6 lg:p-10">
+        {/* TOP SECTION: Header & Stats */}
+        <section className="space-y-6">
+            <div className="flex flex-col sm:flex-row justify-between gap-6 xl:flex-row xl:items-end px-4 md:px-0">
+              <div className="space-y-1">
+                <span className="section-kicker uppercase tracking-[0.2em] text-indigo-500/80 font-black">Architecture</span>
+                <div className="flex items-center gap-4">
+                  <h2 className="text-3xl md:text-4xl font-black tracking-tight text-white decoration-zinc-800 underline-offset-8">Performance <span className="text-zinc-500">Matrix</span></h2>
+                  <button 
+                    onClick={onShare}
+                    className="p-3 bg-white/5 border border-white/5 rounded-2xl text-zinc-400 hover:text-indigo-400 hover:border-indigo-500/30 transition-all hover:scale-110 active:scale-95"
+                    title="Share Plan"
+                  >
+                    <Share2 size={18} />
+                  </button>
+                </div>
+              </div>
+              <ProgressOverview stats={stats} loading={loading} />
             </div>
-            <ProgressOverview stats={stats} loading={loading} />
-          </div>
-          <div className="surface-card rounded-none border-x-0 md:border-x md:rounded-[24px] p-4 md:p-5">
+          
+          <div className="surface-card rounded-[2rem] border-white/5 bg-zinc-900/40 p-6 md:p-8 shadow-2xl overflow-visible">
             <HabitTimeline data={timelineData} loading={loading} />
           </div>
         </section>
 
-        <div className="h-px w-full bg-zinc-200/70 dark:bg-white/5" />
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/5 to-transparent" />
 
-        <div className="flex flex-col gap-8">
-          <div className="surface-card h-[400px] rounded-none border-x-0 md:border-x md:rounded-[28px] p-6 md:p-8">
+        {/* BOTTOM SECTION: Charts */}
+        <div className="grid grid-cols-1 gap-10">
+          <div className="surface-card h-[450px] rounded-[2rem] border-white/5 bg-zinc-900/20 p-8 md:p-12">
             <ProgressChart loading={loading} data={progressData} />
           </div>
 
-          <div className="surface-card overflow-hidden rounded-none border-x-0 md:border-x md:rounded-[28px] p-6 md:p-8">
+          <div className="surface-card overflow-hidden rounded-[2rem] border-white/5 bg-zinc-900/20 p-8 md:p-12">
             <HabitHeatmap
               data={heatmapData}
               loading={loading}

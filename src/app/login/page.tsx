@@ -54,54 +54,96 @@ export default function LoginPage() {
     <div className="relative min-h-screen overflow-hidden bg-transparent text-zinc-900 dark:text-white flex-1">
       {/* BACKGROUND DECOR */}
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[120px] animate-pulse" />
-        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[140px] animate-pulse" style={{ animationDelay: '2s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full opacity-[0.03] dark:opacity-[0.05]" style={{ backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+        <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-indigo-500/[0.03] rounded-full blur-[120px]" />
+        <div className="absolute bottom-[10%] right-[-10%] w-[600px] h-[600px] bg-white/[0.02] rounded-full blur-[120px]" />
+        
+        {/* DOT GRID */}
+        <div className="absolute inset-0 opacity-[0.03]" 
+             style={{ backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+
+        {/* GIANT WATERMARK */}
+        <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none opacity-20">
+          <motion.h1 
+              animate={{ 
+                x: [0, 20, 0],
+                y: [0, -10, 0]
+              }}
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+              className="text-[20vw] font-black tracking-[-0.04em] leading-none text-transparent bg-clip-text bg-gradient-to-b from-white/[0.04] to-transparent"
+              style={{ WebkitTextStroke: '1px rgba(255,255,255,0.02)' }}>
+            ACCESS
+          </motion.h1>
+        </div>
       </div>
 
-      <div className="relative mx-auto grid min-h-screen max-w-6xl items-center gap-12 px-6 py-12 lg:grid-cols-[1fr_400px]">
+      <div className="relative mx-auto grid min-h-screen max-w-7xl items-center gap-16 px-6 py-12 lg:grid-cols-[1.1fr_420px]">
         {/* LEFT: Branding Section */}
-        <div className="hidden lg:block space-y-10">
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="flex flex-col gap-1">
-               <span className="text-xs font-semibold tracking-widest text-[rgb(var(--primary))] uppercase">Velrocity</span>
-               <h2 className="text-4xl font-extrabold border-none p-0 bg-transparent text-zinc-900 dark:text-zinc-50 tracking-tight">
-                 Pick up where you <span className="text-[rgb(var(--primary))]">left off.</span>
-               </h2>
+        <div className="hidden lg:block space-y-12">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="space-y-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/[0.03] px-4 py-1.5 text-[10px] font-black uppercase tracking-[0.2em] text-indigo-400 backdrop-blur-md">
+              <Sparkles size={12} className="animate-pulse" />
+              Welcome back to elite
             </div>
-            <p className="max-w-xl font-medium text-zinc-500 dark:text-zinc-400">
-               Log in to sync your habits, track progress, and keep your streaks alive.
+            <h1 className="text-7xl font-black leading-[0.95] tracking-tight text-white">
+              Pick up where <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-blue-500">you left off.</span>
+            </h1>
+            <p className="text-lg font-medium leading-relaxed text-zinc-400 max-w-xl">
+              Sync your habits, analyze your momentum, and architect unstoppable consistency with the world's most focused productivity OS.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-6 max-w-xl">
+          <div className="space-y-6 max-w-lg">
             {[
-              { text: "Dashboard Intel", icon: <CheckCircle2 size={16} /> },
-              { text: "Weekly Sync", icon: <CheckCircle2 size={16} /> },
-              { text: "Platform Auth", icon: <Globe size={16} /> },
-              { text: "Credential XP", icon: <Sparkles size={16} /> },
-            ].map(b => (
-              <div key={b.text} className="surface-card p-6 flex items-center gap-4 group transition-all hover:translate-x-1">
-                 <div className="w-8 h-8 rounded-xl bg-[rgba(var(--primary),0.05)] text-[rgb(var(--primary))] flex items-center justify-center group-hover:bg-[rgb(var(--primary))] group-hover:text-white transition-all">
-                   {b.icon}
-                 </div>
-                 <span className="label-elite leading-none text-zinc-400 group-hover:text-zinc-100">{b.text}</span>
-              </div>
+              { title: "Real-time Momentum", desc: "Your streaks are updated live across all your connected devices.", icon: <CheckCircle2 size={18} /> },
+              { title: "Deep Analytics", desc: "Review your coding performance with enterprise-grade data visualization.", icon: <Sparkles size={18} /> },
+              { title: "Universal Sync", desc: "Seamlessly integrate with GitHub, LeetCode, and Codeforces.", icon: <Globe size={18} /> },
+            ].map((item, idx) => (
+              <motion.div 
+                key={item.title} 
+                initial={{ opacity: 0, x: -20 }} 
+                animate={{ opacity: 1, x: 0 }} 
+                transition={{ delay: 0.3 + idx * 0.1 }}
+                className="flex gap-5 items-start bg-white/[0.02] border border-white/5 p-5 rounded-2xl hover:bg-white/[0.04] transition-colors"
+              >
+                  <div className="w-12 h-12 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center shrink-0 border border-indigo-500/20 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-black uppercase tracking-widest text-white mb-1">{item.title}</h3>
+                    <p className="text-sm text-zinc-500 font-medium leading-relaxed">{item.desc}</p>
+                  </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
         {/* RIGHT: Login Core */}
         <motion.div 
-          initial={{ opacity: 0, x: 20 }} 
-          animate={{ opacity: 1, x: 0 }} 
-          className="relative"
+          initial={{ opacity: 0, x: 20, y: 20 }} 
+          animate={{ opacity: 1, x: 0, y: [0, -10, 0] }}
+          transition={{ 
+             opacity: { duration: 0.5 },
+             x: { duration: 0.5 },
+             y: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+          }}
+          className="relative max-w-[420px] w-full mx-auto lg:max-w-none"
         >
+          {/* Ground shadow for float effect */}
+          <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 w-[80%] h-[20px] rounded-[100%] bg-black/60 blur-xl -z-10" />
+
           <form
             onSubmit={handleSubmit}
-            className="surface-card p-8 lg:p-10 space-y-6 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border-[rgba(var(--primary),0.1)] backdrop-blur-2xl"
+            className="group relative rounded-[2rem] p-8 lg:p-10 space-y-6 border border-white/5 bg-gradient-to-b from-white/[0.04] to-transparent backdrop-blur-3xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.1)] transition-all hover:border-indigo-500/20"
           >
-            <div className="space-y-2">
+            {/* Ambient hover glow inside card */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 blur-[50px] rounded-full translate-x-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
+            
+            <div className="space-y-3 relative z-10">
                <Link href="/" className="inline-flex items-center gap-2 text-[10px] font-semibold text-zinc-500 hover:text-[rgb(var(--primary))] transition-all">
                   <ArrowRight size={12} className="rotate-180" />
                   Back to home
@@ -128,7 +170,7 @@ export default function LoginPage() {
                        onChange={(e) => setIdentifier(e.target.value)}
                        required
                        placeholder="Email or User Name..."
-                       className="w-full bg-zinc-100 dark:bg-zinc-950 border-none rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:ring-2 focus:ring-[rgb(var(--primary))] transition-all outline-none"
+                       className="w-full bg-black/40 border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-sm font-bold focus:border-indigo-500/50 focus:bg-white/[0.02] shadow-[inset_0_2px_4px_rgba(0,0,0,0.4)] transition-all outline-none text-white placeholder-zinc-600"
                      />
                   </div>
                </div>
@@ -143,7 +185,7 @@ export default function LoginPage() {
                        onChange={(e) => setPassword(e.target.value)}
                        required
                        placeholder="Direct entry code..."
-                       className="w-full bg-zinc-100 dark:bg-zinc-950 border-none rounded-2xl py-4 pl-12 pr-12 text-sm font-bold focus:ring-2 focus:ring-[rgb(var(--primary))] transition-all outline-none"
+                       className="w-full bg-black/40 border border-white/5 rounded-2xl py-4 pl-12 pr-12 text-sm font-bold focus:border-indigo-500/50 focus:bg-white/[0.02] shadow-[inset_0_2px_4px_rgba(0,0,0,0.4)] transition-all outline-none text-white placeholder-zinc-600"
                      />
                      <button
                        type="button"
@@ -158,10 +200,9 @@ export default function LoginPage() {
 
             <button
               disabled={loading}
-              className="btn-primary w-full py-4 rounded-2xl text-sm font-bold shadow-2xl shadow-[rgba(var(--primary),0.3)] disabled:opacity-50 group overflow-hidden relative"
+              className="w-full py-4 rounded-2xl text-sm font-black uppercase tracking-widest bg-indigo-500 hover:bg-indigo-400 text-white shadow-[0_0_30px_-5px_rgba(99,102,241,0.6)] hover:shadow-[0_0_50px_-5px_rgba(99,102,241,0.8)] disabled:opacity-50 transition-all duration-300 relative z-10"
             >
-              <span className="relative z-10">{loading ? "Signing in..." : "Sign in"}</span>
-              <div className="absolute inset-x-0 bottom-0 h-1 bg-white/20 group-hover:h-full transition-all duration-300" />
+              <span className="relative z-10">{loading ? "Authenticating..." : "Initialize Session"}</span>
             </button>
 
             <div className="flex items-center gap-4 py-2">
@@ -173,9 +214,9 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-              className="flex w-full items-center justify-center gap-3 rounded-[2.5rem] border border-zinc-200 py-4 text-sm font-bold uppercase tracking-widest transition-all hover:bg-zinc-50 dark:border-white/10 dark:hover:bg-white/5"
+              className="flex w-full items-center justify-center gap-3 rounded-[1rem] border border-white/10 bg-white/[0.02] py-4 text-[11px] font-black uppercase tracking-[0.2em] transition-all hover:bg-white/[0.06] hover:border-white/20 text-zinc-300 hover:text-white relative z-10"
             >
-              <svg className="h-5 w-5" viewBox="0 0 24 24">
+              <svg className="h-4 w-4" viewBox="0 0 24 24">
                 <path
                   fill="currentColor"
                   d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
