@@ -12,12 +12,13 @@ interface TaskItemProps {
     date: string;
     deadline?: string | null;
   };
+  isToday?: boolean;
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
   onSetDeadline: (id: string, deadline: string | null) => void;
 }
 
-export default function TaskItem({ task, onToggle, onDelete, onSetDeadline }: TaskItemProps) {
+export default function TaskItem({ task, isToday = true, onToggle, onDelete, onSetDeadline }: TaskItemProps) {
   const isDone = task.status === 'done';
   const [showDatePicker, setShowDatePicker] = useState(false);
 
@@ -67,7 +68,7 @@ export default function TaskItem({ task, onToggle, onDelete, onSetDeadline }: Ta
     >
       <div className="flex items-center gap-4 flex-1 min-w-0">
         <button
-          onClick={() => onToggle(task._id)}
+          onClick={() => isToday && onToggle(task._id)}
           className={`
             w-8 h-8 shrink-0 rounded-xl border-2 flex items-center justify-center transition-all duration-500
             ${isDone 
@@ -76,6 +77,7 @@ export default function TaskItem({ task, onToggle, onDelete, onSetDeadline }: Ta
                 ? "border-rose-500/50 bg-rose-500/10" 
                 : "border-zinc-300 dark:border-zinc-700 group-hover:border-[rgb(var(--primary))] bg-transparent"
             }
+            ${!isToday ? "cursor-not-allowed opacity-50" : ""}
           `}
         >
           {isDone && <Check size={14} className="text-white" strokeWidth={4} />}
@@ -127,21 +129,25 @@ export default function TaskItem({ task, onToggle, onDelete, onSetDeadline }: Ta
       </div>
 
       <div className="flex items-center gap-1 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity">
-        <button 
-          onClick={() => setShowDatePicker(!showDatePicker)}
-          className="text-zinc-500 hover:text-[rgb(var(--primary))] transition-all p-2"
-          title="Set deadline"
-        >
-          <CalendarClock size={16} />
-        </button>
+        {isToday && !isDone && (
+          <button 
+            onClick={() => setShowDatePicker(!showDatePicker)}
+            className="text-zinc-500 hover:text-[rgb(var(--primary))] transition-all p-2"
+            title="Set deadline"
+          >
+            <CalendarClock size={16} />
+          </button>
+        )}
 
-        <button 
-          onClick={() => onDelete(task._id)}
-          className="text-zinc-500 hover:text-rose-500 transition-all p-2"
-          title="Delete task"
-        >
-          <Trash2 size={16} />
-        </button>
+        {isToday && !isDone && (
+          <button 
+            onClick={() => onDelete(task._id)}
+            className="text-zinc-500 hover:text-rose-500 transition-all p-2"
+            title="Delete task"
+          >
+            <Trash2 size={16} />
+          </button>
+        )}
       </div>
     </motion.div>
   );

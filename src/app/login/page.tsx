@@ -51,7 +51,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-transparent text-zinc-900 dark:text-white flex-1">
+    <div className="relative min-h-screen overflow-hidden bg-zinc-950 text-white flex-1 dark">
       {/* BACKGROUND DECOR */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute top-[-10%] left-[-10%] w-[800px] h-[800px] bg-indigo-500/[0.03] rounded-full blur-[120px]" />

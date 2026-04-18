@@ -177,16 +177,18 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
 
               <div className="space-y-2">
                 <AnimatePresence initial={false}>
-                  {tasks.map((task) => (
-                    <TaskItem
-                      key={task._id}
-                      isToday={isToday}
-                      task={task}
-                      onToggle={onToggleTask}
-                      onDelete={onDeleteTask}
-                      onSetDeadline={onSetDeadline}
-                    />
-                  ))}
+                  {[...tasks]
+                    .sort((a, b) => (a.status === 'done' ? 1 : -1))
+                    .map((task) => (
+                      <TaskItem
+                        key={task._id}
+                        isToday={isToday}
+                        task={task}
+                        onToggle={onToggleTask}
+                        onDelete={onDeleteTask}
+                        onSetDeadline={onSetDeadline}
+                      />
+                    ))}
                 </AnimatePresence>
                 
                 {tasks.length === 0 && (

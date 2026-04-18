@@ -100,8 +100,11 @@ export default function Footer() {
         {/* GIANT WORDMARK */}
         <div className="w-full relative flex items-center justify-center overflow-hidden pointer-events-none select-none mb-12">
           <h1 
-            className="text-[13vw] font-black tracking-[-0.04em] leading-none text-transparent bg-clip-text bg-gradient-to-b from-white/[0.04] to-transparent"
-            style={{ WebkitTextStroke: '1px rgba(255,255,255,0.05)' }}
+            className="text-[13vw] font-black tracking-[-0.04em] leading-none text-transparent bg-clip-text bg-gradient-to-b from-[rgb(var(--primary))] to-transparent opacity-20 transition-all duration-1000"
+            style={{ 
+              WebkitTextStroke: '1px rgba(var(--primary-rgb),0.2)',
+              filter: 'drop-shadow(0 0 30px rgba(var(--primary-rgb),0.1))'
+            }}
           >
             VELROCITY
           </h1>

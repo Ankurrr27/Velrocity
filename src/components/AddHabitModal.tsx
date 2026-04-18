@@ -257,7 +257,6 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                   <div className="w-1.5 h-1.5 rounded-full bg-[rgb(var(--primary))] animate-pulse" />
                   <span className="text-[9px] font-black uppercase tracking-widest text-zinc-500">Live Secure</span>
                </div>
-               <div className="text-[9px] font-black uppercase tracking-widest text-[rgb(var(--primary))] italic">+10 Bonus XP</div>
             </div>
           </motion.div>
         </div>

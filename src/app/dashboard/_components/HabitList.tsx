@@ -53,14 +53,16 @@ export default function HabitList({ initialHabits, isToday = true }: { initialHa
 
   return (
     <div className="space-y-3">
-      <AnimatePresence>
-        {habits.map((habit) => (
-          <motion.div
-            key={habit._id}
-            layout
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95 }}
+      <AnimatePresence initial={false}>
+        {[...habits]
+          .sort((a, b) => (a.isCompletedToday ? 1 : -1))
+          .map((habit) => (
+            <motion.div
+              key={habit._id}
+              layout
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
             className={`
               ${habit.isCompletedToday 
                 ? 'bg-[rgba(var(--primary-rgb),0.05)] border-[rgba(var(--primary-rgb),0.2)] opacity-80' 
@@ -79,8 +81,8 @@ export default function HabitList({ initialHabits, isToday = true }: { initialHa
                      ? "bg-[rgb(var(--primary))] border-[rgb(var(--primary))] shadow-[0_0_30px_rgba(var(--primary-rgb),0.6)]"
                      : "border-zinc-300 dark:border-zinc-700 group-hover:border-[rgb(var(--primary))] bg-transparent"
                    }
-                   ${loadingId === habit._id ? "opacity-30" : ""}
-                 `}
+                    ${loadingId === habit._id || !isToday ? "opacity-30 cursor-not-allowed" : ""}
+                  `}
                >
                  <AnimatePresence mode="wait">
                    {habit.isCompletedToday ? (
@@ -122,28 +124,17 @@ export default function HabitList({ initialHabits, isToday = true }: { initialHa
                   </div>
                </div>
              </div>
- 
-             <div className="flex items-center gap-3">
-                <div 
-                  className={`
-                    flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black tracking-[0.15em] transition-all duration-500
-                    ${habit.isCompletedToday
-                       ? "bg-[rgb(var(--primary))] text-white shadow-lg shadow-[rgba(var(--primary-rgb),0.2)] scale-105"
-                       : "bg-white/5 text-zinc-500 dark:text-zinc-400 border border-white/5"
-                    }
-                   `}
-                >
-                   <Zap size={12} className={habit.isCompletedToday ? "text-white" : "text-zinc-500"} fill="currentColor" />
-                   <span>+10</span>
+              {isToday && !habit.isCompletedToday && (
+                <div className="flex items-center gap-3">
+                   <button 
+                     onClick={() => handleDelete(habit)}
+                     className="lg:opacity-0 lg:group-hover:opacity-100 text-zinc-500 hover:text-rose-500 transition-all p-2"
+                     title="Delete habit"
+                   >
+                      <Trash2 size={16} />
+                   </button>
                 </div>
-                <button 
-                  onClick={() => handleDelete(habit)}
-                  className="lg:opacity-0 lg:group-hover:opacity-100 text-zinc-500 hover:text-rose-500 transition-all p-2"
-                  title="Delete habit"
-                >
-                   <Trash2 size={16} />
-                </button>
-             </div>
+              )}
           </motion.div>
         ))}
       </AnimatePresence>
