@@ -64,6 +64,7 @@ export default function HabitList({ initialHabits, isToday = true }: { initialHa
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
             className={`
+              group flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 border
               ${habit.isCompletedToday 
                 ? 'bg-[rgba(var(--primary-rgb),0.05)] border-[rgba(var(--primary-rgb),0.2)] opacity-80' 
                 : 'bg-zinc-100 dark:bg-zinc-800/40 border-zinc-200 dark:border-white/5 hover:border-[rgba(var(--primary-rgb),0.3)] hover:bg-zinc-100 dark:hover:bg-zinc-800/60 shadow-xl shadow-black/5'}

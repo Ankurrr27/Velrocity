@@ -57,7 +57,7 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
     <aside
       style={{ ['--sidebar-w' as string]: `${sidebarWidth}px` } as React.CSSProperties}
       className="relative flex shrink-0 flex-col overflow-hidden border-b border-zinc-200 bg-white dark:bg-zinc-950 dark:border-white/5
-        h-[72vh] max-h-[72vh] w-full
+        h-[85vh] max-h-[85vh] w-full
         lg:h-full lg:max-h-full lg:w-[var(--sidebar-w)] lg:border-b-0 lg:border-r"
     >
       <div

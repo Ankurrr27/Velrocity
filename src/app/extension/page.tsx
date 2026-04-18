@@ -57,7 +57,7 @@ const steps = [
 
 const specs = [
   ["Package", "velrocity-extension.zip"],
-  ["Version", "1.2.0 Alpha"],
+  ["Version", "2.0.0 Elite"],
   ["Architecture", "Manifest V3 + Side Panel"],
   ["Transport", "HTTPS / JSON Sync"],
   ["Source", "Open Source"],
@@ -79,7 +79,7 @@ export default function ExtensionPage() {
             </div>
             <h1 className="text-2xl lg:text-4xl font-black tracking-tighter text-zinc-900 dark:text-white italic">EXTENSION</h1>
            <p className="text-sm text-zinc-500 font-medium leading-relaxed">
-             Velrocity stays close to your browser flow so habits and tasks are always one panel away.
+             Velrocity stays close to your browser flow so habits and tasks are always one panel away. Now with deadline tracking and rollover sync.
            </p>
         </header>
 
@@ -98,7 +98,7 @@ export default function ExtensionPage() {
               className="w-full py-4 rounded-2xl bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 text-[11px] font-extrabold tracking-[0.15em] uppercase flex items-center justify-center gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all"
             >
               <Download size={14} strokeWidth={3} />
-              Download v1.2.0 (.zip)
+              Download v2.0.0 (Elite)
             </a>
             <p className="text-[10px] text-zinc-400 font-medium text-center px-4 leading-relaxed">
                Refer to our <a href={releaseHref} className="underline text-[rgb(var(--primary))] font-bold" target="_blank" rel="noreferrer">GitHub Repository</a> for the latest features and stable releases.

@@ -31,11 +31,11 @@ export default function DashboardContent({
       {/* Background Subtle Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.02] to-transparent pointer-events-none -z-10" />
 
-      <div className="w-full space-y-10 pt-24 pb-20 md:p-6 lg:p-10">
+      <div className="w-full space-y-10 pt-6 pb-20 md:p-6 lg:p-10">
         {/* TOP SECTION: Header & Stats */}
         <section className="space-y-6">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 md:px-0">
-                <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+            <div className="flex flex-row items-center justify-between gap-2 sm:gap-4 px-4 md:px-0">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
                     <h1 className="text-2xl sm:text-4xl font-black text-zinc-900 dark:text-white italic tracking-tighter shrink-0">Progress <span className="text-zinc-500 hidden sm:inline">Dashboard</span></h1>
                     
                     {/* SCOPE SWITCHER */}
@@ -56,19 +56,19 @@ export default function DashboardContent({
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                <div className="flex items-center gap-2 sm:gap-4 justify-end">
                    {dashboardScope === 'college' && (
-                      <div className="px-3 py-1.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-white/5 rounded-xl flex items-center gap-2">
+                      <div className="px-3 py-1.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-white/5 rounded-xl hidden sm:flex items-center gap-2">
                          <div className="w-1 h-1 rounded-full bg-[rgb(var(--primary))] animate-pulse" />
                          <span className="text-[8px] font-black uppercase text-zinc-500 tracking-widest italic">College <span className="text-zinc-900 dark:text-white hidden sm:inline">Active</span></span>
                       </div>
                    )}
                    <button 
                      onClick={onShare}
-                     className="h-10 px-4 rounded-xl bg-white dark:bg-white text-zinc-900 dark:text-black border border-zinc-200 dark:border-none flex items-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-xl"
+                     className="h-10 px-4 rounded-xl bg-white dark:bg-white text-zinc-900 dark:text-black border border-zinc-200 dark:border-none flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-xl"
                    >
                       <Share2 size={14} />
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em]">Share</span>
+                      <span className="text-[9px] font-black uppercase tracking-[0.2em] hidden sm:inline">Share</span>
                    </button>
                 </div>
             </div>
