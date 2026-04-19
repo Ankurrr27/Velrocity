@@ -13,6 +13,23 @@ import type {
   ProgressPoint,
   TimelineData,
 } from "./_components/types";
+import { 
+  fetchHabits, 
+  fetchUserProgress, 
+  fetchHabitTimelineData, 
+  fetchActivityFeed, 
+  fetchProgressHistory, 
+  fetchHeatmapData,
+  fetchUserProfile
+} from "@/app/actions/habitActions";
+import { 
+  fetchTasks, 
+  createTask, 
+  toggleTask, 
+  deleteTask, 
+  setTaskDeadline 
+} from "@/app/actions/taskActions";
+
 
 const getNDays = (past: number, future: number) => {
   const dates = [];
@@ -54,15 +71,6 @@ export default function DashboardPage() {
   const isToday = selectedIndex === 29;
 
   const fetchAllForDate = async (dateIso: string) => {
-    const {
-      fetchHabits,
-      fetchUserProgress,
-      fetchHabitTimelineData,
-      fetchActivityFeed,
-      fetchProgressHistory,
-      fetchHeatmapData,
-    } = await import("@/app/actions/habitActions");
-    const { fetchTasks } = await import("@/app/actions/taskActions");
 
     try {
       const [habitData, statData, timeline, , progress, taskData, heatmap] =
@@ -99,7 +107,6 @@ export default function DashboardPage() {
     if (e) e.preventDefault();
     if (!newTaskTitle.trim()) return;
 
-    const { createTask } = await import("@/app/actions/taskActions");
     const task = await createTask(newTaskTitle);
     if (!task.error) {
       setTasks([task, ...tasks]);
@@ -108,7 +115,6 @@ export default function DashboardPage() {
   };
 
   const handleToggleTask = async (id: string) => {
-    const { toggleTask } = await import("@/app/actions/taskActions");
     setTasks(
       tasks.map((task) =>
         task._id === id
@@ -120,13 +126,11 @@ export default function DashboardPage() {
   };
 
   const handleDeleteTask = async (id: string) => {
-    const { deleteTask } = await import("@/app/actions/taskActions");
     setTasks(tasks.filter((task) => task._id !== id));
     await deleteTask(id);
   };
 
   const handleSetDeadline = async (id: string, deadline: string | null) => {
-    const { setTaskDeadline } = await import("@/app/actions/taskActions");
     setTasks(tasks.map((task) => task._id === id ? { ...task, deadline } : task));
     await setTaskDeadline(id, deadline);
   };
@@ -154,7 +158,6 @@ export default function DashboardPage() {
   const [showShareModal, setShowShareModal] = useState(false);
 
   const fetchUserData = async () => {
-     const { fetchUserProfile } = await import("@/app/actions/habitActions");
      const data = await fetchUserProfile();
      setUserData(data);
   };

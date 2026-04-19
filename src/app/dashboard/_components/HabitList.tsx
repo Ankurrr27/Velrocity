@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Check, Trash2, Zap } from 'lucide-react';
-import { checkInHabit } from '@/app/actions/habitActions';
+import { checkInHabit, deleteHabit } from '@/app/actions/habitActions';
 
 type Habit = {
   _id: string;
@@ -35,7 +35,6 @@ export default function HabitList({ initialHabits, isToday = true }: { initialHa
     const confirmation = window.confirm(`Delete habit "${habit.title}"?`);
     if (confirmation) {
       setHabits(current => current.filter(h => h._id !== habit._id));
-      const { deleteHabit } = await import('@/app/actions/habitActions');
       await deleteHabit(habit._id);
     }
   };

@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import AddHabitModal from "./AddHabitModal";
 import { useSession, signOut } from "next-auth/react";
 import { logout } from "@/app/actions/authActions";
+import { fetchUserProfile } from "@/app/actions/habitActions";
 
 export default function Sidebar() {
   const { data: session } = useSession();
@@ -24,7 +25,6 @@ export default function Sidebar() {
   useEffect(() => {
     const loadProfile = async () => {
       try {
-        const { fetchUserProfile } = await import("@/app/actions/habitActions");
         const profile = await fetchUserProfile();
         setUserProfile(profile);
       } catch (err) {

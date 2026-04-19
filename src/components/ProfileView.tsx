@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { updateProfile } from "@/app/actions/profileActions";
+import { toggleFollow } from "@/app/actions/socialActions";
 
 const accentSwatches: Record<string, string> = {
   indigo: "bg-indigo-500",
@@ -273,7 +274,6 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
              ) : (
                <button 
                  onClick={async () => {
-                   const { toggleFollow } = await import("@/app/actions/socialActions");
                    const res = await toggleFollow(profile.id);
                    if (res.success) {
                      setProfile((p: any) => ({ ...p, isFollowing: res.isFollowing }));
