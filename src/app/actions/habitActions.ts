@@ -486,7 +486,7 @@ export async function fetchHeatmapData() {
       const count = logsMap.get(dateStr) || 0;
       
       const intensity = Math.min(4, count);
-      heatmap.push({ intensity, date: dateStr });
+      heatmap.push({ intensity, count, date: dateStr });
     }
 
     return JSON.parse(JSON.stringify(heatmap));

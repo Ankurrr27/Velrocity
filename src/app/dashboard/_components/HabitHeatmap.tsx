@@ -42,8 +42,15 @@ export default function HabitHeatmap({
 
   // Calculate month labels positions
   const displayData = isMobile ? data.slice(-91) : data;
+  let paddedData = [...displayData];
+  if (paddedData.length > 0) {
+    const firstDay = new Date(paddedData[0].date);
+    const padding = firstDay.getUTCDay(); // 0 is Sun
+    paddedData = [...Array(padding).fill({ isEmpty: true }), ...paddedData];
+  }
   const monthLabels: { label: string, index: number }[] = [];
-  displayData.forEach((day, i) => {
+  paddedData.forEach((day, i) => {
+    if (day.isEmpty) return;
     if (i % 7 === 0) { // Check beginning of each week
       const d = new Date(day.date);
       const monthName = d.toLocaleDateString('en-US', { month: 'short' }).toUpperCase();
@@ -82,7 +89,7 @@ export default function HabitHeatmap({
 
         <div className="flex-1 overflow-hidden">
            <div className="flex justify-end">
-             <div className="relative" style={{ width: `${Math.ceil(displayData.length / 7) * 17}px` }}>
+             <div className="relative" style={{ width: `${Math.ceil(paddedData.length / 7) * 17}px` }}>
                 {/* MONTH LABELS */}
                 <div className="absolute -top-6 left-0 right-0 flex text-[9px] font-black uppercase tracking-widest text-zinc-500/80 pointer-events-none h-6">
                    {monthLabels.map((m, i) => (
@@ -96,7 +103,10 @@ export default function HabitHeatmap({
                 </div>
 
                 <div className="grid grid-flow-col grid-rows-7 gap-[4px] pt-1">
-                  {displayData.map((day: any, i: number) => {
+                  {paddedData.map((day: any, i: number) => {
+                    if (day.isEmpty) {
+                       return <div key={i} className="w-[13px] h-[13px]" />;
+                    }
                     const intensity = day.intensity;
                     
                     return (
@@ -108,12 +118,11 @@ export default function HabitHeatmap({
                           type: "spring",
                           stiffness: 300,
                           damping: 20,
-                          delay: (displayData.length - i) * 0.001 
+                          delay: (displayData.length - (i - (paddedData.length - displayData.length))) * 0.001 
                         }}
-                        title={`${day.date}: ${intensity} units`}
-                        onClick={() => onDateClick?.(day.date)}
+                        title={`${day.count || 0} done`}
                         className={`
-                          w-[13px] h-[13px] rounded-[3px] cursor-pointer relative group
+                          w-[13px] h-[13px] rounded-[3px] relative group
                           ${intensity === 0 ? getIntensityColor(0) : getIntensityColor(intensity)}
                           transition-all duration-300 hover:scale-150 hover:z-20
                           ${intensity >= 3 ? 'shadow-[0_0_12px_rgba(var(--primary-rgb),0.3)]' : ''}
