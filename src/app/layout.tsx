@@ -1,19 +1,23 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import AppLayout from "@/components/AppLayout";
 import { Providers } from "@/components/Providers";
 
-const outfit = Outfit({
+const geistSans = Geist({
   subsets: ["latin"],
-  variable: "--font-outfit",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  variable: "--font-geist-sans",
+});
+
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
 });
 
 export const metadata: Metadata = {
-  title: "Velrocity - Elite Habit Tracker",
-  description: "Track your habits with a premium, immersive experience.",
+  title: "Velrocity",
+  description: "A focused, premium workspace for habit momentum and developer consistency.",
 };
 
 export default function RootLayout({
@@ -22,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={`${outfit.variable} font-sans bg-zinc-50 dark:bg-zinc-950`}>
+    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body className="font-sans antialiased">
         <ThemeProvider>
           <Providers>
             <AppLayout>

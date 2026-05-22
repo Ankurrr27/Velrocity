@@ -8,6 +8,7 @@ import {
   Plus, 
   Search, 
   Download,
+  UserRound,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import AddHabitModal from "./AddHabitModal";
@@ -58,16 +59,23 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* DESKTOP SIDEBAR - FLUSH ZINC RAIL */}
       <aside className="
         hidden md:fixed md:top-0 md:left-0 md:flex md:flex-col
-        md:h-screen w-[64px] shrink-0 z-50
-        bg-zinc-950 border-r border-white/5
-        px-2.5 py-6
+        md:h-screen w-[72px] shrink-0 z-50
+        bg-white/86 dark:bg-[#070b14]/92 border-r border-slate-200/80 dark:border-white/5
+        px-3 py-5 backdrop-blur-xl
         transition-colors
       ">
-        {/* NAV */}
-        <nav className="flex flex-1 flex-col gap-4">
+        <button
+          onClick={() => router.push("/dashboard")}
+          className="mb-7 flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950 text-sm font-bold text-white shadow-sm dark:bg-white dark:text-slate-950"
+          aria-label="Velrocity dashboard"
+          title="Velrocity"
+        >
+          V
+        </button>
+
+        <nav className="flex flex-1 flex-col gap-2">
           {navItems.map((item) => (
             <SidebarItem
               key={item.path}
@@ -79,25 +87,23 @@ export default function Sidebar() {
           ))}
         </nav>
 
-        {/* BOTTOM ACTIONS */}
-        <div className="flex flex-col gap-4 pt-4">
-          {/* Add Habit */}
+        <div className="flex flex-col gap-3 pt-4">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-[rgb(var(--primary))] text-white shadow-xl shadow-[rgba(var(--primary-rgb),0.3)] transition hover:opacity-90 active:scale-95 mx-auto"
+            className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-[rgb(var(--primary))] text-white shadow-lg shadow-blue-500/20 hover:-translate-y-0.5 active:scale-95"
             aria-label="Add habit"
+            title="Add habit"
           >
             <Plus size={18} strokeWidth={3} />
           </button>
 
-          {/* Profile Avatar */}
           <button
             onClick={() => router.push("/profile")}
             className={`
-              flex h-10 w-10 items-center justify-center overflow-hidden rounded-full transition mx-auto border-2
+              flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl transition mx-auto border
               ${isActive("/profile")
-                ? "border-[rgb(var(--primary))] ring-4 ring-[rgba(var(--primary-rgb),0.1)]"
-                : "border-transparent hover:border-white/20"
+                ? "border-[rgb(var(--primary))] ring-4 ring-[rgba(var(--primary-rgb),0.12)]"
+                : "border-slate-200 dark:border-white/10 hover:border-blue-200 dark:hover:border-blue-400/30"
               }
             `}
             aria-label="Open profile"
@@ -109,7 +115,7 @@ export default function Sidebar() {
                 className="h-full w-full object-cover"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center bg-zinc-800 text-[10px] font-black uppercase text-zinc-100 italic">
+              <div className="flex h-full w-full items-center justify-center bg-slate-100 text-[10px] font-bold uppercase text-slate-600 dark:bg-slate-900 dark:text-slate-200">
                 {userProfile?.name?.[0] || session?.user?.name?.[0] || 'ID'}
               </div>
             )}
@@ -118,8 +124,9 @@ export default function Sidebar() {
           {/* Logout */}
           <button
             onClick={handleLogout}
-            className="flex h-11 w-11 items-center justify-center rounded-2xl text-zinc-400 transition hover:bg-rose-500/10 hover:text-rose-500 mx-auto"
+            className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl text-slate-400 hover:bg-rose-500/10 hover:text-rose-500"
             aria-label="Logout"
+            title="Logout"
           >
             <LogOut size={18} />
           </button>
@@ -128,10 +135,10 @@ export default function Sidebar() {
 
       <nav className="
         fixed inset-x-0 bottom-0 z-50 md:hidden
-        bg-white/80 dark:bg-zinc-950/95 backdrop-blur-2xl
-        border-t border-zinc-200 dark:border-white/10
+        bg-white/88 dark:bg-[#070b14]/94 backdrop-blur-2xl
+        border-t border-slate-200/80 dark:border-white/10
         px-4 pt-1 pb-1 sm:pb-2
-        shadow-[0_-10px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_-20px_40px_rgba(0,0,0,0.4)]
+        shadow-[0_-12px_32px_rgba(15,23,42,0.08)] dark:shadow-[0_-20px_40px_rgba(0,0,0,0.4)]
       ">
         <div className="flex items-center justify-between max-w-sm mx-auto">
           <MobileNavButton icon={<Home size={20} />} active={isActive("/dashboard")} onClick={() => router.push("/dashboard")} label="Home" />
@@ -140,7 +147,7 @@ export default function Sidebar() {
           {/* FAB */}
           <button
             onClick={() => setIsModalOpen(true)}
-            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[rgb(var(--primary))] text-white shadow-2xl shadow-[rgba(var(--primary-rgb),0.4)] transition hover:opacity-90 active:scale-90 -translate-y-3 border-[3px] border-white dark:border-zinc-950"
+            className="-translate-y-3 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-[3px] border-white bg-[rgb(var(--primary))] text-white shadow-xl shadow-blue-500/25 hover:-translate-y-3.5 active:scale-95 dark:border-[#070b14]"
             aria-label="Add habit"
           >
             <Plus size={20} strokeWidth={3} />
@@ -152,10 +159,10 @@ export default function Sidebar() {
             <button
             onClick={() => router.push("/profile")}
             className={`
-              flex h-9 w-9 items-center justify-center overflow-hidden rounded-full transition border-2
+              flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl transition border
               ${isActive("/profile")
-                ? "border-[rgb(var(--primary))] ring-2 ring-[rgba(var(--primary-rgb),0.2)]"
-                : "border-zinc-300 dark:border-zinc-700 hover:border-zinc-500"
+                ? "border-[rgb(var(--primary))] ring-2 ring-[rgba(var(--primary-rgb),0.18)]"
+                : "border-slate-300 dark:border-white/10 hover:border-blue-300"
               }
             `}
             aria-label="Profile"
@@ -163,8 +170,8 @@ export default function Sidebar() {
             {session?.user?.image ? (
               <img src={session.user.image} alt="Profile" className="h-full w-full object-cover" />
             ) : (
-              <div className="flex h-full w-full items-center justify-center bg-zinc-700 text-[10px] font-bold uppercase text-zinc-100">
-                {session?.user?.name?.[0] || session?.user?.email?.[0] || '?'}
+              <div className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-500 dark:bg-slate-900 dark:text-slate-300">
+                <UserRound size={15} />
               </div>
             )}
           </button>
@@ -184,10 +191,10 @@ function SidebarItem({ icon, label, onClick, active }: { icon: React.ReactNode, 
     <button
       onClick={onClick}
       className={`
-        group relative flex flex-col items-center justify-center rounded-full transition-all duration-300 w-10 h-10 mx-auto
+        group relative flex flex-col items-center justify-center rounded-xl transition-all duration-200 w-10 h-10 mx-auto
         ${active
-          ? "bg-[rgba(var(--primary),0.1)] text-[rgb(var(--primary))]"
-          : "text-zinc-400 hover:bg-zinc-700"
+          ? "bg-[rgba(var(--primary-rgb),0.12)] text-[rgb(var(--primary))]"
+          : "text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/5 dark:hover:text-slate-100"
         }
       `}
       title={label}
@@ -195,10 +202,10 @@ function SidebarItem({ icon, label, onClick, active }: { icon: React.ReactNode, 
       {active && (
         <motion.div 
            layoutId="activeSide" 
-           className="absolute left-[-12px] h-6 w-1.5 bg-[rgb(var(--primary))] rounded-r-full shadow-[0_0_15px_rgba(var(--primary),0.8)]"
+           className="absolute left-[-13px] h-5 w-1 rounded-r-full bg-[rgb(var(--primary))] shadow-[0_0_14px_rgba(var(--primary-rgb),0.7)]"
         />
       )}
-      <span className={`transition-transform duration-300 group-hover:scale-120 ${active ? "text-[rgb(var(--primary))]" : "text-zinc-200 group-hover:text-white"}`}>
+      <span className={`transition-transform duration-200 group-hover:scale-105 ${active ? "text-[rgb(var(--primary))]" : ""}`}>
         {icon}
       </span>
     </button>
@@ -213,8 +220,8 @@ function MobileNavButton({ icon, onClick, active, label }: { icon: React.ReactNo
       className={`
         flex h-10 w-10 items-center justify-center rounded-xl transition
         ${active
-          ? "bg-[rgba(var(--primary),0.1)] text-[rgb(var(--primary))]"
-          : "text-zinc-500 dark:text-zinc-200 hover:text-zinc-900 dark:hover:text-white"
+          ? "bg-[rgba(var(--primary-rgb),0.12)] text-[rgb(var(--primary))]"
+          : "text-slate-500 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white"
         }
       `}
     >

@@ -8,16 +8,16 @@ export default async function TeamsListPage() {
   const teams = await fetchUserTeams();
 
   return (
-    <main className="min-h-screen p-6 lg:p-10 page-shell">
-      <div className="max-w-6xl mx-auto space-y-8 page-stack">
+    <main className="page-shell min-h-screen p-4 sm:p-6 lg:p-8">
+      <div className="page-stack mx-auto max-w-6xl">
         
-        <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-6 border-b border-zinc-200 dark:border-white/5">
+        <header className="flex flex-col justify-between gap-5 border-b border-slate-200/70 pb-6 dark:border-white/5 sm:flex-row sm:items-end">
           <div className="space-y-1">
             <span className="section-kicker">Network</span>
-            <h1 className="text-4xl font-bold uppercase tracking-tighter text-zinc-900 dark:text-white leading-none">
-              Operational Teams
+            <h1 className="text-3xl font-semibold leading-tight text-slate-950 dark:text-white">
+              Teams
             </h1>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400 font-medium max-w-xl">
+            <p className="max-w-xl text-sm text-slate-500 dark:text-slate-400">
               Collaborate on shared goals and compete on the global leaderboards.
             </p>
           </div>
@@ -29,22 +29,22 @@ export default async function TeamsListPage() {
         </header>
 
         {teams.length === 0 ? (
-          <div className="surface-card p-16 text-center flex flex-col items-center group">
-            <div className="w-20 h-20 rounded-[28px] bg-zinc-100 dark:bg-zinc-900 text-zinc-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500">
+          <div className="surface-card flex flex-col items-center p-12 text-center">
+            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-100 text-slate-400 dark:bg-white/5">
               <Users size={32} />
             </div>
-            <h2 className="text-2xl font-bold uppercase tracking-tighter">No Active Cells</h2>
-            <p className="text-zinc-500 max-w-sm mt-3 text-sm font-medium">
-              You haven't joined any operational teams yet. Initiate a new cell to get started.
+            <h2 className="text-xl font-semibold text-slate-950 dark:text-white">No active teams</h2>
+            <p className="mt-3 max-w-sm text-sm text-slate-500">
+              You haven't joined any teams yet. Create one to get started.
             </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {teams.map((team) => (
               <Link key={team._id} href={`/teams/${team._id}`}>
-                <div className="surface-card group p-8 flex flex-col h-full cursor-pointer hover:border-[rgb(var(--primary))]">
+                <div className="surface-card group flex h-full cursor-pointer flex-col p-6 hover:border-[rgb(var(--primary))]">
                   <div className="flex items-start justify-between mb-6">
-                    <div className="w-14 h-14 rounded-2xl bg-zinc-900 dark:bg-white text-white dark:text-black flex items-center justify-center font-bold text-2xl shadow-xl">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-950 text-xl font-semibold text-white shadow-sm dark:bg-white dark:text-slate-950">
                       {team.name.charAt(0).toUpperCase()}
                     </div>
                     {team.isPrivate && (
@@ -55,19 +55,19 @@ export default async function TeamsListPage() {
                     )}
                   </div>
                   
-                  <h3 className="text-xl font-bold uppercase tracking-tighter text-zinc-900 dark:text-zinc-50 truncate leading-tight group-hover:text-[rgb(var(--primary))] transition-colors">
+                  <h3 className="truncate text-lg font-semibold leading-tight text-slate-950 transition-colors group-hover:text-[rgb(var(--primary))] dark:text-white">
                     {team.name}
                   </h3>
-                  <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400 mt-2 line-clamp-2 min-h-[44px]">
+                  <p className="mt-2 line-clamp-2 min-h-[44px] text-sm text-slate-500 dark:text-slate-400">
                     {team.description || 'No operational briefing provided.'}
                   </p>
                   
-                  <div className="mt-8 pt-6 border-t border-zinc-100 dark:border-white/5 flex items-center justify-between">
-                    <div className="flex items-center gap-2 label-elite uppercase text-[rgb(var(--primary))]">
+                  <div className="mt-6 flex items-center justify-between border-t border-slate-200/70 pt-5 dark:border-white/5">
+                    <div className="label-elite flex items-center gap-2 text-[rgb(var(--primary))]">
                       <Users size={14} />
-                      {team.memberCount} MBRS
+                      {team.memberCount} members
                     </div>
-                    <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-400 group-hover:bg-[rgb(var(--primary))] group-hover:text-white transition-all">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-100 text-slate-400 transition-all group-hover:bg-[rgb(var(--primary))] group-hover:text-white dark:bg-white/5">
                        <Plus size={14} />
                     </div>
                   </div>

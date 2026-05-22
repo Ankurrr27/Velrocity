@@ -1,17 +1,17 @@
 'use client';
 
 import { usePathname } from "next/navigation";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Wifi } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
 
 function getPageMeta(pathname: string) {
-  if (pathname.startsWith("/dashboard")) return { title: "Dashboard" };
-  if (pathname.startsWith("/teams"))     return { title: "Teams" };
-  if (pathname.startsWith("/users"))     return { title: "Discovery" };
-  if (pathname.startsWith("/profile"))   return { title: "Profile" };
-  if (pathname.startsWith("/calendar"))  return { title: "Calendar" };
-  if (pathname.startsWith("/extension")) return { title: "Extension" };
-  return { title: "Velrocity" };
+  if (pathname.startsWith("/dashboard")) return { title: "Dashboard", eyebrow: "Momentum workspace" };
+  if (pathname.startsWith("/teams")) return { title: "Teams", eyebrow: "Shared goals" };
+  if (pathname.startsWith("/users")) return { title: "Discovery", eyebrow: "Community signal" };
+  if (pathname.startsWith("/profile")) return { title: "Profile", eyebrow: "Identity and settings" };
+  if (pathname.startsWith("/calendar")) return { title: "Calendar", eyebrow: "Daily review" };
+  if (pathname.startsWith("/extension")) return { title: "Extension", eyebrow: "Browser companion" };
+  return { title: "Velrocity", eyebrow: "Focus operating system" };
 }
 
 export default function Navbar() {
@@ -20,29 +20,29 @@ export default function Navbar() {
   const pageMeta = getPageMeta(pathname);
 
   return (
-    <header className="sticky top-0 z-40 flex h-12 shrink-0 items-center justify-between border-b border-zinc-200 dark:border-white/5 bg-white dark:bg-zinc-950 px-6 transition-colors">
-      {/* Page title */}
-      <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-200">
-        {pageMeta.title}
-      </span>
+    <header className="sticky top-0 z-40 flex h-14 shrink-0 items-center justify-between border-b border-slate-200/70 bg-white/82 px-4 backdrop-blur-xl transition-colors dark:border-white/5 dark:bg-[#0b0f19]/82 sm:px-6">
+      <div className="min-w-0">
+        <p className="hidden text-[10px] font-semibold uppercase tracking-[0.08em] text-slate-500 dark:text-slate-400 sm:block">
+          {pageMeta.eyebrow}
+        </p>
+        <h1 className="truncate text-sm font-semibold text-slate-950 dark:text-white">
+          {pageMeta.title}
+        </h1>
+      </div>
 
-      {/* Right actions */}
-      <div className="flex items-center gap-3">
-        {/* Sync indicator */}
-        <div className="flex items-center gap-1.5">
-          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-xs font-medium text-zinc-400 dark:text-zinc-500">Synced</span>
+      <div className="flex items-center gap-2">
+        <div className="hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 shadow-sm dark:border-white/10 dark:bg-white/[0.03] sm:flex">
+          <Wifi size={13} className="text-blue-500" />
+          <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Synced</span>
         </div>
 
-        <div className="w-px h-4 bg-zinc-200 dark:bg-zinc-700" />
-
-        {/* Theme toggle */}
         <button
           onClick={toggleTheme}
-          className="flex h-8 w-8 items-center justify-center rounded-lg text-zinc-400 dark:text-zinc-500 transition-all hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-200"
+          className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 shadow-sm hover:border-blue-200 hover:text-blue-600 dark:border-white/10 dark:bg-white/[0.03] dark:text-slate-400 dark:hover:border-blue-400/30 dark:hover:text-blue-300"
           aria-label="Toggle theme"
+          title="Toggle theme"
         >
-          {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
+          {theme === "dark" ? <Sun size={15} /> : <Moon size={15} />}
         </button>
       </div>
     </header>

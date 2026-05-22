@@ -59,10 +59,10 @@ export default function TaskItem({ task, isToday = true, onToggle, onDelete, onS
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       className={`
-        group flex items-center justify-between px-3 py-3 transition-all duration-300 rounded-[1.25rem] border
+        group flex items-center justify-between px-3 py-3 transition-all duration-200 rounded-xl border
         ${isDeadlinePassed 
           ? "bg-rose-500/5 border-rose-500/20" 
-          : "bg-white/5 border-transparent hover:border-white/10 hover:bg-white/[0.08]"
+          : "bg-white dark:bg-white/[0.03] border-slate-200/70 dark:border-white/5 hover:border-[rgba(var(--primary-rgb),0.24)]"
         }
       `}
     >
@@ -70,12 +70,12 @@ export default function TaskItem({ task, isToday = true, onToggle, onDelete, onS
         <button
           onClick={() => isToday && onToggle(task._id)}
           className={`
-            w-8 h-8 shrink-0 rounded-xl border-2 flex items-center justify-center transition-all duration-500
+            w-8 h-8 shrink-0 rounded-xl border flex items-center justify-center transition-all duration-300
             ${isDone 
-              ? "bg-[rgb(var(--primary))] border-[rgb(var(--primary))] shadow-[0_0_20px_rgba(var(--primary-rgb),0.4)]" 
+              ? "bg-[rgb(var(--primary))] border-[rgb(var(--primary))] shadow-lg shadow-blue-500/20" 
               : isDeadlinePassed 
                 ? "border-rose-500/50 bg-rose-500/10" 
-                : "border-zinc-300 dark:border-zinc-700 group-hover:border-[rgb(var(--primary))] bg-transparent"
+                : "border-slate-300 dark:border-white/10 group-hover:border-[rgb(var(--primary))] bg-transparent"
             }
             ${!isToday ? "cursor-not-allowed opacity-50" : ""}
           `}
@@ -86,16 +86,16 @@ export default function TaskItem({ task, isToday = true, onToggle, onDelete, onS
         <div className="flex flex-col flex-1 min-w-0">
           <span className={`text-[12px] font-black uppercase tracking-tight truncate transition-all duration-500 ${
             isDone 
-              ? "text-zinc-500 dark:text-zinc-600 line-through" 
+              ? "text-slate-400 line-through" 
               : isDeadlinePassed 
                 ? "text-rose-500"
-                : "text-zinc-900 dark:text-white"
+                : "text-slate-950 dark:text-white"
           }`}>
             {task.title}
           </span>
           
           <div className="flex items-center gap-2 mt-0.5">
-            <span className="text-[8px] font-black uppercase tracking-[0.2em] text-zinc-500">Log</span>
+            <span className="text-[9px] font-semibold uppercase tracking-[0.08em] text-slate-500">Log</span>
             {isRolledOver && (
               <>
                 <span className="w-1 h-1 rounded-full bg-orange-500" />
@@ -107,7 +107,7 @@ export default function TaskItem({ task, isToday = true, onToggle, onDelete, onS
             {!isDone && task.deadline && (
               <>
                 <span className="w-1 h-1 rounded-full bg-zinc-700" />
-                <span className={`text-[8px] font-black uppercase tracking-[0.15em] flex items-center gap-1 ${isDeadlinePassed ? 'text-rose-500' : isDeadlineNear ? 'text-amber-500' : 'text-zinc-500'}`}>
+                <span className={`flex items-center gap-1 text-[9px] font-semibold uppercase tracking-[0.08em] ${isDeadlinePassed ? 'text-rose-500' : isDeadlineNear ? 'text-amber-500' : 'text-slate-500'}`}>
                    {new Date(task.deadline).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}
                 </span>
               </>
@@ -118,7 +118,7 @@ export default function TaskItem({ task, isToday = true, onToggle, onDelete, onS
             <input 
               type="date" 
               autoFocus
-              className="mt-3 text-[10px] p-2 rounded-xl border border-white/10 bg-black/40 outline-none text-white font-black uppercase tracking-widest"
+              className="input-shell mt-3 p-2 text-[11px]"
               defaultValue={task.deadline ? new Date(task.deadline).toISOString().split('T')[0] : ''}
               onChange={handleDateChange}
               onBlur={() => setShowDatePicker(false)}
@@ -132,7 +132,7 @@ export default function TaskItem({ task, isToday = true, onToggle, onDelete, onS
         {isToday && !isDone && (
           <button 
             onClick={() => setShowDatePicker(!showDatePicker)}
-            className="text-zinc-500 hover:text-[rgb(var(--primary))] transition-all p-2"
+            className="p-2 text-slate-400 transition-all hover:text-[rgb(var(--primary))]"
             title="Set deadline"
           >
             <CalendarClock size={16} />
@@ -142,7 +142,7 @@ export default function TaskItem({ task, isToday = true, onToggle, onDelete, onS
         {isToday && !isDone && (
           <button 
             onClick={() => onDelete(task._id)}
-            className="text-zinc-500 hover:text-rose-500 transition-all p-2"
+            className="p-2 text-slate-400 transition-all hover:text-rose-500"
             title="Delete task"
           >
             <Trash2 size={16} />

@@ -41,10 +41,10 @@ export default function HabitList({ initialHabits, isToday = true }: { initialHa
 
   if (habits.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center space-y-4">
+      <div className="flex flex-col items-center justify-center space-y-3 py-16 text-center">
         <div className="space-y-1">
-           <p className="text-zinc-500 dark:text-zinc-400 text-[12px] font-semibold">No habits yet</p>
-           <p className="text-xs text-zinc-400 dark:text-zinc-500">Add a habit to get started</p>
+           <p className="text-sm font-semibold text-slate-600 dark:text-slate-300">No habits yet</p>
+           <p className="text-xs text-slate-400">Add a habit to get started</p>
         </div>
       </div>
     );
@@ -63,10 +63,10 @@ export default function HabitList({ initialHabits, isToday = true }: { initialHa
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
             className={`
-              group flex items-center justify-between px-4 py-3 rounded-2xl transition-all duration-300 border
+              group flex items-center justify-between px-3.5 py-3 rounded-xl transition-all duration-200 border
               ${habit.isCompletedToday 
-                ? 'bg-[rgba(var(--primary-rgb),0.05)] border-[rgba(var(--primary-rgb),0.2)] opacity-80' 
-                : 'bg-zinc-100 dark:bg-zinc-800/40 border-zinc-200 dark:border-white/5 hover:border-[rgba(var(--primary-rgb),0.3)] hover:bg-zinc-100 dark:hover:bg-zinc-800/60 shadow-xl shadow-black/5'}
+                ? 'bg-[rgba(var(--primary-rgb),0.06)] border-[rgba(var(--primary-rgb),0.18)] opacity-90' 
+                : 'bg-white dark:bg-white/[0.03] border-slate-200/80 dark:border-white/5 hover:border-[rgba(var(--primary-rgb),0.26)] shadow-sm'}
             `}
           >
              <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -76,10 +76,10 @@ export default function HabitList({ initialHabits, isToday = true }: { initialHa
                  whileTap={{ scale: 0.8 }}
                  whileHover={{ scale: 1.1, rotate: habit.isCompletedToday ? -10 : 10 }}
                  className={`
-                   w-10 h-10 rounded-2xl border-2 flex items-center justify-center transition-all duration-500 focus:outline-none shrink-0
+                   w-9 h-9 rounded-xl border flex items-center justify-center transition-all duration-300 focus:outline-none shrink-0
                    ${habit.isCompletedToday
-                     ? "bg-[rgb(var(--primary))] border-[rgb(var(--primary))] shadow-[0_0_30px_rgba(var(--primary-rgb),0.6)]"
-                     : "border-zinc-300 dark:border-zinc-700 group-hover:border-[rgb(var(--primary))] bg-transparent"
+                     ? "bg-[rgb(var(--primary))] border-[rgb(var(--primary))] shadow-lg shadow-blue-500/20"
+                     : "border-slate-300 dark:border-white/10 group-hover:border-[rgb(var(--primary))] bg-transparent"
                    }
                     ${loadingId === habit._id || !isToday ? "opacity-30 cursor-not-allowed" : ""}
                   `}
@@ -109,16 +109,16 @@ export default function HabitList({ initialHabits, isToday = true }: { initialHa
  
                <div className="flex flex-col min-w-0">
                  <span className={`text-[13px] font-black uppercase tracking-tight truncate transition-all duration-500 ${
-                    habit.isCompletedToday ? "text-zinc-500 dark:text-zinc-600 line-through" : "text-zinc-900 dark:text-white"
+                    habit.isCompletedToday ? "text-slate-400 line-through" : "text-slate-950 dark:text-white"
                   }`}>
                     {habit.title}
                   </span>
                   <div className="flex items-center gap-2">
-                    <span className="text-[9px] font-black uppercase tracking-widest text-[rgb(var(--primary))] opacity-80 italic">
+                    <span className="text-[10px] font-semibold uppercase tracking-[0.06em] text-[rgb(var(--primary))]">
                       {habit.type}
                     </span>
-                    <span className="w-1 h-1 rounded-full bg-zinc-600" />
-                    <span className="text-[9px] font-black uppercase tracking-widest text-zinc-500">
+                    <span className="h-1 w-1 rounded-full bg-slate-300 dark:bg-slate-700" />
+                    <span className="text-[10px] font-medium uppercase tracking-[0.06em] text-slate-500">
                       {habit.frequency}
                     </span>
                   </div>
@@ -128,7 +128,7 @@ export default function HabitList({ initialHabits, isToday = true }: { initialHa
                 <div className="flex items-center gap-3">
                    <button 
                      onClick={() => handleDelete(habit)}
-                     className="lg:opacity-0 lg:group-hover:opacity-100 text-zinc-500 hover:text-rose-500 transition-all p-2"
+                     className="p-2 text-slate-400 transition-all hover:text-rose-500 lg:opacity-0 lg:group-hover:opacity-100"
                      title="Delete habit"
                    >
                       <Trash2 size={16} />

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Plus, Target, Zap, Clock, Calendar, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { X, Plus, Target, Zap, Clock, CheckCircle2 } from 'lucide-react';
 import { createHabit } from '@/app/actions/habitActions';
 
 interface AddHabitModalProps {
@@ -75,42 +75,42 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-zinc-950/60 backdrop-blur-xl"
+            className="absolute inset-0 bg-slate-950/55 backdrop-blur-xl"
           />
 
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 30 }}
-            className="relative w-full max-w-2xl bg-white dark:bg-zinc-950 rounded-[3rem] shadow-2xl overflow-hidden border border-zinc-200 dark:border-white/5"
+            className="relative w-full max-w-2xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-white/10 dark:bg-[#0b0f19]"
           >
-            {/* Header */}
-            <div className="px-8 pt-8 pb-6 flex items-center justify-between border-b border-zinc-100 dark:border-white/5">
+            <div className="flex items-center justify-between border-b border-slate-200/70 px-6 py-5 dark:border-white/5 sm:px-8">
               <div className="space-y-0.5">
-                <div className="label-elite uppercase text-[rgb(var(--primary))] opacity-70">New Goal</div>
-                <h2 className="text-xl font-black tracking-tighter text-zinc-900 dark:text-white italic">SET UP HABIT</h2>
+                <div className="label-elite text-[rgb(var(--primary))]">New goal</div>
+                <h2 className="text-xl font-semibold text-slate-950 dark:text-white">Set up habit</h2>
               </div>
               <button 
                 onClick={onClose} 
-                className="p-1.5 rounded-lg hover:bg-zinc-100 dark:hover:bg-white/5 transition-all outline-none"
+                className="rounded-xl p-2 text-slate-400 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/5 dark:hover:text-white"
+                aria-label="Close habit modal"
               >
                 <X className="w-4 h-4 text-zinc-400" />
               </button>
             </div>
 
             {success ? (
-              <div className="px-8 py-16 flex flex-col items-center justify-center text-center space-y-4">
-                <div className="w-16 h-16 rounded-3xl bg-[rgba(var(--primary-rgb),0.1)] text-[rgb(var(--primary))] flex items-center justify-center mb-2 shadow-xl shadow-[rgba(var(--primary-rgb),0.05)]">
+              <div className="flex flex-col items-center justify-center space-y-4 px-8 py-16 text-center">
+                <div className="mb-2 flex h-14 w-14 items-center justify-center rounded-2xl bg-[rgba(var(--primary-rgb),0.1)] text-[rgb(var(--primary))]">
                   <CheckCircle2 size={32} />
                 </div>
-                <h3 className="text-lg font-black text-zinc-900 dark:text-white uppercase tracking-tighter italic">Goal Created</h3>
-                <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Your tracking engine is now active.</p>
+                <h3 className="text-lg font-semibold text-slate-950 dark:text-white">Goal created</h3>
+                <p className="text-sm text-slate-500">Your tracking engine is now active.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="px-8 py-7 space-y-7">
+              <form onSubmit={handleSubmit} className="space-y-6 px-6 py-6 sm:px-8">
                 
                 <div className="space-y-2">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-zinc-500 ml-1">What is the goal?</label>
+                  <label className="label-elite ml-1">What is the goal?</label>
                   <div className="relative group">
                     <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none text-zinc-400/60 group-focus-within:text-[rgb(var(--primary))] transition-colors">
                       <Target size={14} />
@@ -120,7 +120,7 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       placeholder="Title of your habit..."
-                      className={`w-full bg-zinc-50 dark:bg-zinc-900/60 border ${error ? 'border-rose-500' : 'border-zinc-200 dark:border-white/10'} rounded-xl pl-12 pr-4 py-3 text-sm font-semibold text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400/50 focus:border-[rgb(var(--primary))] outline-none transition-all shadow-sm`}
+                      className={`input-shell pl-11 ${error ? 'border-rose-500' : ''}`}
                     />
                   </div>
                 </div>
@@ -128,12 +128,12 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                 {/* Grid Fields */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div className="space-y-2">
-                    <label className="text-[9px] font-black uppercase tracking-widest text-zinc-500 ml-1">Goal Type</label>
+                    <label className="label-elite ml-1">Goal type</label>
                     <div className="relative">
                       <select
                         value={type}
                         onChange={(e) => setType(e.target.value)}
-                        className="w-full h-10 bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-white/10 rounded-xl px-4 text-[12px] font-bold text-zinc-700 dark:text-zinc-300 appearance-none cursor-pointer focus:border-[rgb(var(--primary))] outline-none transition-all shadow-sm"
+                        className="input-shell h-10 cursor-pointer appearance-none px-4 py-0 text-sm"
                       >
                         <option value="habit">Elite habit</option>
                         <option value="hobby">Hobby Flow</option>
@@ -143,17 +143,17 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                   </div>
 
                   <div className="space-y-2">
-                    <label className="text-[9px] font-black uppercase tracking-widest text-zinc-500 ml-1">Frequency</label>
-                    <div className="flex h-10 w-full bg-zinc-100/50 dark:bg-zinc-900/80 p-1 rounded-xl border border-zinc-200 dark:border-white/10">
+                    <label className="label-elite ml-1">Frequency</label>
+                    <div className="segmented-control flex h-10 w-full">
                       {['daily', 'weekly', 'interval'].map(f => (
                         <button
                           key={f}
                           type="button"
                           onClick={() => setFrequency(f)}
-                          className={`flex-1 rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-widest transition-all ${
+                          className={`segmented-tab flex-1 ${
                             frequency === f 
-                              ? 'bg-white dark:bg-zinc-100 text-zinc-900 dark:text-black shadow-sm' 
-                              : 'text-zinc-400 hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300'
+                              ? 'segmented-tab-active' 
+                              : ''
                           }`}
                         >
                           {f}
@@ -181,8 +181,8 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                               onClick={() => toggleDay(d)}
                               className={`w-9 h-9 rounded-lg transition-all border font-bold text-[10px] uppercase ${
                                 days.includes(d) 
-                                  ? 'bg-[rgb(var(--primary))] border-[rgb(var(--primary))] text-white shadow-lg shadow-[rgba(var(--primary-rgb),0.2)]' 
-                                  : 'bg-zinc-100/50 dark:bg-zinc-900/40 border-zinc-200 dark:border-white/5 text-zinc-400 hover:border-zinc-300'
+                                  ? 'bg-[rgb(var(--primary))] border-[rgb(var(--primary))] text-white shadow-lg shadow-blue-500/20' 
+                                  : 'bg-slate-100/70 dark:bg-white/[0.03] border-slate-200 dark:border-white/5 text-slate-500 hover:border-blue-300'
                               }`}
                             >
                               {d[0]}
@@ -190,7 +190,7 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                           ))}
                         </div>
                       ) : (
-                        <div className="flex items-center gap-4 bg-zinc-50 dark:bg-zinc-900/40 p-3 rounded-xl border border-zinc-200 dark:border-white/10">
+                        <div className="flex items-center gap-4 rounded-xl border border-slate-200 bg-slate-50 p-3 dark:border-white/10 dark:bg-white/[0.03]">
                            <Clock size={16} className="text-[rgb(var(--primary))] ml-1" />
                            <input 
                              type="range" min="1" max="30" value={intervalDays} 
@@ -205,13 +205,13 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                 </AnimatePresence>
 
                 <div className="space-y-2">
-                  <label className="text-[9px] font-black uppercase tracking-widest text-zinc-500 ml-1">Tracking Mode</label>
+                  <label className="label-elite ml-1">Tracking mode</label>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="relative">
                       <select
                         value={rule}
                         onChange={(e) => setRule(e.target.value)}
-                        className="w-full h-10 bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-white/10 rounded-xl px-4 text-[12px] font-bold text-zinc-700 dark:text-zinc-300 appearance-none cursor-pointer focus:border-[rgb(var(--primary))] outline-none transition-all shadow-sm"
+                        className="input-shell h-10 cursor-pointer appearance-none px-4 py-0 text-sm"
                       >
                         <option value="manual">Manual</option>
                         <option value="platform">Platform</option>
@@ -226,7 +226,7 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                         <select
                           value={source}
                           onChange={(e) => setSource(e.target.value)}
-                          className="w-full h-10 bg-zinc-50 dark:bg-zinc-900/60 border border-zinc-200 dark:border-white/10 rounded-xl px-4 text-[12px] font-bold text-zinc-700 dark:text-zinc-300 appearance-none cursor-pointer focus:border-[rgb(var(--primary))] outline-none transition-all shadow-sm"
+                          className="input-shell h-10 cursor-pointer appearance-none px-4 py-0 text-sm"
                         >
                           <option value="">Stream...</option>
                           <option value="github">GitHub</option>
@@ -243,7 +243,7 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
                   <button
                     type="submit"
                     disabled={loading || !title.trim()}
-                    className="w-full py-3.5 rounded-xl bg-zinc-950 dark:bg-[rgb(var(--primary))] text-white label-elite uppercase shadow-lg hover:shadow-[rgba(var(--primary),0.2)] hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-30"
+                    className="btn-primary w-full disabled:opacity-30"
                   >
                     {loading ? 'Starting...' : 'Start Tracking'}
                   </button>
@@ -251,8 +251,7 @@ export default function AddHabitModal({ isOpen, onClose, onSuccess }: AddHabitMo
               </form>
             )}
 
-            {/* Footer */}
-            <div className="px-8 py-4 border-t border-zinc-100 dark:border-white/5 flex items-center justify-between opacity-60">
+            <div className="flex items-center justify-between border-t border-slate-200/70 px-8 py-4 opacity-70 dark:border-white/5">
                <div className="flex items-center gap-2">
                   <div className="w-1.5 h-1.5 rounded-full bg-[rgb(var(--primary))] animate-pulse" />
                   <span className="text-[9px] font-black uppercase tracking-widest text-zinc-500">Live Secure</span>

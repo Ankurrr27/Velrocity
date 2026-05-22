@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link2, Share2 } from "lucide-react";
+import { Share2 } from "lucide-react";
 import ProgressOverview from "./ProgressOverview";
 import ProgressChart from "./ProgressChart";
 import HabitHeatmap from "./HabitHeatmap";
@@ -27,27 +27,25 @@ export default function DashboardContent({
 }: DashboardContentProps) {
   const [dashboardScope, setDashboardScope] = useState<'global' | 'college'>('global');
   return (
-    <main className="custom-scrollbar h-full w-full flex-1 overflow-y-auto bg-transparent relative">
-      {/* Background Subtle Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/[0.02] to-transparent pointer-events-none -z-10" />
+    <main className="custom-scrollbar relative h-full w-full flex-1 overflow-y-auto bg-transparent">
+      <div className="w-full space-y-6 p-4 pb-20 sm:p-6 lg:p-8">
+        <section className="space-y-5">
+            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <div>
+                      <p className="text-xs font-medium text-slate-500 dark:text-slate-400">Today&apos;s execution signal</p>
+                      <h1 className="text-2xl font-semibold text-slate-950 dark:text-white sm:text-3xl">Progress dashboard</h1>
+                    </div>
 
-      <div className="w-full space-y-10 pt-6 pb-20 md:p-6 lg:p-10">
-        {/* TOP SECTION: Header & Stats */}
-        <section className="space-y-6">
-            <div className="flex flex-row items-center justify-between gap-2 sm:gap-4 px-4 md:px-0">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
-                    <h1 className="text-2xl sm:text-4xl font-black text-zinc-900 dark:text-white italic tracking-tighter shrink-0">Progress <span className="text-zinc-500 hidden sm:inline">Dashboard</span></h1>
-                    
-                    {/* SCOPE SWITCHER */}
-                    <div className="flex items-center p-1 bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 rounded-xl shrink-0">
+                    <div className="segmented-control flex w-full max-w-[240px] shrink-0">
                        {['global', 'college'].map((scope) => (
                          <button
                            key={scope}
                            onClick={() => setDashboardScope(scope as any)}
-                           className={`px-3 py-1 rounded-lg text-[8px] font-black uppercase tracking-widest transition-all ${
+                           className={`segmented-tab flex-1 ${
                              dashboardScope === scope 
-                               ? 'bg-[rgb(var(--primary))] text-white shadow-lg shadow-[rgba(var(--primary-rgb),0.2)]' 
-                               : 'text-zinc-500 hover:text-zinc-300'
+                               ? 'segmented-tab-active' 
+                               : ''
                            }`}
                          >
                            {scope}
@@ -56,38 +54,35 @@ export default function DashboardContent({
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2 sm:gap-4 justify-end">
+                <div className="flex items-center gap-2 sm:gap-3 md:justify-end">
                    {dashboardScope === 'college' && (
-                      <div className="px-3 py-1.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-white/5 rounded-xl hidden sm:flex items-center gap-2">
-                         <div className="w-1 h-1 rounded-full bg-[rgb(var(--primary))] animate-pulse" />
-                         <span className="text-[8px] font-black uppercase text-zinc-500 tracking-widest italic">College <span className="text-zinc-900 dark:text-white hidden sm:inline">Active</span></span>
+                      <div className="stat-pill hidden sm:flex">
+                         <div className="h-1.5 w-1.5 rounded-full bg-[rgb(var(--primary))]" />
+                         <span className="text-xs font-medium text-slate-500 dark:text-slate-400">College active</span>
                       </div>
                    )}
                    <button 
                      onClick={onShare}
-                     className="h-10 px-4 rounded-xl bg-white dark:bg-white text-zinc-900 dark:text-black border border-zinc-200 dark:border-none flex items-center justify-center gap-2 hover:scale-105 active:scale-95 transition-all shadow-xl"
+                     className="btn-secondary h-10 px-4"
                    >
                       <Share2 size={14} />
-                      <span className="text-[9px] font-black uppercase tracking-[0.2em] hidden sm:inline">Share</span>
+                      <span className="hidden sm:inline">Share</span>
                    </button>
                 </div>
             </div>
             <ProgressOverview stats={stats} loading={loading} />
           
-          <div className="surface-card rounded-[2rem] border-zinc-200 dark:border-white/5 bg-white dark:bg-zinc-900/40 p-6 md:p-8 shadow-2xl overflow-visible">
+          <div className="surface-card overflow-visible p-5 md:p-6">
             <HabitTimeline data={timelineData} loading={loading} />
           </div>
         </section>
 
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/5 to-transparent" />
-
-        {/* BOTTOM SECTION: Charts */}
-        <div className="grid grid-cols-1 gap-10">
-          <div className="surface-card h-[450px] rounded-[2rem] border-zinc-200 dark:border-white/5 bg-white dark:bg-zinc-900/20 p-8 md:p-12 shadow-xl shadow-black/5">
+        <div className="grid grid-cols-1 gap-5">
+          <div className="surface-card h-[420px] p-5 md:p-6">
             <ProgressChart loading={loading} data={progressData} />
           </div>
 
-          <div className="surface-card overflow-hidden rounded-[2rem] border-zinc-200 dark:border-white/5 bg-white dark:bg-zinc-900/20 p-8 md:p-12 shadow-xl shadow-black/5">
+          <div className="surface-card overflow-hidden p-5 md:p-6">
             <HabitHeatmap
               data={heatmapData}
               loading={loading}
