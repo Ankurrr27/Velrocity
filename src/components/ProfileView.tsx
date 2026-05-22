@@ -10,6 +10,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import { updateProfile } from "@/app/actions/profileActions";
 import { toggleFollow } from "@/app/actions/socialActions";
+import { getOptimizedCloudinaryImage, uploadProfileImageToCloudinary } from "@/utils/cloudinaryUpload";
 
 const accentSwatches: Record<string, string> = {
   indigo: "bg-indigo-500",
@@ -68,53 +69,81 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const [uploadError, setUploadError] = useState("");
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        alert("Sector data too dense. Max 2MB.");
+      if (file.size > 8 * 1024 * 1024) {
+        alert("Please choose an image under 8MB.");
         return;
       }
+      setUploadError("");
       const reader = new FileReader();
       reader.onloadend = () => {
         setTempImage(reader.result as string);
         setShowCropModal(true);
         setZoom(1);
-        setPosition({ x: 0, y: 0 }); // We'll center it in the modal via useEffect or initial state
+        setPosition({ x: 0, y: 0 });
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleApplyCrop = () => {
+  const handleApplyCrop = async () => {
     if (!tempImage) return;
+    setUploadingAvatar(true);
+    setUploadError("");
     const canvas = document.createElement('canvas');
     const img = new Image();
     img.src = tempImage;
-    img.onload = () => {
-      const size = 400;
+    img.onload = async () => {
+      const size = 1024;
       canvas.width = size;
       canvas.height = size;
       const ctx = canvas.getContext('2d');
       if (ctx) {
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
         const displayWidth = 300;
         const naturalWidth = img.width;
-        // Scale factor between natural pixels and display pixels (at zoom=1)
         const baseScale = naturalWidth / displayWidth;
-        
-        // sx/sy are the top-left coordinates in the natural image
-        // position.x/y are the shifts applied to the image relative to the 300x300 box
         const sx = (-position.x / zoom) * baseScale;
         const sy = (-position.y / zoom) * baseScale;
         const sWidth = (displayWidth / zoom) * baseScale;
         const sHeight = (displayWidth / zoom) * baseScale;
 
         ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, size, size);
-        setAvatar(canvas.toDataURL('image/jpeg', 0.9));
+        canvas.toBlob(async (blob) => {
+          if (!blob) {
+            setUploadError("Could not process this image.");
+            setUploadingAvatar(false);
+            return;
+          }
+
+          try {
+            const cloudinaryUrl = await uploadProfileImageToCloudinary(blob);
+            setAvatar(cloudinaryUrl);
+            const result = await updateProfile({ avatar: cloudinaryUrl });
+            if (result.success) {
+              setProfile((current: any) => ({ ...current, avatar: cloudinaryUrl }));
+              setMessage("Profile photo updated.");
+              setTimeout(() => setMessage(""), 3000);
+            }
+            setShowCropModal(false);
+            setTempImage(null);
+          } catch (error: any) {
+            setUploadError(error.message || "Cloudinary upload failed.");
+          } finally {
+            setUploadingAvatar(false);
+          }
+        }, "image/jpeg", 0.96);
       }
-      setShowCropModal(false);
-      setTempImage(null);
+    };
+    img.onerror = () => {
+      setUploadError("Could not read this image.");
+      setUploadingAvatar(false);
     };
   };
 
@@ -178,8 +207,8 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
             className="w-32 h-32 sm:w-44 sm:h-44 lg:w-56 lg:h-56 rounded-[2.5rem] p-1.5 bg-gradient-to-br from-[rgba(var(--primary-rgb),1)] via-[rgba(var(--primary-rgb),0.3)] to-transparent shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)] shrink-0 relative group border-none"
           >
              <div className="w-full h-full rounded-[2.2rem] overflow-hidden bg-zinc-100 dark:bg-zinc-950 border-4 border-zinc-200 dark:border-zinc-950 flex items-center justify-center text-4xl sm:text-5xl font-black uppercase shadow-inner relative">
-                {profile.avatar ? (
-                  <img src={profile.avatar} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110" />
+                {avatar || profile.avatar ? (
+                  <img src={getOptimizedCloudinaryImage(avatar || profile.avatar, 900)} alt={profile.name} className="w-full h-full object-cover" />
                 ) : (
                   <div className="w-full h-full bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-950 flex items-center justify-center text-zinc-500 dark:text-white italic tracking-tighter">
                     {profile.username[0]}
@@ -576,28 +605,28 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/90 backdrop-blur-xl"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/70 p-6 backdrop-blur-xl"
             onMouseUp={() => setIsDragging(false)}
             onMouseLeave={() => setIsDragging(false)}
           >
             <motion.div 
               initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              className="w-full max-w-md bg-zinc-900 border border-white/10 rounded-[2.5rem] overflow-hidden shadow-2xl"
+              className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-white/10 dark:bg-[#0b0f19]"
               onClick={e => e.stopPropagation()}
             >
-              <div className="p-8 border-b border-white/5 flex items-center justify-between">
+              <div className="flex items-center justify-between border-b border-slate-200/70 p-6 dark:border-white/5">
                 <div>
-                  <h3 className="text-xl font-black text-white italic tracking-tighter">Calibrate Asset</h3>
-                  <p className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500 mt-1">Adjust framing parameter</p>
+                  <h3 className="text-xl font-semibold text-slate-950 dark:text-white">Crop profile photo</h3>
+                  <p className="mt-1 text-sm text-slate-500">Uploaded to Cloudinary at high quality.</p>
                 </div>
-                <button onClick={() => setShowCropModal(false)} className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-zinc-400 hover:text-white transition-all">
+                <button onClick={() => setShowCropModal(false)} className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-400 transition-all hover:text-slate-950 dark:bg-white/5 dark:hover:text-white">
                    <Target size={18} />
                 </button>
               </div>
 
-              <div className="p-8 space-y-8">
-                <div className="relative w-[300px] h-[300px] mx-auto overflow-hidden rounded-[2rem] bg-black border-2 border-indigo-500/30 cursor-move"
+              <div className="space-y-6 p-6">
+                <div className="relative mx-auto h-[300px] w-[300px] cursor-move overflow-hidden rounded-2xl border border-blue-500/30 bg-slate-950"
                   onMouseDown={handleMouseDown}
                   onMouseMove={handleMouseMove}
                 >
@@ -605,22 +634,21 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                     src={tempImage} 
                     alt="Crop Preview" 
                     draggable={false}
-                    className="absolute pointer-events-none origin-top-left shadow-2xl transition-transform duration-75 select-none"
+                    className="pointer-events-none absolute origin-top-left select-none shadow-2xl transition-transform duration-75"
                     style={{ 
                       transform: `translate(${position.x}px, ${position.y}px) scale(${zoom})`,
                       width: '300px',
                       maxWidth: 'none'
                     }} 
                   />
-                  {/* Overlay for center guide */}
-                  <div className="absolute inset-0 border-[40px] border-black/40 pointer-events-none" />
-                  <div className="absolute inset-0 shadow-[inset_0_0_100px_rgba(0,0,0,0.8)] pointer-events-none" />
+                  <div className="pointer-events-none absolute inset-0 border-[40px] border-black/35" />
+                  <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-white/10" />
                 </div>
 
                 <div className="space-y-4">
-                  <div className="flex justify-between items-center px-1">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Magnification</span>
-                    <span className="text-[10px] font-black text-indigo-500">{Math.round(zoom * 100)}%</span>
+                  <div className="flex items-center justify-between px-1">
+                    <span className="label-elite">Zoom</span>
+                    <span className="text-xs font-semibold text-blue-600">{Math.round(zoom * 100)}%</span>
                   </div>
                   <input 
                     type="range" 
@@ -629,22 +657,30 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                     step="0.01" 
                     value={zoom} 
                     onChange={e => setZoom(parseFloat(e.target.value))}
-                    className="w-full h-1 bg-white/10 rounded-full appearance-none accent-indigo-500 cursor-pointer"
+                    className="h-1 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-blue-600 dark:bg-white/10"
                   />
                 </div>
+
+                {uploadError && (
+                  <div className="rounded-xl border border-rose-500/20 bg-rose-500/10 px-4 py-3 text-sm font-medium text-rose-500">
+                    {uploadError}
+                  </div>
+                )}
 
                 <div className="flex gap-4 pt-4">
                   <button 
                     onClick={() => setShowCropModal(false)}
-                    className="flex-1 py-4 rounded-2xl bg-white/5 text-zinc-400 text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white/10 transition-all"
+                    disabled={uploadingAvatar}
+                    className="btn-secondary flex-1"
                   >
-                    Abort
+                    Cancel
                   </button>
                     <button 
                       onClick={handleApplyCrop}
-                      className="flex-2 py-4 px-10 rounded-2xl bg-indigo-500 text-white text-[10px] font-black uppercase tracking-[0.3em] shadow-xl shadow-indigo-500/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                      disabled={uploadingAvatar}
+                      className="btn-primary flex-1 disabled:opacity-60"
                     >
-                      Apply Photo
+                      {uploadingAvatar ? "Uploading..." : "Apply photo"}
                     </button>
                 </div>
               </div>

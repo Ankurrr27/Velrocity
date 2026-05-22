@@ -3,8 +3,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-sans: Inter, "SF Pro Display", "SF Pro Text", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "SF Mono", "Cascadia Code", Consolas, ui-monospace, SFMono-Regular, Menlo, monospace;
   --animate-shimmer: shimmer 2s linear infinite;
 
   @keyframes shimmer {
@@ -102,7 +102,7 @@ body {
     radial-gradient(circle at top right, rgba(var(--primary-rgb), 0.08), transparent 34rem),
     linear-gradient(180deg, rgb(var(--bg-top)) 0%, rgb(var(--bg-middle)) 42%, rgb(var(--bg-bottom)) 100%);
   color: rgb(var(--text));
-  font-family: var(--font-geist-sans), "Geist", ui-sans-serif, system-ui, sans-serif;
+  font-family: Inter, "SF Pro Display", "SF Pro Text", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -429,4 +429,33 @@ textarea:focus-visible {
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Velrocity polish pass: calm older expressive utility choices into one premium SaaS tone. */
+.font-black {
+  font-weight: 650;
+}
+
+.italic {
+  font-style: normal;
+}
+
+.tracking-tighter,
+.tracking-tight {
+  letter-spacing: 0;
+}
+
+.rounded-3xl,
+[class*="rounded-[2"],
+[class*="rounded-[3"] {
+  border-radius: 1rem;
+}
+
+@media (max-width: 640px) {
+  .text-5xl,
+  .text-6xl,
+  .text-7xl {
+    font-size: 2rem;
+    line-height: 1.12;
+  }
 }

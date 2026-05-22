@@ -66,26 +66,43 @@ export default function LoginPage() {
                 </p>
               </div>
 
-              <div className="grid max-w-xl gap-3">
-                {[
-                  { title: "Fast daily check-ins", icon: CheckCircle2 },
-                  { title: "Readable streak analytics", icon: BarChart3 },
-                  { title: "Profile and extension sync", icon: ShieldCheck },
-                ].map((item) => (
-                  <div key={item.title} className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/5 dark:bg-white/[0.03]">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-300">
-                      <item.icon size={18} />
-                    </div>
-                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{item.title}</span>
+              <div className="grid max-w-2xl grid-cols-[1fr_0.72fr] gap-4">
+                <div className="surface-card p-5">
+                  <div className="mb-5 flex items-center justify-between">
+                    <span className="label-elite">Live today</span>
+                    <span className="rounded-full bg-blue-500/10 px-2.5 py-1 text-xs font-semibold text-blue-600 dark:text-blue-300">82%</span>
                   </div>
-                ))}
+                  <div className="space-y-3">
+                    {["Ship dashboard polish", "Code review block", "30 min DSA"].map((item, index) => (
+                      <div key={item} className="flex items-center gap-3 rounded-xl border border-slate-200/70 bg-slate-50 p-3 dark:border-white/5 dark:bg-white/[0.03]">
+                        <div className={`h-3 w-3 rounded-full ${index === 0 ? "bg-blue-600" : "bg-slate-300 dark:bg-slate-600"}`} />
+                        <span className="text-sm font-medium text-slate-700 dark:text-slate-200">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid gap-4">
+                  {[
+                    { label: "Streak", value: "24d", icon: CheckCircle2 },
+                    { label: "Level", value: "860", icon: BarChart3 },
+                  ].map((item) => (
+                    <div key={item.label} className="surface-card p-4">
+                      <div className="mb-5 flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-300">
+                        <item.icon size={17} />
+                      </div>
+                      <p className="text-2xl font-semibold text-slate-950 dark:text-white">{item.value}</p>
+                      <p className="text-xs font-medium text-slate-500">{item.label}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         <section className="flex items-center justify-center px-5 py-10 sm:px-8">
-          <form onSubmit={handleSubmit} className="w-full max-w-[420px] space-y-6">
+          <form onSubmit={handleSubmit} className="surface-card w-full max-w-[420px] space-y-6 p-6 sm:p-8">
             <div className="space-y-3">
               <Link href="/" className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-blue-600">
                 <ArrowRight size={14} className="rotate-180" />

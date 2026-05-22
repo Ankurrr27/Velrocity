@@ -63,22 +63,38 @@ export default function RegisterPage() {
                 </p>
               </div>
 
-              <div className="grid max-w-xl gap-3">
-                {["Compact dashboard", "Habit and task tracking", "Public profile controls"].map((title) => (
-                  <div key={title} className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/5 dark:bg-white/[0.03]">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-300">
-                      <CheckCircle2 size={18} />
-                    </div>
-                    <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{title}</span>
+              <div className="grid max-w-2xl gap-4">
+                <div className="surface-card p-5">
+                  <div className="mb-5 flex items-center justify-between">
+                    <span className="label-elite">Your first workspace</span>
+                    <span className="rounded-full bg-blue-500/10 px-2.5 py-1 text-xs font-semibold text-blue-600 dark:text-blue-300">Ready</span>
                   </div>
-                ))}
+                  <div className="grid grid-cols-3 gap-3">
+                    {["Focus", "Build", "Review"].map((label, index) => (
+                      <div key={label} className="rounded-xl border border-slate-200/70 bg-slate-50 p-4 dark:border-white/5 dark:bg-white/[0.03]">
+                        <div className={`mb-6 h-2 rounded-full ${index === 0 ? "bg-blue-600" : "bg-slate-300 dark:bg-slate-600"}`} />
+                        <p className="text-sm font-semibold text-slate-950 dark:text-white">{label}</p>
+                        <p className="mt-1 text-xs text-slate-500">{index === 0 ? "Active" : "Queued"}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-3 gap-3">
+                  {["Compact dashboard", "Habit tracking", "Public profile"].map((title) => (
+                    <div key={title} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-white/5 dark:bg-white/[0.03]">
+                      <CheckCircle2 size={18} className="mb-5 text-blue-600 dark:text-blue-300" />
+                      <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{title}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         <section className="flex items-center justify-center px-5 py-10 sm:px-8">
-          <form onSubmit={handleSubmit} className="w-full max-w-[440px] space-y-6">
+          <form onSubmit={handleSubmit} className="surface-card w-full max-w-[440px] space-y-6 p-6 sm:p-8">
             <div className="space-y-3">
               <Link href="/" className="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-blue-600">
                 <ArrowRight size={14} className="rotate-180" />
