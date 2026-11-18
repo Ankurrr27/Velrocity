@@ -40,7 +40,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
       <div className="flex min-w-0 flex-1 flex-col md:ml-[72px]">
         <Navbar />
-        <main className="no-scrollbar flex h-full min-h-0 flex-1 flex-col overflow-y-auto overflow-x-hidden border-l border-slate-200/70 pb-20 dark:border-white/5 md:pb-0">
+        <main className="no-scrollbar flex h-full min-h-0 flex-1 flex-col overflow-y-auto overflow-x-hidden border-l border-slate-200/70 pb-[calc(3.5rem+env(safe-area-inset-bottom))] dark:border-white/5 md:border-l-0 md:pb-0">
           <div className="flex h-full min-h-0 w-full flex-col">{children}</div>
         </main>
       </div>

@@ -10,8 +10,6 @@ import type { DashboardHabit, DashboardTask } from "./types";
 
 interface DashboardSidebarProps {
   loading: boolean;
-  sidebarWidth: number;
-  isResizing: boolean;
   selectedDate: Date;
   weekDates: Date[];
   selectedIndex: number;
@@ -20,7 +18,7 @@ interface DashboardSidebarProps {
   activeTab: "habits" | "tasks";
   newTaskTitle: string;
   isToday: boolean;
-  onStartResizing: () => void;
+  onAddHabit: () => void;
   onSelectDate: (index: number) => void;
   onSetActiveTab: (tab: "habits" | "tasks") => void;
   onTaskTitleChange: (value: string) => void;
@@ -33,8 +31,6 @@ interface DashboardSidebarProps {
 export default function DashboardSidebar(props: DashboardSidebarProps) {
   const {
     loading,
-    sidebarWidth,
-    isResizing,
     selectedDate,
     weekDates,
     selectedIndex,
@@ -43,7 +39,7 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
     activeTab,
     newTaskTitle,
     isToday,
-    onStartResizing,
+    onAddHabit,
     onSelectDate,
     onSetActiveTab,
     onTaskTitleChange,
@@ -55,32 +51,30 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
 
   return (
     <aside
-      style={{ ['--sidebar-w' as string]: `${sidebarWidth}px` } as React.CSSProperties}
-      className="relative flex shrink-0 flex-col overflow-hidden border-b border-slate-200/80 bg-white/90 backdrop-blur-xl dark:bg-[#0b0f19]/84 dark:border-white/5
-        h-[85vh] max-h-[85vh] w-full
-        lg:h-full lg:max-h-full lg:w-[var(--sidebar-w)] lg:border-b-0 lg:border-r"
+      className="relative flex shrink-0 flex-col overflow-visible border-b border-slate-200/80 bg-white dark:border-white/10 dark:bg-[#111111]
+        h-auto max-h-none min-h-0 w-full
+        lg:h-full lg:max-h-full lg:w-[300px] lg:border-b-0 lg:border-r"
     >
-      <div
-        onMouseDown={onStartResizing}
-        className={`absolute right-0 top-0 bottom-0 z-10 hidden w-1 cursor-col-resize transition-colors hover:bg-[rgb(var(--primary))] lg:block ${isResizing ? "bg-[rgb(var(--primary))]" : "bg-transparent"
-          }`}
-      />
-
-      <div className="border-b border-slate-200/70 px-4 pb-3 pt-4 dark:border-white/5 lg:px-5 lg:pb-5 lg:pt-6">
-        <div className="segmented-control flex">
+      <div className="flex items-center gap-2 border-b border-slate-200/70 px-3 py-2 dark:border-white/10 lg:px-4 lg:py-3">
+        <div className="flex min-w-0 flex-1 items-center gap-4">
           {(["habits", "tasks"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => onSetActiveTab(tab)}
-              className={`segmented-tab flex-1 ${activeTab === tab ? "segmented-tab-active" : ""}`}
+              className={`relative px-1 py-2 text-sm font-medium capitalize transition-colors ${activeTab === tab ? "text-[rgb(var(--primary))]" : "text-slate-500 hover:text-slate-900 dark:hover:text-white"}`}
             >
               {tab}
+              {activeTab === tab && <span className="absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-[rgb(var(--primary))]" />}
             </button>
           ))}
         </div>
+        <button onClick={onAddHabit} className="inline-flex h-8 items-center gap-1.5 rounded-md px-2 text-sm font-medium text-[rgb(var(--primary))] hover:bg-[rgba(var(--primary-rgb),0.08)]" aria-label="Add habit">
+          <Plus size={16} />
+          <span className="text-sm">Habit</span>
+        </button>
       </div>
 
-      <div className="mb-2 shrink-0 px-3 pt-3 lg:mb-5 lg:px-4">
+      <div className="mb-1 shrink-0 px-3 pt-2 lg:mb-3 lg:px-4 lg:pt-3">
         {loading ? (
           <div className="flex gap-2 overflow-hidden px-1 animate-pulse">
              {[1,2,3,4,5,6,7,8].map(i => (
@@ -97,7 +91,7 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
         )}
       </div>
 
-      <div className="custom-scrollbar flex-1 overflow-y-auto px-3 pb-12 lg:px-4">
+      <div className="custom-scrollbar flex-1 overflow-visible px-3 pb-3 lg:overflow-y-auto lg:px-4 lg:pb-6">
         <AnimatePresence mode="wait">
           {loading ? (
              <motion.div 
@@ -134,11 +128,11 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.98 }}
-              className="space-y-4"
+              className="space-y-2"
             >
-              <div className="flex items-center justify-between px-2">
-                <span className="label-elite">Goals</span>
-                <div className="stat-pill text-[10px] font-semibold text-[rgb(var(--primary))]">{habits.length} active</div>
+              <div className="flex items-center justify-between px-1">
+                <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">Habits</span>
+                <span className="text-xs text-slate-500">{habits.length}</span>
               </div>
               <HabitList
                 isToday={isToday}
@@ -165,7 +159,7 @@ export default function DashboardSidebar(props: DashboardSidebarProps) {
                   <button
                     type="submit"
                     disabled={!newTaskTitle.trim()}
-                    className="absolute right-2.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-xl bg-[rgb(var(--primary))] text-white shadow-lg shadow-blue-500/20 hover:scale-105 active:scale-95 disabled:opacity-30 disabled:hover:scale-100"
+                    className="absolute right-2.5 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-xl bg-[rgb(var(--primary))] text-white shadow-lg shadow-[rgba(var(--primary-rgb),0.2)] hover:scale-105 active:scale-95 disabled:opacity-30 disabled:hover:scale-100"
                   >
                     <Plus size={16} strokeWidth={3} />
                   </button>

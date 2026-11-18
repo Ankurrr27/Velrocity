@@ -59,10 +59,11 @@ export default function TaskItem({ task, isToday = true, onToggle, onDelete, onS
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
       className={`
-        group flex items-center justify-between px-3 py-3 transition-all duration-200 rounded-xl border
+        group flex items-center justify-between border-b border-slate-200 px-1 py-2.5 transition-all duration-200 last:border-0 dark:border-white/10
+        lg:rounded-xl lg:border lg:px-3 lg:py-3
         ${isDeadlinePassed 
-          ? "bg-rose-500/5 border-rose-500/20" 
-          : "bg-white dark:bg-white/[0.03] border-slate-200/70 dark:border-white/5 hover:border-[rgba(var(--primary-rgb),0.24)]"
+          ? "lg:border-rose-500/20 lg:bg-rose-500/5"
+          : "lg:border-slate-200/70 lg:bg-white dark:lg:border-white/5 dark:lg:bg-white/[0.03]"
         }
       `}
     >
@@ -70,9 +71,9 @@ export default function TaskItem({ task, isToday = true, onToggle, onDelete, onS
         <button
           onClick={() => isToday && onToggle(task._id)}
           className={`
-            w-8 h-8 shrink-0 rounded-xl border flex items-center justify-center transition-all duration-300
+            h-7 w-7 shrink-0 rounded-full border flex items-center justify-center transition-all duration-300 lg:h-8 lg:w-8 lg:rounded-xl
             ${isDone 
-              ? "bg-[rgb(var(--primary))] border-[rgb(var(--primary))] shadow-lg shadow-blue-500/20" 
+              ? "bg-[rgb(var(--primary))] border-[rgb(var(--primary))] shadow-lg shadow-[rgba(var(--primary-rgb),0.2)]"
               : isDeadlinePassed 
                 ? "border-rose-500/50 bg-rose-500/10" 
                 : "border-slate-300 dark:border-white/10 group-hover:border-[rgb(var(--primary))] bg-transparent"

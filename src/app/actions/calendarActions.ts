@@ -9,7 +9,15 @@ import { revalidatePath } from 'next/cache';
 
 import Task from '@/models/Task';
 
-export async function fetchDayStatus(dateStr: string) {
+export type DayStatus = {
+  habitId: string;
+  title: string;
+  frequency: string;
+  done: boolean;
+  type: 'habit' | 'task';
+};
+
+export async function fetchDayStatus(dateStr: string): Promise<DayStatus[]> {
   try {
     await connectToDatabase();
     const userId = await getUserId();
@@ -67,7 +75,7 @@ export async function fetchDayStatus(dateStr: string) {
       type: 'task'
     }));
 
-    return JSON.parse(JSON.stringify([...habitResults, ...taskResults]));
+    return JSON.parse(JSON.stringify([...habitResults, ...taskResults])) as DayStatus[];
   } catch (error) {
     console.error('Fetch day status error:', error);
     return [];

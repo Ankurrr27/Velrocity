@@ -3,35 +3,6 @@
 import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 
-const habits = [
-  "CodeChef Contest",
-  "Leetcode",
-  "GFG",
-  "Leetcode Contest",
-  "Gym",
-  "DSA",
-  "Github"
-];
-
-const daysHeader = [
-  { day: 'Tue', date: 7 },
-  { day: 'Wed', date: 8 },
-  { day: 'Thu', date: 9 },
-  { day: 'Fri', date: 10 },
-  { day: 'Sat', date: 11 },
-  { day: 'Sun', date: 12, isSelected: true },
-  { day: 'Mon', date: 13 },
-  { day: 'Tue', date: 14 },
-  { day: 'Wed', date: 15 },
-  { day: 'Thu', date: 16 },
-  { day: 'Fri', date: 17 },
-  { day: 'Sat', date: 18 },
-  { day: 'Sun', date: 19 },
-  { day: 'Mon', date: 20 },
-  { day: 'Tue', date: 21 },
-  { day: 'Wed', date: 22 },
-];
-
 interface HabitTimelineProps {
   loading?: boolean;
   data: {
@@ -92,83 +63,63 @@ export default function HabitTimeline({ data, loading }: HabitTimelineProps) {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col gap-1.5 px-1">
-        <span className="text-[12px] font-semibold text-zinc-500 dark:text-zinc-400">Habit Timeline</span>
+    <div className="space-y-3">
+      <div className="px-1">
+        <h2 className="text-sm font-semibold text-zinc-800 dark:text-zinc-200">Habit activity</h2>
       </div>
 
-      <div className="overflow-x-auto no-scrollbar pb-6">
-        <div className="w-full">
-          {/* Header Row */}
-          <div className="flex mb-4">
-            <div className="w-32 sm:w-40 shrink-0" />
-            <div className="flex flex-1 justify-between gap-1 sm:gap-2">
-              {daysHeader.map((d, i) => {
-                const isMobileSpecial = i >= 8 && i <= 12;
+      <div className="w-full min-w-0">
+        <div className="mb-2 grid grid-cols-[minmax(0,5rem)_repeat(5,minmax(0,1fr))] gap-x-1 lg:grid-cols-[minmax(0,9rem)_repeat(16,minmax(0,1fr))] lg:gap-x-2">
+          <div />
+          {daysHeader.map((d, i) => {
+            const isMobileSpecial = i >= 8 && i <= 12;
+            return (
+              <div
+                key={i}
+                className={`flex min-w-0 flex-col items-center ${isMobileSpecial ? '' : 'hidden lg:flex'}`}
+              >
+                <span className="mb-1 text-[9px] font-medium text-zinc-400">{d.day}</span>
+                <span className={`text-[10px] font-bold ${d.isSelected ? 'text-[rgb(var(--primary))]' : 'text-zinc-500'}`}>{d.date}</span>
+              </div>
+            );
+          })}
+          </div>
+
+        <div className="space-y-0.5">
+          {habits.map((habit, habitIdx) => (
+            <div
+              key={habit._id}
+              className="grid grid-cols-[minmax(0,5rem)_repeat(5,minmax(0,1fr))] items-center gap-x-1 py-0.5 lg:grid-cols-[minmax(0,9rem)_repeat(16,minmax(0,1fr))] lg:gap-x-2"
+            >
+              <div className="truncate px-1 text-[10px] font-medium text-zinc-600 dark:text-zinc-300 sm:text-xs">
+                {habit.title}
+              </div>
+              {gridData[habitIdx].map((cell, dayIdx) => {
+                const isMobileSpecial = dayIdx >= 8 && dayIdx <= 12;
                 return (
-                  <div 
-                    key={i} 
-                    className={`
-                      flex flex-col items-center w-full max-w-[32px] 
-                      ${isMobileSpecial ? 'flex' : 'hidden lg:flex'}
-                      ${d.isSelected ? 'relative' : ''}
-                    `}
+                  <div
+                    key={dayIdx}
+                    className={`flex min-w-0 justify-center ${isMobileSpecial ? '' : 'hidden lg:flex'}`}
                   >
-                    <span className="text-[9px] font-medium text-zinc-400 mb-1">{d.day}</span>
-                    <span className={`text-[10px] font-bold ${d.isSelected ? 'text-[rgb(var(--primary))]' : 'text-zinc-500'}`}>{d.date}</span>
-                    {d.isSelected && (
-                      <div className="absolute -top-4 inset-x-0 flex justify-center">
-                         <div className="w-px h-60 bg-zinc-200/50 dark:bg-zinc-800/50 absolute top-10 pointer-events-none" />
-                      </div>
+                    {cell.isScheduled || cell.isActive ? (
+                      <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ delay: (habitIdx * 0.02) + (dayIdx * 0.01) }}
+                        className={`h-4 w-4 rounded-[4px] transition-all duration-300 sm:h-5 sm:w-5 sm:rounded-[6px] ${
+                          cell.isActive
+                            ? 'bg-[rgb(var(--primary))] shadow-sm'
+                            : 'border border-zinc-200/20 bg-zinc-100 dark:border-white/5 dark:bg-zinc-900/40'
+                        }`}
+                      />
+                    ) : (
+                      <div className="h-4 w-4 sm:h-5 sm:w-5" />
                     )}
                   </div>
                 );
               })}
             </div>
-          </div>
-
-          {/* Habit Rows */}
-          <div className="space-y-1">
-            {habits.map((habit, habitIdx) => (
-              <div key={habit._id} className="group flex items-center hover:bg-zinc-50/50 dark:hover:bg-white/5 rounded-xl transition-colors py-1">
-                <div className="w-32 sm:w-40 shrink-0 text-[10px] sm:text-xs font-medium text-zinc-600 dark:text-zinc-300 px-2 truncate">
-                  {habit.title}
-                </div>
-                <div className="flex flex-1 justify-between gap-1 sm:gap-2">
-                  {gridData[habitIdx].map((cell, dayIdx) => {
-                    const isMobileSpecial = dayIdx >= 8 && dayIdx <= 12;
-                    return (
-                      <div 
-                        key={dayIdx} 
-                        className={`
-                          w-full max-w-[32px] flex justify-center
-                          ${isMobileSpecial ? 'flex' : 'hidden lg:flex'}
-                        `}
-                      >
-                         {cell.isScheduled || cell.isActive ? (
-                           <motion.div 
-                             initial={{ scale: 0.8, opacity: 0 }}
-                             animate={{ scale: 1, opacity: 1 }}
-                             transition={{ delay: (habitIdx * 0.02) + (dayIdx * 0.01) }}
-                             className={`
-                               w-5 h-5 rounded-[6px] transition-all duration-300
-                               ${cell.isActive 
-                                 ? 'bg-[rgb(var(--primary))] shadow-sm'
-                                 : 'bg-zinc-100 dark:bg-zinc-900/40 border border-zinc-200/20 dark:border-white/5'
-                               }
-                               ${daysHeader[dayIdx].isSelected ? 'ring-2 ring-[rgba(var(--primary),0.1)] ring-offset-2 dark:ring-offset-zinc-950' : ''}
-                             `}
-                           />
-                         ) : (
-                           <div className="w-5 h-5" />
-                         )}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </div>

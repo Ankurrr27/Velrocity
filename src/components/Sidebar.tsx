@@ -6,9 +6,8 @@ import {
   Home, 
   LogOut, 
   Plus, 
-  Search, 
-  Download,
   UserRound,
+  Download,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import AddHabitModal from "./AddHabitModal";
@@ -50,8 +49,8 @@ export default function Sidebar() {
   const isActive = (path: string) => pathname === path || pathname.startsWith(path + "/");
 
   const navItems = [
-    { icon: <Home size={20} />, label: "Home", path: "/dashboard" },
-    { icon: <Search size={20} />, label: "Search", path: "/users" },
+    { icon: <Home size={20} />, label: "Dashboard", path: "/dashboard" },
+    { icon: <UserRound size={20} />, label: "Profile", path: "/profile" },
     { icon: <Download size={20} />, label: "Extension", path: "/extension" },
   ];
 
@@ -62,7 +61,7 @@ export default function Sidebar() {
       <aside className="
         hidden md:fixed md:top-0 md:left-0 md:flex md:flex-col
         md:h-screen w-[72px] shrink-0 z-50
-        bg-white/86 dark:bg-[#070b14]/92 border-r border-slate-200/80 dark:border-white/5
+        bg-white dark:bg-[#111111] border-r border-slate-200/80 dark:border-white/10
         px-3 py-5 backdrop-blur-xl
         transition-colors
       ">
@@ -90,35 +89,11 @@ export default function Sidebar() {
         <div className="flex flex-col gap-3 pt-4">
           <button
             onClick={() => setIsModalOpen(true)}
-            className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-[rgb(var(--primary))] text-white shadow-lg shadow-blue-500/20 hover:-translate-y-0.5 active:scale-95"
+            className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-[rgb(var(--primary))] text-white shadow-lg shadow-[rgba(var(--primary-rgb),0.2)] hover:-translate-y-0.5 active:scale-95"
             aria-label="Add habit"
             title="Add habit"
           >
             <Plus size={18} strokeWidth={3} />
-          </button>
-
-          <button
-            onClick={() => router.push("/profile")}
-            className={`
-              flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl transition mx-auto border
-              ${isActive("/profile")
-                ? "border-[rgb(var(--primary))] ring-4 ring-[rgba(var(--primary-rgb),0.12)]"
-                : "border-slate-200 dark:border-white/10 hover:border-blue-200 dark:hover:border-blue-400/30"
-              }
-            `}
-            aria-label="Open profile"
-          >
-            {profileImage ? (
-              <img 
-                src={profileImage} 
-                alt="Profile" 
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-slate-100 text-[10px] font-bold uppercase text-slate-600 dark:bg-slate-900 dark:text-slate-200">
-                {userProfile?.name?.[0] || session?.user?.name?.[0] || 'ID'}
-              </div>
-            )}
           </button>
 
           {/* Logout */}
@@ -135,43 +110,40 @@ export default function Sidebar() {
 
       <nav className="
         fixed inset-x-0 bottom-0 z-50 md:hidden
-        bg-white/88 dark:bg-[#070b14]/94 backdrop-blur-2xl
+        bg-white dark:bg-zinc-950
         border-t border-slate-200/80 dark:border-white/10
-        px-4 pt-1 pb-1 sm:pb-2
-        shadow-[0_-12px_32px_rgba(15,23,42,0.08)] dark:shadow-[0_-20px_40px_rgba(0,0,0,0.4)]
+        px-2 pb-[env(safe-area-inset-bottom)]
+        shadow-[0_-2px_8px_rgba(15,23,42,0.06)] dark:shadow-[0_-2px_8px_rgba(0,0,0,0.2)]
       ">
-        <div className="flex items-center justify-between max-w-sm mx-auto">
-          <MobileNavButton icon={<Home size={20} />} active={isActive("/dashboard")} onClick={() => router.push("/dashboard")} label="Home" />
-          <MobileNavButton icon={<Search size={20} />} active={isActive("/users")} onClick={() => router.push("/users")} label="Search" />
+        <div className="mx-auto flex h-14 max-w-sm items-center justify-around">
+          <MobileNavButton icon={<Home size={19} />} active={isActive("/dashboard")} onClick={() => router.push("/dashboard")} label="Home" />
           
           {/* FAB */}
           <button
             onClick={() => setIsModalOpen(true)}
-            className="-translate-y-3 flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border-[3px] border-white bg-[rgb(var(--primary))] text-white shadow-xl shadow-blue-500/25 hover:-translate-y-3.5 active:scale-95 dark:border-[#070b14]"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[rgb(var(--primary))] text-white shadow-sm active:scale-95"
             aria-label="Add habit"
+            title="Add habit"
           >
-            <Plus size={20} strokeWidth={3} />
+            <Plus size={18} strokeWidth={2.5} />
           </button>
 
-          <MobileNavButton icon={<Download size={20} />} active={isActive("/extension")} onClick={() => router.push("/extension")} label="Extension" />
+          <MobileNavButton icon={<Download size={19} />} active={isActive("/extension")} onClick={() => router.push("/extension")} label="Extension" />
 
-          {/* Profile */}
-            <button
+          <button
             onClick={() => router.push("/profile")}
             className={`
-              flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl transition border
-              ${isActive("/profile")
-                ? "border-[rgb(var(--primary))] ring-2 ring-[rgba(var(--primary-rgb),0.18)]"
-                : "border-slate-300 dark:border-white/10 hover:border-blue-300"
-              }
+              flex h-8 w-8 items-center justify-center overflow-hidden rounded-full transition
+              ${isActive("/profile") ? "ring-2 ring-[rgb(var(--primary))] ring-offset-2 ring-offset-white dark:ring-offset-zinc-950" : ""}
             `}
             aria-label="Profile"
+            title={userProfile?.name || "Profile"}
           >
-            {session?.user?.image ? (
-              <img src={session.user.image} alt="Profile" className="h-full w-full object-cover" />
+            {profileImage ? (
+              <img src={profileImage} alt="Profile" className="h-full w-full object-cover" />
             ) : (
-              <div className="flex h-full w-full items-center justify-center bg-slate-100 text-slate-500 dark:bg-slate-900 dark:text-slate-300">
-                <UserRound size={15} />
+              <div className="flex h-full w-full items-center justify-center bg-slate-100 text-[10px] font-semibold text-slate-500 dark:bg-zinc-800 dark:text-slate-300">
+                {userProfile?.name?.[0] || session?.user?.name?.[0] || <UserRound size={15} />}
               </div>
             )}
           </button>
@@ -218,14 +190,15 @@ function MobileNavButton({ icon, onClick, active, label }: { icon: React.ReactNo
       onClick={onClick}
       aria-label={label}
       className={`
-        flex h-10 w-10 items-center justify-center rounded-xl transition
+        flex h-10 min-w-12 flex-col items-center justify-center gap-0.5 px-1 text-[9px] transition
         ${active
-          ? "bg-[rgba(var(--primary-rgb),0.12)] text-[rgb(var(--primary))]"
+          ? "text-[rgb(var(--primary))]"
           : "text-slate-500 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white"
         }
       `}
     >
       {icon}
+      <span>{label}</span>
     </button>
   );
 }

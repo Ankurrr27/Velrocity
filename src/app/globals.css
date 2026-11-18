@@ -16,8 +16,8 @@
 :root {
   color-scheme: light;
   --bg-top: 255 255 255;
-  --bg-middle: 248 250 252;
-  --bg-bottom: 241 245 249;
+  --bg-middle: 255 255 255;
+  --bg-bottom: 255 255 255;
   --text: 11 15 25;
   --muted-text: 82 92 112;
   --primary: 37 99 235;
@@ -44,24 +44,24 @@
 
 .dark {
   color-scheme: dark;
-  --bg-top: 11 15 25;
-  --bg-middle: 7 11 20;
-  --bg-bottom: 3 7 18;
-  --text: 248 250 252;
-  --muted-text: 148 163 184;
-  --primary: 59 130 246;
-  --primary-rgb: 59, 130, 246;
-  --secondary: 51 65 85;
-  --tertiary: 96 165 250;
+  --bg-top: 17 17 17;
+  --bg-middle: 17 17 17;
+  --bg-bottom: 17 17 17;
+  --text: 245 245 245;
+  --muted-text: 153 153 153;
+  --primary: 255 99 56;
+  --primary-rgb: 255, 99, 56;
+  --secondary: 63 63 63;
+  --tertiary: 255 135 100;
 
-  --primary-soft: 59 130 246 / 0.14;
-  --bg-accent: 59 130 246 / 0.06;
-  --border-accent: 255 255 255 / 0.10;
-  --surface: 15 23 42 / 0.72;
-  --surface-strong: 15 23 42 / 0.95;
-  --surface-tint: 15 23 42 / 0.62;
-  --shadow-soft: 0 18px 50px -34px rgba(0, 0, 0, 0.72);
-  --shadow-card: 0 24px 70px -42px rgba(0, 0, 0, 0.82);
+  --primary-soft: 255 99 56 / 0.14;
+  --bg-accent: 255 99 56 / 0.06;
+  --border-accent: 255 255 255 / 0.08;
+  --surface: 24 24 24 / 1;
+  --surface-strong: 24 24 24 / 1;
+  --surface-tint: 32 32 32 / 1;
+  --shadow-soft: 0 4px 12px rgba(0, 0, 0, 0.28);
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 .theme-sky,
@@ -75,15 +75,15 @@
   --primary-rgb: 37, 99, 235;
 }
 
-.dark.theme-sky,
-.dark.theme-rose,
-.dark.theme-emerald,
-.dark.theme-cyan,
-.dark.theme-orange,
-.dark.theme-violet,
-.dark.theme-indigo {
-  --primary: 59 130 246;
-  --primary-rgb: 59, 130, 246;
+.dark .theme-sky,
+.dark .theme-rose,
+.dark .theme-emerald,
+.dark .theme-cyan,
+.dark .theme-orange,
+.dark .theme-violet,
+.dark .theme-indigo {
+  --primary: 255 99 56;
+  --primary-rgb: 255, 99, 56;
 }
 
 * {
@@ -91,26 +91,32 @@
 }
 
 html {
-  background: rgb(var(--bg-middle));
+  background: #fff;
   text-rendering: geometricPrecision;
 }
 
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  background:
-    radial-gradient(circle at top right, rgba(var(--primary-rgb), 0.08), transparent 34rem),
-    linear-gradient(180deg, rgb(var(--bg-top)) 0%, rgb(var(--bg-middle)) 42%, rgb(var(--bg-bottom)) 100%);
+  background: #fff;
   color: rgb(var(--text));
   font-family: Inter, "SF Pro Display", "SF Pro Text", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
+.dark .landing-page {
+  --text: 245 245 245;
+  --muted-text: 161 161 170;
+}
+
+.auth-page {
+  --primary: 249 115 22;
+  --primary-rgb: 249, 115, 22;
+  --primary-soft: 249 115 22 / 0.1;
+}
+
 .dark body {
-  background:
-    radial-gradient(circle at 92% 4%, rgba(var(--primary-rgb), 0.16), transparent 32rem),
-    radial-gradient(circle at 8% 18%, rgba(96, 165, 250, 0.05), transparent 24rem),
-    linear-gradient(180deg, rgb(var(--bg-top)) 0%, rgb(var(--bg-middle)) 45%, rgb(var(--bg-bottom)) 100%);
+  background: rgb(var(--bg-middle));
 }
 
 h1,
@@ -167,10 +173,12 @@ textarea:focus-visible {
 }
 
 .page-shell {
-  background:
-    linear-gradient(180deg, rgba(var(--primary-rgb), 0.025), transparent 17rem),
-    rgb(var(--bg-middle));
+  background: rgb(var(--bg-middle));
   color: rgb(var(--text));
+}
+
+.dark .page-shell {
+  background: rgb(var(--bg-middle));
 }
 
 .page-stack {
@@ -217,12 +225,7 @@ textarea:focus-visible {
 }
 
 .surface-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 38%);
-  opacity: 0.45;
+  content: none;
 }
 
 .surface-card > * {
@@ -242,10 +245,7 @@ textarea:focus-visible {
 }
 
 @utility mesh-gradient {
-  background:
-    radial-gradient(circle at 74% 0%, rgba(var(--primary-rgb), 0.16), transparent 30rem),
-    radial-gradient(circle at 0% 18%, rgba(96, 165, 250, 0.07), transparent 24rem),
-    linear-gradient(180deg, #0b0f19 0%, #070b14 55%, #030712 100%);
+  background: #050505;
 }
 
 @utility glass-premium {
@@ -286,7 +286,7 @@ textarea:focus-visible {
 }
 
 .dark .btn-primary:hover {
-  background: rgb(37 99 235);
+  background: rgb(var(--primary));
 }
 
 .btn-primary:active {
@@ -324,6 +324,14 @@ textarea:focus-visible {
   padding: 0.8rem 0.95rem;
   font-weight: 520;
   outline: none;
+}
+
+.input-shell-icon {
+  padding-left: 2.5rem;
+}
+
+.input-shell-icon-trailing {
+  padding-right: 2.75rem;
 }
 
 .input-shell::placeholder {
@@ -395,7 +403,7 @@ textarea:focus-visible {
   left: -120%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+  background: rgba(255, 255, 255, 0.08);
   animation: shimmer-pass 2.8s infinite;
 }
 

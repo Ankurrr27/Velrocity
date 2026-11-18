@@ -6,7 +6,7 @@ import { Providers } from "@/components/Providers";
 
 export const metadata: Metadata = {
   title: "Velrocity",
-  description: "A focused, premium workspace for habit momentum and developer consistency.",
+  description: "Track habits, tasks, and progress.",
 };
 
 export default function RootLayout({

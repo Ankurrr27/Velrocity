@@ -35,13 +35,13 @@ export default function WeekCalendar({
       <div className="flex shrink-0 items-center gap-1">
         <button 
           onClick={() => onSelect(Math.max(0, selectedIndex - 5))}
-          className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-200/80 bg-white/80 text-zinc-500 transition-colors hover:text-zinc-900 dark:border-white/8 dark:bg-white/5 dark:text-zinc-400 dark:hover:text-white"
+          className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-white/[0.06] dark:hover:text-white"
         >
           <ChevronLeft size={14} strokeWidth={3} />
         </button>
         <button 
           onClick={() => onSelect(Math.min(weekDates.length - 1, selectedIndex + 5))}
-          className="flex h-8 w-8 items-center justify-center rounded-full border border-zinc-200/80 bg-white/80 text-zinc-500 transition-colors hover:text-zinc-900 dark:border-white/8 dark:bg-white/5 dark:text-zinc-400 dark:hover:text-white"
+          className="flex h-8 w-8 items-center justify-center rounded-full text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-white/[0.06] dark:hover:text-white"
         >
           <ChevronRight size={14} strokeWidth={3} />
         </button>
@@ -63,11 +63,11 @@ export default function WeekCalendar({
               ref={(el) => { itemRefs.current[i] = el; }}
               onClick={() => onSelect(i)}
               className={`
-                relative flex h-[56px] min-w-[44px] sm:h-[72px] sm:min-w-[50px] flex-col items-center justify-center rounded-2xl transition-all duration-300
+                relative flex h-[56px] min-w-[44px] sm:h-[72px] sm:min-w-[50px] flex-col items-center justify-center transition-colors duration-200
                 ${isMobileVisible ? 'flex' : 'hidden md:flex'}
                 ${isSelected 
-                  ? 'z-10 scale-[1.05] border border-[rgba(var(--primary-rgb),0.3)] bg-white dark:bg-zinc-800 shadow-[0_15px_30px_-10px_rgba(var(--primary-rgb),0.3)]' 
-                  : 'border border-transparent bg-white/5 hover:bg-white/10 dark:bg-white/[0.03] dark:hover:bg-white/[0.06]'
+                  ? 'z-10'
+                  : 'hover:bg-zinc-50 dark:hover:bg-white/[0.03]'
                 }
               `}
             >

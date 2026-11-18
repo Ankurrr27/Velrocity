@@ -18,9 +18,7 @@ export default async function TeamDashboardPage({ params }: { params: { id: stri
       <div className="max-w-6xl mx-auto space-y-8 page-stack">
         
         {/* Banner */}
-        <div className="surface-card overflow-hidden relative p-8 pb-12 flex flex-col justify-end bg-gradient-to-tr from-[rgba(var(--primary),0.1)] to-transparent">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[rgb(var(--primary))] opacity-[0.03] blur-3xl rounded-full translate-x-1/2 -translate-y-1/4" />
-          
+        <div className="surface-card relative flex flex-col justify-end overflow-hidden bg-[rgba(var(--primary-rgb),0.05)] p-5 sm:p-8">
           <div className="relative z-10">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white dark:bg-zinc-950 rounded-full text-xs font-bold text-[rgb(var(--primary))] border border-[rgba(var(--primary),0.2)] mb-4">
               <Users size={14} /> Team Dashboard
@@ -111,7 +109,7 @@ export default async function TeamDashboardPage({ params }: { params: { id: stri
                           <p className="text-xs text-zinc-500 capitalize">{member.role}</p>
                         </div>
                         
-                        <div className="text-sm font-bold text-indigo-500 bg-indigo-500/10 px-2.5 py-1 rounded-full shrink-0">
+                        <div className="text-sm font-bold text-[rgb(var(--primary))] bg-[rgb(var(--primary-soft))] px-2.5 py-1 rounded-full shrink-0">
                           {member.credibilityScore} XP
                         </div>
                       </div>

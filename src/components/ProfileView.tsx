@@ -186,31 +186,24 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
   return (
     <main className={`min-h-screen pb-20 page-shell overflow-x-hidden theme-${accentColor}`}>
       
-      {/* ENHANCED COVER SECTION */}
-      <div className="relative h-40 lg:h-72 -mx-6 lg:-mx-12 overflow-hidden bg-zinc-900 dark:bg-black">
-         {banner ? (
-            <img src={banner} alt="Cover Banner" className="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-luminosity duration-700 hover:scale-105 transition-all" />
-         ) : (
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[rgba(var(--primary-rgb),0.3)] via-transparent to-transparent opacity-80" />
+      <div className="relative -mx-6 h-24 overflow-hidden bg-zinc-100 shadow-sm dark:bg-zinc-900 lg:-mx-12">
+         {banner && (
+            <img src={banner} alt="Cover Banner" className="absolute inset-0 h-full w-full object-cover opacity-60 mix-blend-luminosity" />
          )}
-         <div className="absolute inset-0 bg-gradient-to-r from-[rgba(var(--primary-rgb),0.1)] to-transparent mix-blend-overlay" />
-         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[rgb(var(--bg-middle))] to-transparent" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 z-10 relative">
-        {/* COMPACT HEADER BAR */}
-        <div className="relative -mt-16 sm:-mt-24 lg:-mt-32 flex flex-col sm:flex-row items-center sm:items-end gap-6 sm:gap-10 mb-16">
-          {/* Avatar - Elegant Dynamic Ring */}
+      <div className="relative z-10 mx-auto max-w-5xl px-3 sm:px-4">
+        <div className="relative -mt-10 mb-6 flex flex-col items-center gap-4 sm:flex-row sm:items-end sm:gap-6">
           <motion.div 
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
-            className="w-32 h-32 sm:w-44 sm:h-44 lg:w-56 lg:h-56 rounded-[2.5rem] p-1.5 bg-gradient-to-br from-[rgba(var(--primary-rgb),1)] via-[rgba(var(--primary-rgb),0.3)] to-transparent shadow-[0_20px_50px_-15px_rgba(0,0,0,0.5)] shrink-0 relative group border-none"
+            className="group relative h-24 w-24 shrink-0 rounded-2xl border border-slate-200 bg-white p-1 shadow-lg dark:border-white/10 dark:bg-zinc-900"
           >
-             <div className="w-full h-full rounded-[2.2rem] overflow-hidden bg-zinc-100 dark:bg-zinc-950 border-4 border-zinc-200 dark:border-zinc-950 flex items-center justify-center text-4xl sm:text-5xl font-black uppercase shadow-inner relative">
+             <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-xl bg-zinc-100 text-3xl font-semibold uppercase text-zinc-500 dark:bg-zinc-800 dark:text-white">
                 {avatar || profile.avatar ? (
                   <img src={getOptimizedCloudinaryImage(avatar || profile.avatar, 900)} alt={profile.name} className="w-full h-full object-cover" />
                 ) : (
-                  <div className="w-full h-full bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-950 flex items-center justify-center text-zinc-500 dark:text-white italic tracking-tighter">
+                  <div className="flex h-full w-full items-center justify-center bg-zinc-200 text-zinc-500 dark:bg-zinc-800 dark:text-white">
                     {profile.username[0]}
                   </div>
                 )}
@@ -242,61 +235,60 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                   </>
                 )}
              </div>
-              <div className="absolute -bottom-2 sm:-bottom-4 left-1/2 -translate-x-1/2 bg-white dark:bg-zinc-100 text-black px-4 py-1.5 rounded-full text-[8px] font-black uppercase tracking-[0.3em] shadow-xl whitespace-nowrap">
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-white px-3 py-1 text-[10px] font-semibold text-black shadow-md dark:bg-zinc-100">
                  Level {profile.credibilityScore > 1000 ? '99' : '12'}
               </div>
           </motion.div>
 
-          <div className="flex-1 text-center sm:text-left pb-4 space-y-4">
+          <div className="flex-1 space-y-2 pb-2 text-center sm:text-left">
              <div className="space-y-1">
                <div className="flex flex-col sm:flex-row items-center sm:items-center gap-2 sm:gap-4 mb-2">
-                 <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-zinc-900 dark:text-white leading-none">
+                 <h1 className="text-2xl font-semibold leading-tight text-zinc-900 dark:text-white sm:text-3xl">
                    {profile.name}
                  </h1>
-                 <div className="bg-[rgba(var(--primary-rgb),0.1)] text-[rgb(var(--primary))] border border-[rgba(var(--primary-rgb),0.2)] text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-lg">
-                   Core Elite
+                 <div className="rounded-full border border-[rgba(var(--primary-rgb),0.2)] bg-[rgba(var(--primary-rgb),0.1)] px-2.5 py-1 text-xs font-medium text-[rgb(var(--primary))]">
+                   Profile
                  </div>
                </div>
-               <div className="flex flex-wrap justify-center sm:justify-start items-center gap-3 sm:gap-6 text-zinc-500">
-                  <span className="text-sm font-black tracking-tighter uppercase opacity-80">@{profile.username}</span>
+               <div className="flex flex-wrap items-center justify-center gap-3 text-zinc-500 sm:justify-start">
+                  <span className="text-sm font-medium">@{profile.username}</span>
                   <div className="w-1.5 h-1.5 rounded-full bg-zinc-800 hidden sm:block" />
                   <div className="flex items-center gap-1.5">
                     <MapPin size={12} className="text-zinc-500" />
-                    <span className="text-[10px] font-black uppercase tracking-widest">{profile.location || 'Unknown Sector'}</span>
+                    {profile.location && <span className="text-sm">{profile.location}</span>}
                   </div>
                </div>
              </div>
 
-             {profile.currentFocus && (
+             {(profile.currentFocus || profile.college) && (
                <div className="flex flex-wrap gap-2">
-                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-500/10 border border-indigo-500/20 rounded-xl">
-                    <Target size={14} className="text-indigo-500" />
-                    <span className="text-[10px] font-black uppercase tracking-[0.1em] text-zinc-900 dark:text-white">Current Focus: <span className="text-indigo-600 dark:text-indigo-400 italic">{profile.currentFocus}</span></span>
-                 </div>
+                 {profile.currentFocus && <div className="inline-flex items-center gap-2 rounded-lg border border-[rgba(var(--primary-rgb),0.2)] bg-[rgb(var(--primary-soft))] px-3 py-1.5">
+                    <Target size={14} className="text-[rgb(var(--primary))]" />
+                    <span className="text-sm text-zinc-900 dark:text-white">Focus: <span className="text-[rgb(var(--primary))]">{profile.currentFocus}</span></span>
+                 </div>}
                  {profile.college && (
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-500/10 border border-zinc-500/10 rounded-xl">
+                    <div className="inline-flex items-center gap-2 rounded-lg border border-zinc-500/10 bg-zinc-500/10 px-3 py-1.5">
                        <ShieldCheck size={14} className="text-zinc-500" />
-                       <span className="text-[10px] font-black uppercase tracking-[0.1em] text-zinc-400">{profile.college}</span>
+                       <span className="text-sm text-zinc-500">{profile.college}</span>
                     </div>
                  )}
                </div>
              )}
           </div>
 
-          <div className="shrink-0 pb-6 flex justify-center w-full sm:w-auto">
+          <div className="flex w-full shrink-0 justify-center sm:w-auto">
              {isOwnProfile ? (
                <div className="flex gap-2">
                  <button 
                   onClick={() => setActiveTab('settings')} 
                   className="
-                    group h-12 px-8 rounded-2xl bg-white text-zinc-900 
-                    flex items-center gap-3 shadow-2xl transition-all duration-500 border border-zinc-200 hover:scale-[1.05]
+                    flex h-10 items-center gap-2 rounded-lg border border-zinc-200 bg-white px-4 text-zinc-900 shadow-sm transition hover:bg-zinc-50 dark:border-white/10 dark:bg-zinc-900 dark:text-white
                   "
                  >
                    <SettingsIcon size={16} className="group-hover:rotate-90 transition-transform duration-500" />
-                   <span className="text-[10px] font-black uppercase tracking-[0.2em]">Edit Profile</span>
+                   <span className="text-sm font-medium">Edit profile</span>
                  </button>
-                 <button className="w-12 h-12 rounded-2xl bg-zinc-100 dark:bg-white/5 border border-zinc-200 dark:border-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-all">
+                 <button className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-100 text-zinc-500 shadow-sm transition hover:bg-zinc-200 dark:border-white/10 dark:bg-zinc-900 dark:text-zinc-300" aria-label="Share profile">
                     <Share2 size={16} />
                  </button>
                </div>
@@ -309,7 +301,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                    }
                  }}
                  className={`
-                   h-14 px-10 rounded-2xl flex items-center gap-3 transition-all duration-500 hover:scale-105 shadow-2xl
+                   h-10 rounded-lg px-4 flex items-center gap-2 transition shadow-sm
                    ${profile.isFollowing 
                      ? 'bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-white/10 text-zinc-500' 
                      : 'bg-[rgb(var(--primary))] text-white'
@@ -317,8 +309,8 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                  `}
                >
                   <Users size={16} />
-                  <span className="text-[11px] font-black tracking-[0.2em] uppercase">
-                    {profile.isFollowing ? 'Disconnect' : 'Sync Frequency'}
+                  <span className="text-sm font-medium">
+                    {profile.isFollowing ? 'Unfollow' : 'Follow'}
                   </span>
                </button>
              )}
@@ -326,47 +318,40 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
         </div>
 
         {/* OPERATIONS STRIP */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-           <div className="bg-white dark:bg-zinc-900/40 border border-zinc-100 dark:border-white/5 rounded-[2rem] p-8 flex items-start gap-6 transition-all hover:bg-zinc-50 dark:hover:bg-zinc-900/60 shadow-xl shadow-black/5">
-              <Quote size={24} className="text-indigo-500 shrink-0 mt-1 opacity-40" />
-              <div className="space-y-2">
-                 <div className="label-elite uppercase text-zinc-500 font-black tracking-[0.2em]">My Motto</div>
-                 <p className="text-base font-medium italic text-zinc-800 dark:text-zinc-100 leading-relaxed">
-                   "{profile.tagline || "Mission in progress. Architecting absolute consistency."}"
-                 </p>
+        {(profile.tagline || profile.bio || profile.stats?.totalTicks || profile.stats?.habitCount) && (
+          <section className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-3 border-y border-zinc-200 py-3 dark:border-white/10">
+            {(profile.tagline || profile.bio) && (
+              <div className="min-w-0 flex-1">
+                {profile.tagline && <p className="font-medium text-zinc-800 dark:text-zinc-200">{profile.tagline}</p>}
+                {profile.bio && <p className="mt-1 text-sm">{profile.bio}</p>}
               </div>
-           </div>
-           <div className="lg:col-span-2 bg-white dark:bg-zinc-900/40 border border-zinc-100 dark:border-white/5 rounded-[2rem] p-8 flex flex-col md:flex-row items-center justify-between gap-10 shadow-xl shadow-black/5">
-              <div className="space-y-3 w-full md:w-auto">
-                 <div className="label-elite uppercase text-zinc-500 font-black tracking-[0.2em]">About Me</div>
-                 <p className="text-sm font-medium text-zinc-500 leading-relaxed max-w-lg">{profile.bio || "No historical logs captured for this operative. Session initial."}</p>
+            )}
+            <div className="flex items-center gap-5">
+              <div>
+                <span className="block text-xs text-zinc-500">Completions</span>
+                <span className="font-semibold text-zinc-900 dark:text-white">{profile.stats?.totalTicks || 0}</span>
               </div>
-              <div className="flex items-center gap-12 shrink-0 w-full md:w-auto justify-between md:justify-end border-t border-zinc-100 dark:border-white/5 pt-6 md:pt-0 md:border-t-0">
-                 <div className="text-center md:text-right">
-                    <div className="label-elite uppercase text-zinc-500 mb-1">Total Syncs</div>
-                    <div className="text-4xl font-black text-zinc-900 dark:text-white leading-none tracking-tighter">{profile.stats.totalTicks}</div>
-                 </div>
-                 <div className="text-center md:text-right">
-                    <div className="label-elite uppercase text-zinc-500 mb-1">Objectives</div>
-                    <div className="text-4xl font-black text-indigo-500 leading-none tracking-tighter">{profile.stats.habitCount}</div>
-                 </div>
+              <div>
+                <span className="block text-xs text-zinc-500">Habits</span>
+                <span className="font-semibold text-zinc-900 dark:text-white">{profile.stats?.habitCount || 0}</span>
               </div>
-           </div>
-        </div>
+            </div>
+          </section>
+        )}
 
         {/* NAVIGATION */}
-        <div className="flex justify-center sm:justify-start overflow-x-auto no-scrollbar border-b border-zinc-100 dark:border-white/5 px-2 mb-12">
-             <div className="flex gap-12">
+        <div className="mb-6 flex justify-center overflow-x-auto border-b border-zinc-100 px-2 no-scrollbar dark:border-white/5 sm:justify-start">
+             <div className="flex gap-6">
                {tabs.map(tab => (
                  <button 
                    key={tab.id}
                    onClick={() => setActiveTab(tab.id)}
-                   className={`pb-5 text-[11px] font-black uppercase tracking-[0.3em] transition-all relative whitespace-nowrap ${
-                     activeTab === tab.id ? 'text-indigo-500' : 'text-zinc-500 hover:text-zinc-300'
+                   className={`relative whitespace-nowrap py-3 text-sm font-medium transition-all ${
+                     activeTab === tab.id ? 'text-[rgb(var(--primary))]' : 'text-zinc-500 hover:text-zinc-300'
                    }`}
                  >
                    {tab.label}
-                   {activeTab === tab.id && <motion.div layoutId="tabLine" className="absolute bottom-0 left-0 right-0 h-1 bg-indigo-500 rounded-full" />}
+                   {activeTab === tab.id && <motion.div layoutId="tabLine" className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-[rgb(var(--primary))]" />}
                  </button>
                ))}
             </div>
@@ -376,20 +361,20 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
         <div className="w-full">
                <AnimatePresence mode="wait">
                   {activeTab === 'stats' && (
-                    <motion.div key="stats" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="space-y-6">
-                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <motion.div key="stats" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}>
+                       <div className="grid grid-cols-1 divide-y divide-zinc-200 sm:grid-cols-3 sm:divide-x sm:divide-y-0 dark:divide-white/10">
                           {[
                             { label: 'Success Rate', val: `${profile.stats?.successRate || 0}%`, icon: Star, color: 'text-amber-500', bg: 'bg-amber-500/10' },
                             { label: 'Matrix Score', val: profile.credibilityScore, icon: ShieldCheck, color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
-                            { label: 'Global Rank', val: `#${profile.stats?.rank || '---'}`, icon: Trophy, color: 'text-indigo-500', bg: 'bg-indigo-500/10' }
+                            { label: 'Global Rank', val: `#${profile.stats?.rank || '---'}`, icon: Trophy, color: 'text-[rgb(var(--primary))]', bg: 'bg-[rgb(var(--primary-soft))]' }
                           ].map((item, i) => (
-                            <div key={i} className="bg-white dark:bg-zinc-900/40 border border-zinc-200 dark:border-white/5 rounded-[2.5rem] p-10 flex flex-col items-center text-center gap-6 transition-all hover:border-indigo-500/30 group shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] dark:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)]">
-                               <div className={`w-16 h-16 rounded-[2rem] ${item.bg} flex items-center justify-center ${item.color} group-hover:scale-110 transition-transform duration-500`}>
-                                  <item.icon size={28} />
+                            <div key={i} className="flex items-center gap-3 py-3 sm:justify-center sm:px-3">
+                               <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${item.bg} ${item.color}`}>
+                                  <item.icon size={18} />
                                </div>
-                               <div className="space-y-2">
-                                  <div className="text-4xl font-black tracking-tighter text-zinc-900 dark:text-white leading-none">{item.val}</div>
-                                  <div className="label-elite uppercase text-zinc-500 font-bold tracking-[0.2em]">{item.label}</div>
+                               <div>
+                                  <div className="text-lg font-semibold leading-tight text-zinc-900 dark:text-white">{item.val}</div>
+                                  <div className="text-xs text-zinc-500">{item.label}</div>
                                 </div>
                             </div>
                           ))}
@@ -398,13 +383,13 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                   )}
 
                   {activeTab === 'links' && (
-                    <motion.div key="links" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="space-y-8">
-                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <motion.div key="links" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.98 }} className="space-y-4">
+                       <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
                           {profileFields.map((field) => {
                              const val = externalProfiles[field.key];
                              if (!isOwnProfile && !val) return null;
                              return (
-                               <div key={field.key} className="bg-white dark:bg-zinc-900/40 border border-zinc-100 dark:border-white/5 rounded-3xl p-6 space-y-4 hover:border-indigo-500/20 transition-all shadow-xl shadow-black/5">
+                               <div key={field.key} className="bg-white dark:bg-zinc-900/40 border border-zinc-100 dark:border-white/5 rounded-3xl p-6 space-y-4 hover:border-[rgba(var(--primary-rgb),0.2)] transition-all shadow-xl shadow-black/5">
                                   <div className="flex items-center justify-between px-1">
                                      <span className="text-[10px] font-black uppercase tracking-[0.2em] text-zinc-500">{field.label}</span>
                                      <Link2 size={14} className="text-zinc-600" />
@@ -413,13 +398,13 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                                     <input 
                                       value={val || ""}
                                       onChange={(e) => setExternalProfiles({...externalProfiles, [field.key]: e.target.value})}
-                                      className="w-full bg-zinc-50 dark:bg-black/60 border border-zinc-200 dark:border-white/5 rounded-2xl px-5 py-4 text-xs font-bold focus:border-indigo-500 outline-none transition-all placeholder:text-zinc-700"
+                                      className="w-full bg-zinc-50 dark:bg-black/60 border border-zinc-200 dark:border-white/5 rounded-2xl px-5 py-4 text-xs font-bold focus:border-[rgb(var(--primary))] outline-none transition-all placeholder:text-zinc-700"
                                       placeholder={`@username...`}
                                     />
                                   ) : (
                                     <div className="flex items-center justify-between bg-zinc-50 dark:bg-black/60 rounded-2xl p-4 border border-zinc-200 dark:border-white/5">
                                        <span className="text-sm font-black text-zinc-700 dark:text-zinc-200 truncate pr-4">{val || "REDACTED"}</span>
-                                       <ExternalLink size={16} className="text-indigo-500 hover:scale-110 cursor-pointer transition-all" />
+                                       <ExternalLink size={16} className="text-[rgb(var(--primary))] hover:scale-110 cursor-pointer transition-all" />
                                     </div>
                                   )}
                                </div>
@@ -429,7 +414,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                        
                        {isOwnProfile && (
                          <div className="pt-6">
-                            <button onClick={handleSave} disabled={saving} className="w-full py-5 rounded-3xl bg-indigo-600 text-white text-[11px] font-black uppercase tracking-[0.25em] flex items-center justify-center gap-4 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-indigo-500/30 disabled:opacity-50">
+                            <button onClick={handleSave} disabled={saving} className="w-full py-5 rounded-3xl bg-[rgb(var(--primary))] text-white text-[11px] font-black uppercase tracking-[0.25em] flex items-center justify-center gap-4 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_24px_48px_-12px_rgba(var(--primary-rgb),0.3)] disabled:opacity-50">
                                {saving ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Save size={18} />}
                                {saving ? "Deploying Changes..." : "Save Links"}
                             </button>
@@ -443,7 +428,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                            <div className="bg-white dark:bg-zinc-950/40 border border-zinc-100 dark:border-white/5 rounded-[2.5rem] p-10 space-y-6 shadow-xl">
                              <div className="flex items-center gap-3 mb-2">
-                               <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                               <div className="w-1.5 h-1.5 rounded-full bg-[rgb(var(--primary))]" />
                                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500">My Profile</div>
                              </div>
                              <div className="space-y-6">
@@ -453,7 +438,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                                     value={college} 
                                     onChange={(e) => setCollege(e.target.value)} 
                                     placeholder="Which college are you in?"
-                                    className="w-full bg-indigo-50/50 dark:bg-indigo-500/5 border border-indigo-200 dark:border-indigo-500/20 rounded-2xl px-6 py-5 text-sm font-black truncate focus:border-indigo-500 outline-none transition-all placeholder:text-zinc-400" 
+                                    className="w-full bg-indigo-50/50 dark:bg-[rgba(var(--primary-rgb),0.05)] border border-indigo-200 dark:border-[rgba(var(--primary-rgb),0.2)] rounded-2xl px-6 py-5 text-sm font-black truncate focus:border-[rgb(var(--primary))] outline-none transition-all placeholder:text-zinc-400"
                                   />
                                </div>
                                <div className="space-y-2 border-t border-zinc-100 dark:border-white/5 pt-4">
@@ -462,7 +447,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                                     value={name} 
                                     onChange={(e) => setName(e.target.value)} 
                                     placeholder="Assign handle..."
-                                    className="w-full bg-zinc-50 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-6 py-5 text-sm font-black truncate focus:border-indigo-500 outline-none transition-all" 
+                                    className="w-full bg-zinc-50 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-6 py-5 text-sm font-black truncate focus:border-[rgb(var(--primary))] outline-none transition-all"
                                   />
                                </div>
                                <div className="space-y-2">
@@ -471,7 +456,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                                     value={currentFocus} 
                                     onChange={(e) => setCurrentFocus(e.target.value)} 
                                     placeholder="e.g. Master React, Grind 500 LeetCode"
-                                    className="w-full bg-zinc-50 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-6 py-5 text-sm font-black truncate focus:border-indigo-500 outline-none transition-all placeholder:text-zinc-400" 
+                                    className="w-full bg-zinc-50 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-6 py-5 text-sm font-black truncate focus:border-[rgb(var(--primary))] outline-none transition-all placeholder:text-zinc-400"
                                   />
                                </div>
                              </div>
@@ -479,7 +464,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                           
                           <div className="bg-white dark:bg-zinc-950/40 border border-zinc-100 dark:border-white/5 rounded-[2.5rem] p-10 space-y-6 shadow-xl">
                              <div className="flex items-center gap-3 mb-2">
-                               <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                               <div className="w-1.5 h-1.5 rounded-full bg-[rgb(var(--primary))]" />
                                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500">Location & Bio</div>
                              </div>
                              <div className="space-y-6">
@@ -489,7 +474,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                                     value={location} 
                                     onChange={(e) => setLocation(e.target.value)} 
                                     placeholder="Set geographic coordinates..."
-                                    className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-6 py-5 text-sm font-black truncate focus:border-indigo-500 outline-none transition-all" 
+                                    className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-6 py-5 text-sm font-black truncate focus:border-[rgb(var(--primary))] outline-none transition-all"
                                   />
                                </div>
                                <div className="space-y-2">
@@ -498,7 +483,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                                     value={tagline} 
                                     onChange={(e) => setTagline(e.target.value)} 
                                     placeholder="Your motto..."
-                                    className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-6 py-5 text-sm font-black truncate focus:border-indigo-500 outline-none transition-all" 
+                                    className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-6 py-5 text-sm font-black truncate focus:border-[rgb(var(--primary))] outline-none transition-all"
                                   />
                                </div>
                              </div>
@@ -507,10 +492,10 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                           <div className="bg-white dark:bg-zinc-950/40 border border-zinc-100 dark:border-white/5 rounded-[2.5rem] p-10 space-y-4 md:col-span-2 shadow-xl">
                              <div className="flex items-center justify-between mb-4">
                                 <div className="flex items-center gap-3">
-                                  <div className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+                                  <div className="w-1.5 h-1.5 rounded-full bg-[rgb(var(--primary))]" />
                                   <div className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500">Design Settings</div>
                                 </div>
-                                <div className="text-[8px] font-black uppercase text-indigo-500">Visual Enhancement Area</div>
+                                <div className="text-[8px] font-black uppercase text-[rgb(var(--primary))]">Visual Enhancement Area</div>
                              </div>
                              
                              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -521,12 +506,12 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                                          value={avatar} 
                                          onChange={(e) => setAvatar(e.target.value)} 
                                          placeholder="Avatar Image URL..."
-                                         className="flex-1 bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-6 py-4 text-xs font-black focus:border-indigo-500 outline-none transition-all" 
+                                         className="flex-1 bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-6 py-4 text-xs font-black focus:border-[rgb(var(--primary))] outline-none transition-all"
                                        />
                                        <button 
                                          onClick={() => fileInputRef.current?.click()}
                                          type="button"
-                                         className="w-12 h-12 shrink-0 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl flex items-center justify-center text-indigo-500 hover:bg-indigo-500/20 transition-all"
+                                         className="w-12 h-12 shrink-0 bg-[rgb(var(--primary-soft))] border border-[rgba(var(--primary-rgb),0.2)] rounded-2xl flex items-center justify-center text-[rgb(var(--primary))] hover:bg-[rgba(var(--primary-rgb),0.2)] transition-all"
                                          title="Upload Local File"
                                        >
                                           <Users size={16} />
@@ -536,7 +521,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                                      value={banner} 
                                      onChange={(e) => setBanner(e.target.value)} 
                                      placeholder="Custom Banner URL..."
-                                     className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-6 py-4 text-xs font-black focus:border-indigo-500 outline-none transition-all" 
+                                     className="w-full bg-zinc-100 dark:bg-black/40 border border-zinc-200 dark:border-white/10 rounded-2xl px-6 py-4 text-xs font-black focus:border-[rgb(var(--primary))] outline-none transition-all"
                                    />
                                 </div>
                                 <div className="space-y-4">
@@ -546,7 +531,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                                         <button 
                                           key={preset.id}
                                           onClick={() => setBanner(preset.url)}
-                                          className={`relative h-14 rounded-xl overflow-hidden border-2 transition-all ${banner === preset.url ? 'border-indigo-500' : 'border-transparent opacity-60 hover:opacity-100'}`}
+                                          className={`relative h-14 rounded-xl overflow-hidden border-2 transition-all ${banner === preset.url ? 'border-[rgb(var(--primary))]' : 'border-transparent opacity-60 hover:opacity-100'}`}
                                         >
                                           {preset.url ? <img src={preset.url} className="w-full h-full object-cover" /> : <div className="w-full h-full bg-zinc-200 dark:bg-zinc-800" />}
                                           <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
@@ -578,7 +563,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                                   <div className="label-elite uppercase text-zinc-600 font-black tracking-[0.2em]">Profile Status</div>
                                   <div className="text-xs font-black text-zinc-900 dark:text-white uppercase tracking-tighter">{profilePublic ? 'Public Profile' : 'Private Profile'}</div>
                                </div>
-                               <button onClick={() => setProfilePublic(!profilePublic)} className={`w-14 h-7 rounded-full transition-all flex items-center px-1.5 ${profilePublic ? 'bg-indigo-500 justify-end shadow-[0_0_20px_rgba(99,102,241,0.5)]' : 'bg-zinc-200 dark:bg-zinc-800 justify-start'}`}>
+                               <button onClick={() => setProfilePublic(!profilePublic)} className={`w-14 h-7 rounded-full transition-all flex items-center px-1.5 ${profilePublic ? 'bg-[rgb(var(--primary))] justify-end shadow-[0_0_20px_rgba(var(--primary-rgb),0.5)]' : 'bg-zinc-200 dark:bg-zinc-800 justify-start'}`}>
                                   <div className="w-4 h-4 bg-white rounded-full shadow-md" />
                                 </button>
                              </div>
@@ -587,11 +572,11 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                        </div>
   
                        <div className="pt-6">
-                           <button onClick={handleSave} disabled={saving} className="w-full py-6 rounded-[2.5rem] bg-indigo-600 text-white text-[12px] font-black uppercase tracking-[0.3em] flex items-center justify-center gap-4 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-2xl shadow-indigo-500/30">
+                           <button onClick={handleSave} disabled={saving} className="w-full py-6 rounded-[2.5rem] bg-[rgb(var(--primary))] text-white text-[12px] font-black uppercase tracking-[0.3em] flex items-center justify-center gap-4 transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_24px_48px_-12px_rgba(var(--primary-rgb),0.3)]">
                               <ArrowRight size={20} />
                               {saving ? "Deploying Changes..." : "Save All Changes"}
                            </button>
-                           {message && <div className="mt-8 text-center text-[10px] font-black uppercase tracking-[0.5em] text-indigo-500 animate-pulse">{message}</div>}
+                           {message && <div className="mt-8 text-center text-[10px] font-black uppercase tracking-[0.5em] text-[rgb(var(--primary))] animate-pulse">{message}</div>}
                        </div>
                     </motion.div>
                  )}
@@ -626,7 +611,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
               </div>
 
               <div className="space-y-6 p-6">
-                <div className="relative mx-auto h-[300px] w-[300px] cursor-move overflow-hidden rounded-2xl border border-blue-500/30 bg-slate-950"
+                <div className="relative mx-auto h-[300px] w-[300px] cursor-move overflow-hidden rounded-2xl border border-[rgba(var(--primary-rgb),0.3)] bg-slate-950"
                   onMouseDown={handleMouseDown}
                   onMouseMove={handleMouseMove}
                 >
@@ -648,7 +633,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                 <div className="space-y-4">
                   <div className="flex items-center justify-between px-1">
                     <span className="label-elite">Zoom</span>
-                    <span className="text-xs font-semibold text-blue-600">{Math.round(zoom * 100)}%</span>
+                    <span className="text-xs font-semibold text-[rgb(var(--primary))]">{Math.round(zoom * 100)}%</span>
                   </div>
                   <input 
                     type="range" 
@@ -657,7 +642,7 @@ export default function ProfileView({ initialProfile, isOwnProfile }: ProfileVie
                     step="0.01" 
                     value={zoom} 
                     onChange={e => setZoom(parseFloat(e.target.value))}
-                    className="h-1 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-blue-600 dark:bg-white/10"
+                    className="h-1 w-full cursor-pointer appearance-none rounded-full bg-slate-200 accent-[rgb(var(--primary))] dark:bg-white/10"
                   />
                 </div>
 

@@ -3,32 +3,31 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { 
-  Info, Code2, Globe, ShieldCheck, HelpCircle, 
-  Download, CheckCircle2, ArrowRight, Sparkles 
+  CalendarDays, CheckCircle2, HelpCircle, Plus, Sparkles, TrendingUp
 } from "lucide-react";
 
 const SECTIONS = [
-  { id: "about", label: "Sector Intelligence" },
-  { id: "howto", label: "Operations Manual" },
+  { id: "about", label: "Overview" },
+  { id: "howto", label: "How to use" },
 ];
 
 const paradigms = [
   {
-    icon: <Code2 size={20} />,
-    title: "Apex UI",
-    description: "A flush, glassmorphism design language that removes aesthetic friction, keeping visuals pristine.",
-    color: "bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400",
+    icon: <CheckCircle2 size={20} />,
+    title: "Habits",
+    description: "Create routines and track your daily completions.",
+    color: "bg-indigo-50 text-indigo-600 dark:bg-[rgb(var(--primary-soft))] dark:text-[rgb(var(--primary))]",
   },
   {
-    icon: <Globe size={20} />,
-    title: "Matrix Sync",
-    description: "Seamlessly connect your Codeforces, GitHub, LeetCode, and custom platforms automatically.",
-    color: "bg-sky-50 text-sky-600 dark:bg-sky-500/10 dark:text-sky-400",
+    icon: <CalendarDays size={20} />,
+    title: "Tasks",
+    description: "Keep one-time tasks alongside your habits.",
+    color: "bg-sky-50 text-sky-600 dark:bg-[rgb(var(--primary-soft))] dark:text-[rgb(var(--primary))]",
   },
   {
-    icon: <ShieldCheck size={20} />,
-    title: "Elite Core",
-    description: "Built strictly for professionals aiming for absolute consistency and deep collaborative focus.",
+    icon: <TrendingUp size={20} />,
+    title: "Progress",
+    description: "Review your activity and streaks over time.",
     color: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400",
   },
 ];
@@ -36,27 +35,27 @@ const paradigms = [
 const steps = [
   {
     id: 1,
-    icon: <Download size={18} />,
-    title: "Initialize Extension",
-    description: "Interlink the browser extension. Inject your external profiles to establish the synchronization pipeline.",
+    icon: <Plus size={18} />,
+    title: "Add a habit",
+    description: "Use the plus button to create a habit and choose how often you want to do it.",
   },
   {
     id: 2,
     icon: <CheckCircle2 size={18} />,
-    title: "Log Core Rituals",
-    description: "Navigate to the Primary Dashboard. Define habits to generate daily objectives. Metrics update in real-time.",
+    title: "Track your day",
+    description: "Open the dashboard and mark habits complete as you do them.",
   },
   {
     id: 3,
     icon: <Sparkles size={18} />,
-    title: "Monitor Flux",
-    description: "Utilize the Density Heatmap and Velocity Chart to visualize your consistency frequency across the horizon.",
+    title: "Manage tasks",
+    description: "Add tasks from the dashboard and mark them complete when finished.",
   },
   {
     id: 4,
-    icon: <Globe size={18} />,
-    title: "Synchronize Socials",
-    description: "Execute Search protocols to locate other users. Monitor public streaks and credibility indices.",
+    icon: <TrendingUp size={18} />,
+    title: "Review progress",
+    description: "Use the calendar and progress charts to look back on your activity.",
   },
 ];
 
@@ -66,7 +65,6 @@ export default function HowToUsePage() {
   return (
     <div className="flex flex-col w-full h-full lg:overflow-hidden bg-transparent">
       
-      {/* TACTICAL NAVIGATION */}
       <div className="flex border-b border-zinc-100 dark:border-white/5 bg-transparent shrink-0">
         {SECTIONS.map(s => (
           <button
@@ -88,7 +86,6 @@ export default function HowToUsePage() {
         ))}
       </div>
 
-      {/* INTELLIGENCE CONTENT */}
       <div className="flex-1 overflow-y-auto page-shell bg-transparent">
         <div className="max-w-4xl mx-auto p-4 lg:p-10">
           <AnimatePresence mode="wait">
@@ -102,11 +99,10 @@ export default function HowToUsePage() {
               >
                 <header className="space-y-6">
                   <div className="flex flex-col gap-1">
-                     <span className="label-elite text-[rgb(var(--primary))]">Operational Protocol</span>
-                     <h2 className="text-3xl italic">Engineered for <span className="text-[rgb(var(--primary))]">Zero Friction.</span></h2>
+                     <h2 className="text-3xl font-semibold">A simple way to track your progress</h2>
                   </div>
                   <p className="max-w-2xl">
-                    A high-performance workspace designed to sync your focus, align your habits, and amplify your collective momentum in the global matrix.
+                    Track habits, tasks, and daily notes in one place.
                   </p>
                 </header>
 
@@ -122,17 +118,12 @@ export default function HowToUsePage() {
                       <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-6 shadow-sm border ${item.color} border-current border-opacity-10`}>
                         {item.icon}
                       </div>
-                      <h3 className="text-lg font-bold uppercase tracking-tight italic text-zinc-900 dark:text-zinc-50">{item.title}</h3>
-                      <p className="mt-3 text-sm font-medium leading-relaxed text-zinc-500 italic">{item.description}</p>
+                      <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">{item.title}</h3>
+                      <p className="mt-3 text-sm leading-relaxed text-zinc-500">{item.description}</p>
                     </motion.div>
                   ))}
                 </div>
 
-                <footer className="pt-10 border-t border-zinc-100 dark:border-white/5 opacity-50">
-                  <span className="label-elite uppercase text-zinc-400">
-                    Velrocity Tactical Unit · Build 2.4.0 · Apex Edition
-                  </span>
-                </footer>
               </motion.div>
             )}
 
@@ -147,11 +138,11 @@ export default function HowToUsePage() {
                 <header className="space-y-4">
                   <div className="flex items-center gap-3">
                     <HelpCircle size={14} className="text-[rgb(var(--primary))]" />
-                    <span className="label-elite uppercase text-[rgb(var(--primary))]">System Manual</span>
+                    <span className="label-elite uppercase text-[rgb(var(--primary))]">Quick guide</span>
                   </div>
-                  <h1 className="text-4xl font-bold uppercase tracking-tighter italic">Sector Onboarding</h1>
-                  <p className="text-lg font-bold leading-relaxed text-zinc-500 dark:text-zinc-400 italic">
-                    Follow the tactical sequence to initialize your workspace and start tracking with maximum precision.
+                  <h1 className="text-3xl font-semibold">Getting started</h1>
+                  <p className="text-base leading-relaxed text-zinc-500 dark:text-zinc-400">
+                    Four steps to get started.
                   </p>
                 </header>
 
@@ -168,28 +159,17 @@ export default function HowToUsePage() {
                       className="relative z-10 flex gap-8 items-start group"
                     >
                       <div className="w-16 h-16 shrink-0 rounded-[1.5rem] bg-zinc-950 text-white flex items-center justify-center shadow-2xl relative overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-br from-[rgb(var(--primary))] mt-0.5" />
+                        <div className="absolute inset-0 bg-[rgb(var(--primary))] mt-0.5" />
                         <div className="relative z-10">{step.icon}</div>
                       </div>
                       <div className="flex-1 py-1 space-y-1 group-hover:translate-x-1 transition-transform">
-                        <div className="label-elite uppercase text-[rgb(var(--primary))]">Sequence 0{step.id}</div>
-                        <h3 className="text-xl font-bold uppercase tracking-tight italic text-zinc-900 dark:text-zinc-50">{step.title}</h3>
-                        <p className="text-sm font-bold leading-relaxed text-zinc-500 dark:text-zinc-400 italic">{step.description}</p>
+                        <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50">{step.title}</h3>
+                        <p className="text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">{step.description}</p>
                       </div>
                     </motion.div>
                   ))}
                 </div>
 
-                <div className="surface-card p-8 border-emerald-500/20 bg-emerald-500/5 flex items-center gap-6">
-                  <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500">
-                    <CheckCircle2 size={24} />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-lg font-bold uppercase tracking-tight italic text-emerald-600 dark:text-emerald-400">Sector Integrity Confirmed</p>
-                    <p className="text-xs font-bold text-emerald-500 uppercase tracking-widest opacity-60">You are operational. Deploy to dashboard now.</p>
-                  </div>
-                  <ArrowRight size={20} className="text-emerald-500" />
-                </div>
               </motion.div>
             )}
           </AnimatePresence>

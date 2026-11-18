@@ -1,7 +1,6 @@
 'use client';
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 const stagger = {
@@ -19,97 +18,38 @@ export default function Hero() {
       variants={stagger}
       initial="initial"
       animate="animate"
-      className="space-y-7"
+      className="space-y-5"
     >
 
-      {/* BADGE */}
-      <motion.div variants={rise} className="flex items-center gap-3">
-        <span className="inline-flex items-center gap-2 px-3 py-1.5
-                         border border-indigo-500/30 rounded-full
-                         text-[9px] font-bold uppercase tracking-[0.22em] text-indigo-400">
-          <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
-          Professional Choice
-        </span>
-      </motion.div>
-
-      {/* HEADLINE */}
-      <div className="space-y-2">
-
+      <div>
         <motion.h1
           variants={rise}
-          className="text-[clamp(3rem,8vw,5.2rem)]
-                     font-black leading-[0.9] tracking-[-0.03em] text-white">
-          Architecting
+          className="max-w-3xl text-4xl font-bold leading-[1.08] tracking-tight text-zinc-950 dark:text-white sm:text-5xl md:text-6xl">
+          Build better habits.
         </motion.h1>
-
-        <motion.h1
-          variants={rise}
-          className="text-[clamp(3rem,8vw,5.2rem)]
-                     font-black leading-[0.9] tracking-[-0.03em]
-                     bg-gradient-to-r from-indigo-400 to-blue-500
-                     bg-clip-text text-transparent">
-          Consistency.
-        </motion.h1>
-
       </div>
 
-      {/* BODY */}
       <motion.p
         variants={rise}
-        className="text-zinc-400 text-base md:text-lg leading-relaxed max-w-[420px]"
+        className="max-w-xl text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 sm:text-base"
       >
-        Track your development, sync across platforms, and build
-        unstoppable consistency with a precision-focused productivity OS.
+        Track daily habits, manage tasks, and see your progress in one place.
       </motion.p>
 
-      {/* CTA */}
-      <motion.div variants={rise} className="flex gap-3 flex-wrap">
-
+      <motion.div variants={rise} className="flex flex-wrap gap-2.5">
         <Link
           href="/register"
-          className="group inline-flex items-center gap-2
-                     px-7 py-3
-                     bg-indigo-500 hover:bg-indigo-400
-                     text-white text-[11px] font-black uppercase tracking-[0.18em]
-                     rounded-lg transition shadow-[0_0_20px_-5px_rgba(99,102,241,0.5)]"
+          className="rounded-lg bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-orange-400"
         >
-          Get Started
-          <ArrowRight size={14} className="group-hover:translate-x-1 transition" />
+          Create account
         </Link>
-
         <Link
           href="/login"
-          className="inline-flex items-center gap-2
-                     px-7 py-3
-                     border border-white/10 hover:border-white/20
-                     text-zinc-400 hover:text-white text-[11px]
-                     font-bold uppercase tracking-[0.18em]
-                     rounded-lg transition"
+          className="rounded-lg border border-zinc-300 px-5 py-2.5 text-sm font-semibold text-zinc-700 transition hover:border-zinc-400 hover:text-zinc-950 dark:border-white/15 dark:text-zinc-300 dark:hover:border-white/30 dark:hover:text-white"
         >
-          View Docs
+          Sign in
         </Link>
-
       </motion.div>
-
-      {/* STATS */}
-      <motion.div
-        variants={rise}
-        className="pt-6 flex gap-8 text-sm"
-      >
-        <div>
-          <p className="text-zinc-500 text-[10px] uppercase">Uptime</p>
-          <p className="text-white font-bold">99.9%</p>
-        </div>
-        <div>
-          <p className="text-zinc-500 text-[10px] uppercase">Integrations</p>
-          <p className="text-white font-bold">42+</p>
-        </div>
-        <div>
-          <p className="text-zinc-500 text-[10px] uppercase">Rank</p>
-          <p className="text-white font-bold">Tier 1</p>
-        </div>
-      </motion.div>
-
     </motion.div>
   );
 }

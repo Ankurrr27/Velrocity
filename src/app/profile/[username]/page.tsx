@@ -20,8 +20,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
   return (
     <main className="min-h-screen pb-16">
       {/* Immersive Cover */}
-      <div className="h-64 lg:h-80 w-full bg-[rgb(var(--primary))] bg-gradient-to-tr from-[rgba(var(--primary),0.8)] to-[rgba(var(--primary),0.3)] relative overflow-hidden">
-         <div className="absolute inset-0 bg-black/10 mix-blend-overlay" />
+      <div className="relative h-36 w-full bg-[rgb(var(--primary))] shadow-md shadow-[rgba(var(--primary-rgb),0.12)]">
       </div>
 
       <div className="max-w-6xl mx-auto px-6 lg:px-10">
@@ -101,7 +100,7 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
                 <span className="text-xs uppercase tracking-wider text-zinc-500 font-semibold">Active Streak</span>
               </div>
               <div className="surface-card p-6 flex flex-col items-center text-center gap-2">
-                <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center">
+                <div className="w-14 h-14 rounded-2xl bg-[rgb(var(--primary-soft))] text-[rgb(var(--primary))] flex items-center justify-center">
                   <Star size={28} />
                 </div>
                 <span className="text-3xl font-extrabold">{user.credibilityScore}</span>

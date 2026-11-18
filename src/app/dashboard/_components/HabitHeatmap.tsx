@@ -22,9 +22,9 @@ export default function HabitHeatmap({
   }, []);
   if (loading) {
     return (
-      <div className="surface-card p-6 h-[200px] flex flex-col gap-4">
+      <div className="flex h-[200px] flex-col gap-4">
         <div className="h-4 w-40 bg-zinc-100 dark:bg-zinc-800 rounded-lg animate-pulse" />
-        <div className="flex-1 w-full bg-gradient-to-r from-zinc-50 via-zinc-100 to-zinc-50 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 bg-[length:200%_100%] animate-shimmer rounded-xl" />
+        <div className="flex-1 w-full rounded-xl bg-zinc-100 dark:bg-zinc-800" />
       </div>
     );
   }
